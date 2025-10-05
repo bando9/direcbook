@@ -21,6 +21,7 @@ address-book
 - HTML5
 - Tailwind CSS
 - JavaScript
+- Deploy on [Netlify](https://www.netlify.com/)
 
 ## Features
 
@@ -33,7 +34,8 @@ address-book
 ## Links
 
 - Website URL: [direcbook.bandomega.com](https://www.direcbook.bandomega.com)
-- Github Repo: [github.com/bando9](https://github.com/bando9/direcbook)
+- Github Repo: [github.com/bando9/direcbook](https://github.com/bando9/direcbook)
+- Figma: [figma.com](https://www.figma.com/design/tmZRHSxdqb53fi3EC3Hpg0/direcbook)
 
 ### Social Media
 
