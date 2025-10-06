@@ -26,3 +26,7 @@ const contactsData = [
 ];
 
 console.log(contactsData);
+
+for (let i = 0; i < contactsData.length; i++) {
+  console.log(contactsData[i]);
+}
