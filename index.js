@@ -1,7 +1,7 @@
 console.log("Direcbook");
 
 // id, full name, phone, email, address, birthDate, tags, isfavorite, social links, createdAt, updatedAt
-const contactsData = [
+let contactsData = [
   {
     id: 1,
     fullName: "Warren Edward Buffett",
@@ -131,7 +131,6 @@ const contactsData = [
     updatedAt: new Date(),
   },
 ];
-
 // console.log(contactsData);
 
 function calculateAge(yearBirthdate) {
@@ -157,8 +156,8 @@ function calculateAge(yearBirthdate) {
 
 // CRUD
 
-// create
-function addContact(
+//* create
+function addContact({
   id,
   fullName,
   phone,
@@ -167,11 +166,11 @@ function addContact(
   birthdate,
   tags = [],
   isFavorite = false,
-  socialLinks = {}
-) {
+  socialLinks = {},
+}) {
   const now = new Date();
 
-  const contact = {
+  return {
     id,
     fullName,
     phone,
@@ -184,28 +183,26 @@ function addContact(
     createdAt: now,
     updatedAt: now,
   };
-  return contact;
 }
 
-let newObject = addContact(
-  9,
-  "Bando Mega Kusuma",
-  "089241099019",
-  "example@email.com",
-  "Semarang, Jawa Tengah, Indonesia",
-  "1999-10-24",
-  ["Family", "Technology", "Investor"],
-  true,
-  {
+let newObject = addContact({
+  id: 9,
+  fullName: "Bando Mega Kusuma",
+  phone: "089241099019",
+  email: "example@email.com",
+  address: "Semarang, Jawa Tengah, Indonesia",
+  birthdate: "1999-10-24",
+  tags: ["Family", "Technology", "Investor"],
+  isFavorite: true,
+  socialLinks: {
     linkedin: "https://www.linkedin.com/in/bando-mega-kusuma",
     website: "https://bandomega.com",
-  }
-);
-
+  },
+});
 contactsData.push(newObject);
 // console.log(contactsData);
 
-// Read
+//* Read
 function showContact(contacts) {
   for (let i = 0; i < contacts.length; i++) {
     const age = calculateAge(contacts[i].birthdate);
@@ -225,22 +222,48 @@ function showContact(contacts) {
       } | 📝 Updated: ${contacts[i].updatedAt?.toLocaleString() || "-"}`
     );
   }
-  console.table(contacts);
 }
+// showContact(contactsData);
 
-showContact(contactsData);
+// TODO: updateContact
+const idToUpdate = 4;
+console.log(contactsData[idToUpdate - 1]);
 
-// Update
-// Delete
+function updatePhone(id, updateFields, contacts) {
+  // const newPhone = "089677291389";
+  // const newFavorite = "false";
 
-// count data contacts
+  let phoneToUpdate = contacts.find((item) => item.id === id);
+  // console.log(phoneToUpdate);
+
+  if (phoneToUpdate) {
+    contactsData = { ...contacts, updateFields };
+
+    // phoneToUpdate.phone = newPhone;
+    // phoneToUpdate.isFavorite = newFavorite;
+
+    // console.log("contact update");
+  }
+  // console.log(con);
+}
+updatePhone(idToUpdate, (phone = "902039"), contactsData);
+console.log((contactsData.id = idToUpdate));
+
+//**delete contact
+function deleteContact(id, contacts) {
+  contactsData = contacts.filter((item) => item.id !== id);
+  return contactsData;
+}
+// console.log(deleteContact(2, contactsData));
+
+//**count data contacts
 function countContacts(contacts) {
   return contacts.length;
 }
 const count = countContacts(contactsData);
-console.log(`There is ${count} contacs data.`);
+// console.log(`There is ${count} contacs data.`);
 
-// has duplicate phone
+//* has duplicate phone
 function hasDuplicatePhone(contacts) {
   for (let i = 0; i < contacts.length; i++) {
     console.log(contacts[i].phone);
@@ -248,7 +271,7 @@ function hasDuplicatePhone(contacts) {
 }
 // hasDuplicatePhone(contactsData);
 
-// Short Contact by Name
-// Filter Contact by City
-// Show Birthdate this Month
-// Export data contacts to JSON
+// TODO: Short Contact by Name
+// TODO: Filter Contact by City
+// TODO: Show Birthdate this Month
+// TODO: Export data contacts to JSON
