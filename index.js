@@ -226,30 +226,8 @@ function showContact(contacts) {
 // showContact(contactsData);
 
 // TODO: updateContact
-const idToUpdate = 4;
-console.log(contactsData[idToUpdate - 1]);
 
-function updatePhone(id, updateFields, contacts) {
-  // const newPhone = "089677291389";
-  // const newFavorite = "false";
-
-  let phoneToUpdate = contacts.find((item) => item.id === id);
-  // console.log(phoneToUpdate);
-
-  if (phoneToUpdate) {
-    contactsData = { ...contacts, updateFields };
-
-    // phoneToUpdate.phone = newPhone;
-    // phoneToUpdate.isFavorite = newFavorite;
-
-    // console.log("contact update");
-  }
-  // console.log(con);
-}
-updatePhone(idToUpdate, (phone = "902039"), contactsData);
-console.log((contactsData.id = idToUpdate));
-
-//**delete contact
+//*delete contact
 function deleteContact(id, contacts) {
   contactsData = contacts.filter((item) => item.id !== id);
   return contactsData;
@@ -261,17 +239,21 @@ function countContacts(contacts) {
   return contacts.length;
 }
 const count = countContacts(contactsData);
-// console.log(`There is ${count} contacs data.`);
+console.log(`There is ${count} contacs data.`);
 
-//* has duplicate phone
-function hasDuplicatePhone(contacts) {
-  for (let i = 0; i < contacts.length; i++) {
-    console.log(contacts[i].phone);
-  }
-}
-// hasDuplicatePhone(contactsData);
-
+// TODO: has duplicate phone
 // TODO: Short Contact by Name
 // TODO: Filter Contact by City
-// TODO: Show Birthdate this Month
+
+// Show Birthdate this Month
+const monthNow = new Date().getMonth();
+function showBirthdateMonth(contacts) {
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i].birthdate.getMonth() == monthNow) {
+      console.log(`Happy Birth day ${contacts[i].fullName}!`);
+    }
+  }
+}
+showBirthdateMonth(contactsData);
+
 // TODO: Export data contacts to JSON
