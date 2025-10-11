@@ -1,6 +1,6 @@
 console.log("Direcbook");
 
-// id, full name, phone, email, address, birthDate, tags, isfavorite, social links, createdAt, updatedAt
+// id, full name, phone, email, address, birthDate, tags, isFavorited, social links, createdAt, updatedAt
 let contactsData = [
   {
     id: 1,
@@ -10,7 +10,7 @@ let contactsData = [
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1930, 7, 30),
     tags: ["Investor", "Mentor"],
-    isFavorite: true,
+    isFavorited: true,
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/warrenbuffett",
       website: "https://www.berkshirehathaway.com/",
@@ -26,7 +26,7 @@ let contactsData = [
     address: "The Bronx, New York City, USA",
     birthdate: new Date(1944, 7, 17),
     tags: ["Investor", "Technology"],
-    isFavorite: true,
+    isFavorited: true,
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/larryellison",
       website: "https://www.oracle.com/",
@@ -42,7 +42,7 @@ let contactsData = [
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1924, 0, 1),
     tags: ["Investor", "Philanthropist"],
-    isFavorite: false,
+    isFavorited: false,
     socialLinks: {
       linkedin: null,
       website: "https://www.berkshirehathaway.com/",
@@ -58,7 +58,7 @@ let contactsData = [
     address: "Austin, Texas, USA",
     birthdate: new Date(1971, 5, 28),
     tags: ["Technology", "Entrepreneur", "AI"],
-    isFavorite: true,
+    isFavorited: true,
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/elonmusk",
       website: "https://x.com/elonmusk",
@@ -74,7 +74,7 @@ let contactsData = [
     address: "Medina, Washington, USA",
     birthdate: new Date(1964, 0, 12),
     tags: ["Investor", "Technology", "Entrepreneur"],
-    isFavorite: false,
+    isFavorited: false,
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/jeffbezos",
       website: "https://www.amazon.com/",
@@ -90,7 +90,7 @@ let contactsData = [
     address: "San Francisco, California, USA",
     birthdate: new Date(1985, 3, 22),
     tags: ["Entrepreneur", "AI", "Investor"],
-    isFavorite: false,
+    isFavorited: false,
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/sama",
       website: "https://openai.com/",
@@ -106,7 +106,7 @@ let contactsData = [
     address: "Tainan, Taiwan / California, USA",
     birthdate: new Date(1963, 1, 17),
     tags: ["Technology", "AI", "GPU"],
-    isFavorite: true,
+    isFavorited: true,
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/jensen-huang",
       website: "https://www.nvidia.com/",
@@ -122,7 +122,7 @@ let contactsData = [
     address: "Stanford, California, USA",
     birthdate: new Date(1976, 3, 18),
     tags: ["AI", "Educator", "Entrepreneur"],
-    isFavorite: true,
+    isFavorited: true,
     socialLinks: {
       linkedin: "https://www.linkedin.com/in/andrewyng",
       website: "https://www.deeplearning.ai/",
@@ -154,18 +154,20 @@ function calculateAge(yearBirthdate) {
   }
 }
 
+const timestamp = Date.now();
+
 // CRUD
 
 //* create
 function addContact({
-  id,
+  id = timestamp,
   fullName,
   phone,
   email,
   address,
   birthdate,
   tags = [],
-  isFavorite = false,
+  isFavorited = false,
   socialLinks = {},
 }) {
   const now = new Date();
@@ -178,7 +180,7 @@ function addContact({
     address,
     birthdate: new Date(birthdate),
     tags,
-    isFavorite,
+    isFavorited,
     socialLinks,
     createdAt: now,
     updatedAt: now,
@@ -193,7 +195,7 @@ let newObject = addContact({
   address: "Semarang, Jawa Tengah, Indonesia",
   birthdate: "1999-10-24",
   tags: ["Family", "Technology", "Investor"],
-  isFavorite: true,
+  isFavorited: true,
   socialLinks: {
     linkedin: "https://www.linkedin.com/in/bando-mega-kusuma",
     website: "https://bandomega.com",
@@ -212,7 +214,7 @@ function showContact(contacts) {
       } | 📍 ${contacts[i].address} | 🎂 ${age} | 🏷️ ${
         contacts[i].tags?.join(", ") || "-"
       } | ⭐ Favorite: ${
-        contacts[i].isFavorite ? "Yes" : "No"
+        contacts[i].isFavorited ? "Yes" : "No"
       } | 🔗 LinkedIn: ${
         contacts[i].socialLinks?.linkedin || "-"
       } | 🌐 Website: ${
@@ -227,25 +229,49 @@ function showContact(contacts) {
 
 // TODO: updateContact
 
-//*delete contact
+//** delete contact
 function deleteContact(id, contacts) {
   contactsData = contacts.filter((item) => item.id !== id);
   return contactsData;
 }
 // console.log(deleteContact(2, contactsData));
 
-//**count data contacts
+//** count data contacts
 function countContacts(contacts) {
   return contacts.length;
 }
 const count = countContacts(contactsData);
-console.log(`There is ${count} contacs data.`);
+// console.log(`There is ${count} contacs data.`);
 
-// TODO: has duplicate phone
+//** has duplicate phone
+function hasDuplicatedPhone(phone, contacts) {
+  const phoneFinder = contacts.find((item) => item.phone == phone);
+  if (phoneFinder) {
+    console.log(`Phone number already in use.`);
+  }
+}
+// hasDuplicatedPhone("089241099019", contactsData);
+
 // TODO: Short Contact by Name
+function shortByName(contacts) {
+  const shortDataByName = [];
+  for (let i = 0; i < 5; i++) {
+    const j = i + 1;
+    const greaterThen = contacts[i].fullName > contacts[j].fullName;
+    console.log(greaterThen);
+    if (greaterThen) {
+      shortDataByName.push(contacts[i].fullName);
+    }
+    console.log(contacts[i].fullName);
+  }
+
+  console.log(shortDataByName);
+}
+// shortByName(contactsData);
+
 // TODO: Filter Contact by City
 
-// Show Birthdate this Month
+// ** show birthdate this month
 const monthNow = new Date().getMonth();
 function showBirthdateMonth(contacts) {
   for (let i = 0; i < contacts.length; i++) {
@@ -254,6 +280,6 @@ function showBirthdateMonth(contacts) {
     }
   }
 }
-showBirthdateMonth(contactsData);
+// showBirthdateMonth(contactsData);
 
 // TODO: Export data contacts to JSON
