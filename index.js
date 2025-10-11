@@ -1,6 +1,5 @@
 console.log("Direcbook");
 
-// id, full name, phone, email, address, birthDate, tags, isFavorited, social links, createdAt, updatedAt
 let contactsData = [
   {
     id: 1,
@@ -11,9 +10,9 @@ let contactsData = [
     birthdate: new Date(1930, 7, 30),
     tags: ["Investor", "Mentor"],
     isFavorited: true,
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/warrenbuffett",
-      website: "https://www.berkshirehathaway.com/",
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/warrenbuffett",
+      websiteUrl: "https://www.berkshirehathaway.com/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -27,9 +26,9 @@ let contactsData = [
     birthdate: new Date(1944, 7, 17),
     tags: ["Investor", "Technology"],
     isFavorited: true,
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/larryellison",
-      website: "https://www.oracle.com/",
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/larryellison",
+      websiteUrl: "https://www.oracle.com/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -43,9 +42,9 @@ let contactsData = [
     birthdate: new Date(1924, 0, 1),
     tags: ["Investor", "Philanthropist"],
     isFavorited: false,
-    socialLinks: {
-      linkedin: null,
-      website: "https://www.berkshirehathaway.com/",
+    socialMedia: {
+      linkedinUrl: null,
+      websiteUrl: "https://www.berkshirehathaway.com/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -59,9 +58,9 @@ let contactsData = [
     birthdate: new Date(1971, 5, 28),
     tags: ["Technology", "Entrepreneur", "AI"],
     isFavorited: true,
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/elonmusk",
-      website: "https://x.com/elonmusk",
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/elonmusk",
+      websiteUrl: "https://x.com/elonmusk",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -75,9 +74,9 @@ let contactsData = [
     birthdate: new Date(1964, 0, 12),
     tags: ["Investor", "Technology", "Entrepreneur"],
     isFavorited: false,
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/jeffbezos",
-      website: "https://www.amazon.com/",
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/jeffbezos",
+      websiteUrl: "https://www.amazon.com/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -91,9 +90,9 @@ let contactsData = [
     birthdate: new Date(1985, 3, 22),
     tags: ["Entrepreneur", "AI", "Investor"],
     isFavorited: false,
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/sama",
-      website: "https://openai.com/",
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/sama",
+      websiteUrl: "https://openai.com/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -107,9 +106,9 @@ let contactsData = [
     birthdate: new Date(1963, 1, 17),
     tags: ["Technology", "AI", "GPU"],
     isFavorited: true,
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/jensen-huang",
-      website: "https://www.nvidia.com/",
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/jensen-huang",
+      websiteUrl: "https://www.nvidia.com/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -123,15 +122,14 @@ let contactsData = [
     birthdate: new Date(1976, 3, 18),
     tags: ["AI", "Educator", "Entrepreneur"],
     isFavorited: true,
-    socialLinks: {
-      linkedin: "https://www.linkedin.com/in/andrewyng",
-      website: "https://www.deeplearning.ai/",
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/andrewyng",
+      websiteUrl: "https://www.deeplearning.ai/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
   },
 ];
-// console.log(contactsData);
 
 function calculateAge(yearBirthdate) {
   const currentYear = 2025;
@@ -154,13 +152,7 @@ function calculateAge(yearBirthdate) {
   }
 }
 
-const timestamp = Date.now();
-
-// CRUD
-
-//* create
 function addContact({
-  id = timestamp,
   fullName,
   phone,
   email,
@@ -172,114 +164,71 @@ function addContact({
 }) {
   const now = new Date();
 
-  return {
-    id,
-    fullName,
-    phone,
-    email,
-    address,
-    birthdate: new Date(birthdate),
-    tags,
-    isFavorited,
-    socialLinks,
-    createdAt: now,
-    updatedAt: now,
-  };
+  const id = 999999999; // TODO: Fix this
+
+  contactsData.push(contactData);
 }
 
-let newObject = addContact({
-  id: 9,
-  fullName: "Bando Mega Kusuma",
-  phone: "089241099019",
-  email: "example@email.com",
-  address: "Semarang, Jawa Tengah, Indonesia",
-  birthdate: "1999-10-24",
-  tags: ["Family", "Technology", "Investor"],
-  isFavorited: true,
-  socialLinks: {
-    linkedin: "https://www.linkedin.com/in/bando-mega-kusuma",
-    website: "https://bandomega.com",
-  },
-});
-contactsData.push(newObject);
-// console.log(contactsData);
+function showContacts(contacts) {
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    const age = calculateAge(contact.birthdate);
+    const tagsString = contact.tags?.join(", ");
 
-//* Read
-function showContact(contacts) {
-  for (let i = 0; i < contacts.length; i++) {
-    const age = calculateAge(contacts[i].birthdate);
     console.log(
-      `👤 ${contacts[i].fullName} | 📞 ${contacts[i].phone} | 📧 ${
-        contacts[i].email
-      } | 📍 ${contacts[i].address} | 🎂 ${age} | 🏷️ ${
-        contacts[i].tags?.join(", ") || "-"
+      `👤 ${contact.fullName} | 📞 ${contact.phone} | 📧 ${
+        contact.email
+      } | 📍 ${contact.address} | 🎂 ${age} | 🏷️ ${
+        tagsString || "-"
       } | ⭐ Favorite: ${
-        contacts[i].isFavorited ? "Yes" : "No"
-      } | 🔗 LinkedIn: ${
-        contacts[i].socialLinks?.linkedin || "-"
-      } | 🌐 Website: ${
-        contacts[i].socialLinks?.website || "-"
-      } | 🕒 Created: ${
-        contacts[i].createdAt?.toLocaleString() || "-"
-      } | 📝 Updated: ${contacts[i].updatedAt?.toLocaleString() || "-"}`
+        contact.isFavorited ? "Yes" : "No"
+      } | 🔗 linkedinUrl: ${
+        contact.socialLinks?.linkedin || "-"
+      } | 🌐 websiteUrl: ${contact.socialLinks?.website || "-"} | 🕒 Created: ${
+        contact.createdAt?.toLocaleString() || "-"
+      } | 📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
     );
   }
 }
-// showContact(contactsData);
 
-// TODO: updateContact
-
-//** delete contact
 function deleteContact(id, contacts) {
   contactsData = contacts.filter((item) => item.id !== id);
   return contactsData;
 }
-// console.log(deleteContact(2, contactsData));
 
-//** count data contacts
 function countContacts(contacts) {
   return contacts.length;
 }
-const count = countContacts(contactsData);
-// console.log(`There is ${count} contacs data.`);
 
-//** has duplicate phone
-function hasDuplicatedPhone(phone, contacts) {
-  const phoneFinder = contacts.find((item) => item.phone == phone);
-  if (phoneFinder) {
+function checkPhoneAlreadyUsed(phone, contacts) {
+  const contactFound = contacts.find((item) => item.phone == phone);
+  if (contactFound) {
     console.log(`Phone number already in use.`);
   }
 }
-// hasDuplicatedPhone("089241099019", contactsData);
 
-// TODO: Short Contact by Name
-function shortByName(contacts) {
-  const shortDataByName = [];
-  for (let i = 0; i < 5; i++) {
-    const j = i + 1;
-    const greaterThen = contacts[i].fullName > contacts[j].fullName;
-    console.log(greaterThen);
+function sortByName(contacts) {
+  const sortedContactsByName = [];
+  for (let index = 0; index < contacts.length; index++) {
+    const indexNext = index + 1;
+    const greaterThen = contacts[index].fullName > contacts[indexNext].fullName;
     if (greaterThen) {
-      shortDataByName.push(contacts[i].fullName);
+      sortedContactsByName.push(contacts[index].fullName);
     }
-    console.log(contacts[i].fullName);
   }
 
-  console.log(shortDataByName);
+  console.log(sortedContactsByName);
 }
-// shortByName(contactsData);
 
-// TODO: Filter Contact by City
+function showContactsBirthdayThisMonth(contacts) {
+  const thisMonthNumber = new Date().getMonth();
 
-// ** show birthdate this month
-const monthNow = new Date().getMonth();
-function showBirthdateMonth(contacts) {
-  for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i].birthdate.getMonth() == monthNow) {
-      console.log(`Happy Birth day ${contacts[i].fullName}!`);
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    if (contact.birthdate.getMonth() == thisMonthNumber) {
+      console.log(`Happy Birthday ${contact.fullName}!`);
     }
   }
 }
-// showBirthdateMonth(contactsData);
 
-// TODO: Export data contacts to JSON
+// TODO: Call the functions below
