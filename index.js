@@ -4,7 +4,7 @@ let contactsData = [
   {
     id: 1,
     fullName: "Warren Edward Buffett",
-    phone: "081454423694",
+    phone: "089241099019",
     email: "warrenbuffett@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1930, 7, 30),
@@ -49,86 +49,86 @@ let contactsData = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  // {
-  //   id: 4,
-  //   fullName: "Elon Musk",
-  //   phone: "081234567890",
-  //   email: "elon@tesla.com",
-  //   address: "Austin, Texas, USA",
-  //   birthdate: new Date(1971, 5, 28),
-  //   tags: ["Technology", "Entrepreneur", "AI"],
-  //   isFavorited: true,
-  //   socialMedia: {
-  //     linkedinUrl: "https://www.linkedin.com/in/elonmusk",
-  //     websiteUrl: "https://x.com/elonmusk",
-  //   },
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  // },
-  // {
-  //   id: 5,
-  //   fullName: "Jeff Bezos",
-  //   phone: "081298765432",
-  //   email: "jeff@amazon.com",
-  //   address: "Medina, Washington, USA",
-  //   birthdate: new Date(1964, 0, 12),
-  //   tags: ["Investor", "Technology", "Entrepreneur"],
-  //   isFavorited: false,
-  //   socialMedia: {
-  //     linkedinUrl: "https://www.linkedin.com/in/jeffbezos",
-  //     websiteUrl: "https://www.amazon.com/",
-  //   },
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  // },
-  // {
-  //   id: 6,
-  //   fullName: "Sam Altman",
-  //   phone: "081334455667",
-  //   email: "sam@openai.com",
-  //   address: "San Francisco, California, USA",
-  //   birthdate: new Date(1985, 3, 22),
-  //   tags: ["Entrepreneur", "AI", "Investor"],
-  //   isFavorited: false,
-  //   socialMedia: {
-  //     linkedinUrl: "https://www.linkedin.com/in/sama",
-  //     websiteUrl: "https://openai.com/",
-  //   },
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  // },
-  // {
-  //   id: 7,
-  //   fullName: "Jensen Huang",
-  //   phone: "081133355577",
-  //   email: "jensen@nvidia.com",
-  //   address: "Tainan, Taiwan / California, USA",
-  //   birthdate: new Date(1963, 1, 17),
-  //   tags: ["Technology", "AI", "GPU"],
-  //   isFavorited: true,
-  //   socialMedia: {
-  //     linkedinUrl: "https://www.linkedin.com/in/jensen-huang",
-  //     websiteUrl: "https://www.nvidia.com/",
-  //   },
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  // },
-  // {
-  //   id: 8,
-  //   fullName: "Andrew Ng",
-  //   phone: "081144556677",
-  //   email: "andrew@deeplearning.ai",
-  //   address: "Stanford, California, USA",
-  //   birthdate: new Date(1976, 3, 18),
-  //   tags: ["AI", "Educator", "Entrepreneur"],
-  //   isFavorited: true,
-  //   socialMedia: {
-  //     linkedinUrl: "https://www.linkedin.com/in/andrewyng",
-  //     websiteUrl: "https://www.deeplearning.ai/",
-  //   },
-  //   createdAt: new Date(),
-  //   updatedAt: new Date(),
-  // },
+  {
+    id: 4,
+    fullName: "Elon Musk",
+    phone: "081234567890",
+    email: "elon@tesla.com",
+    address: "Austin, Texas, USA",
+    birthdate: new Date(1971, 5, 28),
+    tags: ["Technology", "Entrepreneur", "AI"],
+    isFavorited: true,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/elonmusk",
+      websiteUrl: "https://x.com/elonmusk",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 5,
+    fullName: "Jeff Bezos",
+    phone: "081298765432",
+    email: "jeff@amazon.com",
+    address: "Medina, Washington, USA",
+    birthdate: new Date(1964, 0, 12),
+    tags: ["Investor", "Technology", "Entrepreneur"],
+    isFavorited: false,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/jeffbezos",
+      websiteUrl: "https://www.amazon.com/",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 6,
+    fullName: "Sam Altman",
+    phone: "081334455667",
+    email: "sam@openai.com",
+    address: "San Francisco, California, USA",
+    birthdate: new Date(1985, 3, 22),
+    tags: ["Entrepreneur", "AI", "Investor"],
+    isFavorited: false,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/sama",
+      websiteUrl: "https://openai.com/",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 7,
+    fullName: "Jensen Huang",
+    phone: "081133355577",
+    email: "jensen@nvidia.com",
+    address: "Tainan, Taiwan / California, USA",
+    birthdate: new Date(1963, 1, 17),
+    tags: ["Technology", "AI", "GPU"],
+    isFavorited: true,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/jensen-huang",
+      websiteUrl: "https://www.nvidia.com/",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 8,
+    fullName: "Andrew Ng",
+    phone: "081144556677",
+    email: "andrew@deeplearning.ai",
+    address: "Stanford, California, USA",
+    birthdate: new Date(1976, 3, 18),
+    tags: ["AI", "Educator", "Entrepreneur"],
+    isFavorited: true,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/andrewyng",
+      websiteUrl: "https://www.deeplearning.ai/",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ];
 
 function calculateAge(yearBirthdate) {
@@ -157,28 +157,28 @@ function renderSeparator() {
 }
 
 function addContact(contacts, newContactData) {
+  if (checkPhoneAlreadyUsed(newContactData?.phone, contacts)) {
+    return;
+  }
   contacts = [...contacts, newContactData];
   showContacts(contacts);
 }
-addContact(contactsData, {
-  id: 9,
-  fullName: "Bando Mega Kusuma",
-  phone: "089241099019",
-  email: "example@email.com",
-  address: "Semarang, Jawa Tengah, Indonesia",
-  birthdate: "1999-10-24",
-  tags: ["Family", "Technology", "Investor"],
-  isFavorited: true,
-  socialMedia: {
-    linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
-    websiteUrl: "https://bandomega.com",
-  },
-});
 
-function updatedContactById() {
-  const updatedContact = [...contactsData];
-  // showContact(contact);
+// TODO: Update
+function updatedContactById(id, contacts) {
+  contacts.map((item) => {
+    if (item.id == id) {
+      item = {
+        ...item,
+        fullName: "Trump",
+        phone: "0895308213",
+      };
+      contacts[id - 1] = item;
+    }
+  });
 }
+
+updatedContactById(2, contactsData);
 
 function showContacts(contacts) {
   for (let index = 0; index < contacts.length; index++) {
@@ -189,20 +189,27 @@ function showContacts(contacts) {
 }
 
 function showContact(contact) {
-  const age = calculateAge(contact.birthdate);
-  console.log(
-    `👤 ${contact.fullName} | 📞 ${contact.phone} | 📧 ${contact.email} | 📍 ${
-      contact.address
-    } | 🎂 ${age} | 🏷️ ${contact.tags?.join(", ") || "-"} | ⭐ Favorite: ${
-      contact.isFavorited ? "Yes" : "No"
-    } | 🔗 linkedinUrl: ${
-      contact.socialMedia?.linkedinUrl || "-"
-    } | 🌐 websiteUrl: ${
-      contact.socialMedia?.websiteUrl || "-"
-    } | 🕒 Created: ${
-      contact.createdAt?.toLocaleString() || "-"
-    } | 📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
-  );
+  if (contact) {
+    const age = calculateAge(contact?.birthdate);
+    const tagsString = contact.tags?.join(", ");
+    console.log(
+      `👤 ${contact.fullName} | 📞 ${contact.phone} | 📧 ${
+        contact.email
+      } | 📍 ${contact.address} | 🎂 ${age} | 🏷️ ${
+        tagsString || "-"
+      } | ⭐ Favorite: ${
+        contact.isFavorited ? "Yes" : "No"
+      } | 🔗 linkedinUrl: ${
+        contact.socialMedia?.linkedinUrl || "-"
+      } | 🌐 websiteUrl: ${
+        contact.socialMedia?.websiteUrl || "-"
+      } | 🕒 Created: ${
+        contact.createdAt?.toLocaleString() || "-"
+      } | 📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
+    );
+  } else {
+    console.log("contact not found");
+  }
 }
 
 function deleteContact(id, contacts) {
@@ -214,14 +221,17 @@ function countContacts(contacts) {
   return contacts.length;
 }
 
-function numberPhoneAlreadyUsed(phone, contacts) {
+function checkPhoneAlreadyUsed(phone, contacts) {
   const phoneNumberFound = contacts.find((item) => item.phone == phone);
   if (phoneNumberFound) {
     console.log(`Phone number already in use.`);
+    return true;
+  } else {
+    return false;
   }
 }
 
-function shortByName(contacts) {
+function sortByName(contacts) {
   const shortDataByName = [];
   for (let i = 0; i < 5; i++) {
     const j = i + 1;
@@ -236,11 +246,33 @@ function shortByName(contacts) {
   console.log(shortDataByName);
 }
 
-function showBirthdayThisMonth(contacts) {
+function showContactsBirthdayThisMonth(contacts) {
   for (let i = 0; i < contacts.length; i++) {
-    const thisMonth = new Date().getMonth();
+    const thisMonthNumber = new Date().getMonth();
+    const contact = contacts[i];
     if (contacts[i].birthdate.getMonth() == thisMonth) {
-      console.log(`Happy Birth day ${contacts[i].fullName}!`);
+      console.log(`Happy Birth day ${contact.fullName}!`);
     }
   }
 }
+
+const myName = "banDo mega kusuma";
+function titleCase(keyword) {
+  const lowerString = keyword.toLowerCase().split(" ");
+  console.log(lowerString);
+}
+// titleCase(myName);
+// addContact(contactsData, {
+//   id: 9,
+//   fullName: "Bando Mega Kusuma",
+//   phone: "0818379561242",
+//   email: "example@email.com",
+//   address: "Semarang, Jawa Tengah, Indonesia",
+//   birthdate: "1999-10-24",
+//   tags: ["Family", "Technology", "Investor"],
+//   isFavorited: true,
+//   socialMedia: {
+//     linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
+//     websiteUrl: "https://bandomega.com",
+//   },
+// });
