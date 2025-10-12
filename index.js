@@ -10,6 +10,7 @@ let contactsData = [
     birthdate: new Date(1930, 7, 30),
     tags: ["Investor", "Mentor"],
     isFavorited: true,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/warrenbuffett",
       websiteUrl: "https://www.berkshirehathaway.com/",
@@ -26,6 +27,7 @@ let contactsData = [
     birthdate: new Date(1944, 7, 17),
     tags: ["Investor", "Technology"],
     isFavorited: true,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/larryellison",
       websiteUrl: "https://www.oracle.com/",
@@ -42,6 +44,7 @@ let contactsData = [
     birthdate: new Date(1924, 0, 1),
     tags: ["Investor", "Philanthropist"],
     isFavorited: false,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: null,
       websiteUrl: "https://www.berkshirehathaway.com/",
@@ -58,6 +61,7 @@ let contactsData = [
     birthdate: new Date(1971, 5, 28),
     tags: ["Technology", "Entrepreneur", "AI"],
     isFavorited: true,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/elonmusk",
       websiteUrl: "https://x.com/elonmusk",
@@ -74,6 +78,7 @@ let contactsData = [
     birthdate: new Date(1964, 0, 12),
     tags: ["Investor", "Technology", "Entrepreneur"],
     isFavorited: false,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/jeffbezos",
       websiteUrl: "https://www.amazon.com/",
@@ -90,6 +95,7 @@ let contactsData = [
     birthdate: new Date(1985, 3, 22),
     tags: ["Entrepreneur", "AI", "Investor"],
     isFavorited: false,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/sama",
       websiteUrl: "https://openai.com/",
@@ -106,6 +112,7 @@ let contactsData = [
     birthdate: new Date(1963, 1, 17),
     tags: ["Technology", "AI", "GPU"],
     isFavorited: true,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/jensen-huang",
       websiteUrl: "https://www.nvidia.com/",
@@ -122,6 +129,7 @@ let contactsData = [
     birthdate: new Date(1976, 3, 18),
     tags: ["AI", "Educator", "Entrepreneur"],
     isFavorited: true,
+    isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/andrewyng",
       websiteUrl: "https://www.deeplearning.ai/",
@@ -164,21 +172,38 @@ function addContact(contacts, newContactData) {
   showContacts(contacts);
 }
 
-// TODO: Update
-function updatedContactById(id, contacts) {
+function updatedContactById(
+  id,
+  contacts,
+  {
+    fullName,
+    phone,
+    email,
+    address,
+    birthdate,
+    tags,
+    isFavorited,
+    isDeleted,
+  } = {}
+) {
   contacts.map((item) => {
     if (item.id == id) {
       item = {
         ...item,
-        fullName: "Trump",
-        phone: "0895308213",
+        ...(fullName && { fullName }),
+        ...(phone && { phone }),
+        ...(email && { email }),
+        ...(address && { address }),
+        ...(birthdate && { birthdate }),
+        ...(tags && { tags }),
+        ...(isFavorited && { isFavorited }),
+        ...(isDeleted && { isDeleted }),
+        updatedAt: new Date(),
       };
       contacts[id - 1] = item;
     }
   });
 }
-
-updatedContactById(2, contactsData);
 
 function showContacts(contacts) {
   for (let index = 0; index < contacts.length; index++) {
@@ -271,8 +296,28 @@ function titleCase(keyword) {
 //   birthdate: "1999-10-24",
 //   tags: ["Family", "Technology", "Investor"],
 //   isFavorited: true,
+//  isDeleted: false
 //   socialMedia: {
 //     linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
 //     websiteUrl: "https://bandomega.com",
 //   },
 // });
+
+// showContact(contactsData[1]);
+// renderSeparator();
+// updatedContactById(2, contactsData, {
+//   fullName: "Toto Sugiri",
+//   phone: "089667241563",
+//   email: "totosugiri@dciservice.com",
+//   address: "Bekasi Regency, Jawa Barat, Indonesia ",
+//   birthdate: new Date(1953, 8, 23),
+//   tags: ["DCI ", "Data Engineer"],
+//   isFavorited: true,
+//   isDeleted: false,
+//   socialMedia: {
+//     linkedinUrl: "https://www.linkedin.com/in/otto-toto-sugiri",
+//     websiteUrl: "https://www.instagram.com/dciindonesia",
+//   },
+//   updatedAt: new Date(),
+// });
+// showContact(contactsData[1]);
