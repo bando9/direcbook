@@ -137,6 +137,23 @@ let contactsData = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    id: 9,
+    fullName: "Howard Graham Buffett",
+    phone: "0898748734",
+    email: "howardbuffett@bhhsservice.com",
+    address: "Omaha, Nebraska, USA",
+    birthdate: new Date(1954, 11, 16),
+    tags: ["Investor", "Businuss"],
+    isFavorited: false,
+    isDeleted: false,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/howardbuffett",
+      websiteUrl: "https://www.berkshirehathaway.com/",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ];
 
 function calculateAge(yearBirthdate) {
@@ -242,6 +259,22 @@ function deleteContact(id, contacts) {
   return contactsData;
 }
 
+function searchContactById(id, contacts) {
+  const contact = contacts[id - 1];
+  showContact(contact);
+}
+
+function searchContactByName(name, contacts) {
+  contacts.map((item) => {
+    const sameString = item.fullName.toLowerCase().includes(name.toLowerCase());
+    if (sameString) {
+      showContact(item);
+      renderSeparator();
+    }
+  });
+}
+searchContactByName("BuFFet", contactsData);
+
 function countContacts(contacts) {
   return contacts.length;
 }
@@ -256,26 +289,11 @@ function checkPhoneAlreadyUsed(phone, contacts) {
   }
 }
 
-function sortByName(contacts) {
-  const shortDataByName = [];
-  for (let i = 0; i < 5; i++) {
-    const j = i + 1;
-    const greaterThen = contacts[i].fullName > contacts[j].fullName;
-    console.log(greaterThen);
-    if (greaterThen) {
-      shortDataByName.push(contacts[i].fullName);
-    }
-    console.log(contacts[i].fullName);
-  }
-
-  console.log(shortDataByName);
-}
-
 function showContactsBirthdayThisMonth(contacts) {
-  for (let i = 0; i < contacts.length; i++) {
+  for (let index = 0; index < contacts.length; index++) {
     const thisMonthNumber = new Date().getMonth();
-    const contact = contacts[i];
-    if (contacts[i].birthdate.getMonth() == thisMonth) {
+    const contact = contact[index];
+    if (contacts[index].birthdate.getMonth() == thisMonthNumber) {
       console.log(`Happy Birth day ${contact.fullName}!`);
     }
   }
@@ -286,6 +304,9 @@ function titleCase(keyword) {
   const lowerString = keyword.toLowerCase().split(" ");
   console.log(lowerString);
 }
+
+// Run function
+
 // titleCase(myName);
 // addContact(contactsData, {
 //   id: 9,
