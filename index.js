@@ -4,7 +4,7 @@ let contactsData = [
   {
     id: 1,
     fullName: "Warren Edward Buffett",
-    phone: "089241099019",
+    phone: "+189241099019",
     email: "warrenbuffett@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1930, 7, 30),
@@ -21,7 +21,7 @@ let contactsData = [
   {
     id: 2,
     fullName: "Larry Ellison",
-    phone: "081006330738",
+    phone: "+181006330738",
     email: "lefoundation@outlook.com",
     address: "The Bronx, New York City, USA",
     birthdate: new Date(1944, 7, 17),
@@ -38,7 +38,7 @@ let contactsData = [
   {
     id: 3,
     fullName: "Charles Thomas Munger",
-    phone: "081837956124",
+    phone: "+181837956124",
     email: "charliemunger@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1924, 0, 1),
@@ -55,7 +55,7 @@ let contactsData = [
   {
     id: 4,
     fullName: "Elon Musk",
-    phone: "081234567890",
+    phone: "+181234567890",
     email: "elon@tesla.com",
     address: "Austin, Texas, USA",
     birthdate: new Date(1971, 5, 28),
@@ -185,16 +185,18 @@ function addContact(contacts, newContactData) {
   if (checkPhoneAlreadyUsed(newContactData?.phone, contacts)) {
     return;
   }
-  const newId = contacts.length + 1;
-  newContactData = {
+  const newId = contacts[contacts.length - 1].id + 1;
+  const newContact = {
     id: newId,
     ...newContactData,
   };
 
-  showContact(newContactData);
+  contactsData = [...contactsData, newContact];
+
+  showContact(newContact);
 }
 
-function updatedContactById(
+function updateContactById(
   id,
   contacts,
   {
@@ -208,21 +210,21 @@ function updatedContactById(
     isDeleted,
   } = {}
 ) {
-  contacts.map((item) => {
-    if (item.id == id) {
-      item = {
-        ...item,
-        ...(fullName && { fullName }),
-        ...(phone && { phone }),
-        ...(email && { email }),
-        ...(address && { address }),
-        ...(birthdate && { birthdate }),
-        ...(tags && { tags }),
-        ...(isFavorited && { isFavorited }),
-        ...(isDeleted && { isDeleted }),
+  contacts.map((contact) => {
+    if (contact.id === id) {
+      const updatedContact = {
+        ...contact,
+        fullName,
+        phone,
+        email,
+        address,
+        birthdate,
+        tags,
+        isFavorited,
+        isDeleted,
         updatedAt: new Date(),
       };
-      contacts[id - 1] = item;
+      return updatedContact;
     }
   });
 }
@@ -244,13 +246,9 @@ function showContact(contact) {
         contact.email
       } | 📍 ${contact.address} | 🎂 ${age} | 🏷️ ${
         tagsString || "-"
-      } | ⭐ Favorite: ${
-        contact.isFavorited ? "Yes" : "No"
-      } | 🔗 linkedinUrl: ${
+      } | ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"} | 🔗 LinkedIn: ${
         contact.socialMedia?.linkedinUrl || "-"
-      } | 🌐 websiteUrl: ${
-        contact.socialMedia?.websiteUrl || "-"
-      } | 🕒 Created: ${
+      } | 🌐 Website: ${contact.socialMedia?.websiteUrl || "-"} | 🕒 Created: ${
         contact.createdAt?.toLocaleString() || "-"
       } | 📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
     );
@@ -259,24 +257,18 @@ function showContact(contact) {
   }
 }
 
-function deleteContact(id, contacts) {
+function deleteContactById(id, contacts) {
   contactsData = contacts.filter((item) => item.id !== id);
   return contactsData;
 }
 
-function searchContactById(id, contacts) {
-  const contact = contacts[id - 1];
+function getContactById(id, contacts) {
+  const contact = contacts.find((contact) => contact.id === id);
   showContact(contact);
 }
 
 function searchContactByName(name, contacts) {
-  contacts.map((item) => {
-    const sameString = item.fullName.toLowerCase().includes(name.toLowerCase());
-    if (sameString) {
-      showContact(item);
-      renderSeparator();
-    }
-  });
+  // TODO: Use filter
 }
 
 function countContacts(contacts) {
@@ -303,13 +295,14 @@ function showContactsBirthdayThisMonth(contacts) {
   }
 }
 
-const myName = "banDo mega kusuma";
 function titleCase(keyword) {
   const lowerString = keyword.toLowerCase().split(" ");
   console.log(lowerString);
 }
 
+// -------------------------------------------------------
 // Run function
+// -------------------------------------------------------
 
 addContact(contactsData, {
   fullName: "Bando Mega Kusuma",
