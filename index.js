@@ -185,8 +185,13 @@ function addContact(contacts, newContactData) {
   if (checkPhoneAlreadyUsed(newContactData?.phone, contacts)) {
     return;
   }
-  contacts = [...contacts, newContactData];
-  showContacts(contacts);
+  const newId = contacts.length + 1;
+  newContactData = {
+    id: newId,
+    ...newContactData,
+  };
+
+  showContact(newContactData);
 }
 
 function updatedContactById(
@@ -273,7 +278,6 @@ function searchContactByName(name, contacts) {
     }
   });
 }
-searchContactByName("BuFFet", contactsData);
 
 function countContacts(contacts) {
   return contacts.length;
@@ -307,22 +311,20 @@ function titleCase(keyword) {
 
 // Run function
 
-// titleCase(myName);
-// addContact(contactsData, {
-//   id: 9,
-//   fullName: "Bando Mega Kusuma",
-//   phone: "0818379561242",
-//   email: "example@email.com",
-//   address: "Semarang, Jawa Tengah, Indonesia",
-//   birthdate: "1999-10-24",
-//   tags: ["Family", "Technology", "Investor"],
-//   isFavorited: true,
-//  isDeleted: false
-//   socialMedia: {
-//     linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
-//     websiteUrl: "https://bandomega.com",
-//   },
-// });
+addContact(contactsData, {
+  fullName: "Bando Mega Kusuma",
+  phone: "0818379561242",
+  email: "example@email.com",
+  address: "Semarang, Jawa Tengah, Indonesia",
+  birthdate: "1999-10-24",
+  tags: ["Family", "Technology", "Investor"],
+  isFavorited: true,
+  isDeleted: false,
+  socialMedia: {
+    linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
+    websiteUrl: "https://bandomega.com",
+  },
+});
 
 // showContact(contactsData[1]);
 // renderSeparator();
