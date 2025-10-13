@@ -181,14 +181,35 @@ function renderSeparator() {
   console.log("============================");
 }
 
-function addContact(contacts, newContactData) {
+function addContact(
+  contacts,
+  {
+    fullName = "Full Name",
+    phone = null,
+    email = null,
+    address = null,
+    birthdate = null,
+    tags = null,
+    isFavorited = false,
+    isDeleted = false,
+  }
+) {
   if (checkPhoneAlreadyUsed(newContactData?.phone, contacts)) {
     return;
   }
   const newId = contacts[contacts.length - 1].id + 1;
   const newContact = {
     id: newId,
-    ...newContactData,
+    fullName,
+    phone,
+    email,
+    address,
+    birthdate,
+    tags,
+    isFavorited,
+    isDeleted,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
   contactsData = [...contactsData, newContact];
@@ -200,15 +221,15 @@ function updateContactById(
   id,
   contacts,
   {
-    fullName,
-    phone,
-    email,
-    address,
-    birthdate,
-    tags,
-    isFavorited,
-    isDeleted,
-  } = {}
+    fullName = "Full Name",
+    phone = null,
+    email = null,
+    address = null,
+    birthdate = null,
+    tags = null,
+    isFavorited = false,
+    isDeleted = false,
+  }
 ) {
   contacts.map((contact) => {
     if (contact.id === id) {
