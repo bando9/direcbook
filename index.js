@@ -234,23 +234,24 @@ function updateContactById(
     tags,
     isFavorited,
     isDeleted,
-  } = {}
+    updatedAt = new Date(),
+  }
 ) {
   contacts.map((contact) => {
-    if (contact.id == id) {
+    if (contact.id === id) {
       const updatedContact = {
         ...contact,
-        fullName,
-        phone,
-        email,
-        address,
-        birthdate,
-        tags,
-        isFavorited,
-        isDeleted,
-        updatedAt: new Date(),
+        fullName: fullName ?? contact.fullName,
+        phone: phone ?? phone,
+        email: email ?? email,
+        address: address ?? address,
+        birthdate: birthdate ?? birthdate,
+        tags: tags ?? tags,
+        isFavorited: isFavorited ?? isFavorited,
+        isDeleted: isDeleted ?? isDeleted,
+        updatedAt,
       };
-      return updatedContact;
+      console.log(updatedContact);
     }
   });
 }
@@ -286,12 +287,13 @@ function deleteContactById(id, contacts) {
 }
 
 function getContactById(id, contacts) {
-  const contact = contacts.find((contact) => contact.id === id);
-  showContact(contact);
+  return contacts.find((contact) => contact.id === id);
 }
 
-function searchContactByName(name, contacts) {
-  // TODO: use filter
+function searchContactByName(keyword, contacts) {
+  return contacts.filter((contact) =>
+    contact.fullName.toLowerCase().includes(keyword.toLowerCase())
+  );
 }
 
 function countContacts(contacts) {
@@ -322,18 +324,17 @@ function showContactsBirthdayThisMonth(contacts) {
 // Run function
 // ---------------------------------------------------------------------
 
-addContact(contactsData, {
-  fullName: "Bando Mega Kusuma",
-  phone: "+18924109909",
-  address: "Semarang, Jawa Tengah, Indonesia",
-  birthdate: "1999-10-24",
-  socialMedia: {
-    linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
-    websiteUrl: "https://bandomega.com",
-  },
-});
+// addContact(contactsData, {
+//   fullName: "Bando Mega Kusuma",
+//   phone: "+18924109909",
+//   address: "Semarang, Jawa Tengah, Indonesia",
+//   birthdate: "1999-10-24",
+//   socialMedia: {
+//     linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
+//   },
+// });
 
-showContacts(contactsData);
+// showContacts(contactsData);
 
 // renderSeparator();
 // updateContactById(2, contactsData, {
@@ -346,10 +347,8 @@ showContacts(contactsData);
 //   isFavorited: true,
 //   isDeleted: false,
 //   socialMedia: {
-//     linkedinUrl: "https://www.linkedin.com/in/otto-toto-sugiri",
 //     websiteUrl: "https://www.instagram.com/dciindonesia",
 //   },
-//   updatedAt: new Date(),
 // });
 // showContact(contactsData[1]);
 
@@ -358,37 +357,37 @@ showContacts(contactsData);
 // let dataContacts = [
 //   {
 //     id: 1,
-//     fullName: "fullName example",
-//     phone: "+6289242",
-//     email: "email@example.com",
+//     fullName: "Haidar",
+//     phone: "+628949385",
+//     labels: ["a", "3"],
+//     updatedAt: new Date(),
 //   },
 //   {
 //     id: 40,
-//     fullName: "example fullName",
-//     phone: "+19028293",
-//     email: "example@email.com",
+//     fullName: "Bando",
+//     phone: "+628943095",
+//     labels: ["r", "t"],
+//     updatedAt: new Date(),
 //   },
 // ];
 
-// function addContact(
+// function editContact(
+//   id,
 //   contacts,
-//   { fullName = "No Name", phone = null, email = null }
+//   { fullName, phone, labels, updatedAt = new Date() }
 // ) {
-//   const newId = contacts[contacts.length - 1].id + 1;
-
-//   const newContact = {
-//     id: newId,
-//     fullName: fullName,
-//     phone: phone,
-//     email: email,
-//   };
-
-//   const updatedContacts = [...contacts, newContact];
-
-//   dataContacts = updatedContacts;
+//   contacts.map((contact) => {
+//     if (contact.id === id) {
+//       contact.fullName = fullName ?? contact.fullName;
+//       contact.phone = phone ?? contact.phone;
+//       contact.labels = labels ?? contact.labels;
+//       updatedAt;
+//     }
+//   });
 // }
-
-// showContacts(dataContacts);
-// renderSeparator();
-// addContact(dataContacts, { phone: "+78724", fullName: "dkjend" });
-// showContacts(dataContacts);
+// editContact(1, dataContacts, { fullName: "Hanif" });
+// editContact(40, dataContacts, {
+//   phone: "+628967729138924",
+//   labels: ["gr", "pd"],
+// });
+// console.log(dataContacts);
