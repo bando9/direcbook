@@ -4,7 +4,7 @@ let contactsData = [
   {
     id: 1,
     fullName: "Warren Edward Buffett",
-    phone: "089241099019",
+    phone: "+189241099019",
     email: "warrenbuffett@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1930, 7, 30),
@@ -21,7 +21,7 @@ let contactsData = [
   {
     id: 2,
     fullName: "Larry Ellison",
-    phone: "081006330738",
+    phone: "+181006330738",
     email: "lefoundation@outlook.com",
     address: "The Bronx, New York City, USA",
     birthdate: new Date(1944, 7, 17),
@@ -38,7 +38,7 @@ let contactsData = [
   {
     id: 3,
     fullName: "Charles Thomas Munger",
-    phone: "081837956124",
+    phone: "+181837956124",
     email: "charliemunger@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1924, 0, 1),
@@ -55,7 +55,7 @@ let contactsData = [
   {
     id: 4,
     fullName: "Elon Musk",
-    phone: "081234567890",
+    phone: "+181234567890",
     email: "elon@tesla.com",
     address: "Austin, Texas, USA",
     birthdate: new Date(1971, 5, 28),
@@ -72,7 +72,7 @@ let contactsData = [
   {
     id: 5,
     fullName: "Jeff Bezos",
-    phone: "081298765432",
+    phone: "+181298765432",
     email: "jeff@amazon.com",
     address: "Medina, Washington, USA",
     birthdate: new Date(1964, 0, 12),
@@ -89,7 +89,7 @@ let contactsData = [
   {
     id: 6,
     fullName: "Sam Altman",
-    phone: "081334455667",
+    phone: "+181334455667",
     email: "sam@openai.com",
     address: "San Francisco, California, USA",
     birthdate: new Date(1985, 3, 22),
@@ -106,7 +106,7 @@ let contactsData = [
   {
     id: 7,
     fullName: "Jensen Huang",
-    phone: "081133355577",
+    phone: "+181133355577",
     email: "jensen@nvidia.com",
     address: "Tainan, Taiwan / California, USA",
     birthdate: new Date(1963, 1, 17),
@@ -123,7 +123,7 @@ let contactsData = [
   {
     id: 8,
     fullName: "Andrew Ng",
-    phone: "081144556677",
+    phone: "+181144556677",
     email: "andrew@deeplearning.ai",
     address: "Stanford, California, USA",
     birthdate: new Date(1976, 3, 18),
@@ -140,7 +140,7 @@ let contactsData = [
   {
     id: 9,
     fullName: "Howard Graham Buffett",
-    phone: "0898748734",
+    phone: "+1898748734",
     email: "howardbuffett@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1954, 11, 16),
@@ -181,20 +181,48 @@ function renderSeparator() {
   console.log("============================");
 }
 
-function addContact(contacts, newContactData) {
-  if (checkPhoneAlreadyUsed(newContactData?.phone, contacts)) {
+function addContact(
+  contacts,
+  {
+    fullName = "Unknown",
+    phone = null,
+    email = null,
+    address = null,
+    birthdate = null,
+    tags = null,
+    isFavorited = false,
+    isDeleted = false,
+    socialMedia: { linkedinUrl = null, websiteUrl = null },
+    createdAt = new Date(),
+    updatedAt = new Date(),
+  }
+) {
+  if (checkPhoneAlreadyUsed(phone, contacts)) {
     return;
   }
-  const newId = contacts.length + 1;
-  newContactData = {
+
+  const newId = contacts[contacts.length - 1].id + 1;
+
+  const newContact = {
     id: newId,
-    ...newContactData,
+    fullName,
+    phone,
+    email,
+    address,
+    birthdate,
+    tags,
+    isFavorited,
+    isDeleted,
+    socialMedia: { linkedinUrl, websiteUrl },
+    createdAt,
+    updatedAt,
   };
 
-  showContact(newContactData);
+  const updatedContacts = [...contacts, newContact];
+  contactsData = updatedContacts;
 }
 
-function updatedContactById(
+function updateContactById(
   id,
   contacts,
   {
@@ -208,31 +236,27 @@ function updatedContactById(
     isDeleted,
   } = {}
 ) {
-  contacts.map((item) => {
-    if (item.id == id) {
-      item = {
-        ...item,
-        ...(fullName && { fullName }),
-        ...(phone && { phone }),
-        ...(email && { email }),
-        ...(address && { address }),
-        ...(birthdate && { birthdate }),
-        ...(tags && { tags }),
-        ...(isFavorited && { isFavorited }),
-        ...(isDeleted && { isDeleted }),
+  contacts.map((contact) => {
+    if (contact.id == id) {
+      const updatedContact = {
+        ...contact,
+        fullName,
+        phone,
+        email,
+        address,
+        birthdate,
+        tags,
+        isFavorited,
+        isDeleted,
         updatedAt: new Date(),
       };
-      contacts[id - 1] = item;
+      return updatedContact;
     }
   });
 }
 
 function showContacts(contacts) {
-  for (let index = 0; index < contacts.length; index++) {
-    const contact = contacts[index];
-    renderSeparator();
-    showContact(contact);
-  }
+  contacts.forEach((contact) => showContact(contact));
 }
 
 function showContact(contact) {
@@ -241,42 +265,33 @@ function showContact(contact) {
     const tagsString = contact.tags?.join(", ");
     console.log(
       `👤 ${contact.fullName} | 📞 ${contact.phone} | 📧 ${
-        contact.email
+        contact?.email || "-"
       } | 📍 ${contact.address} | 🎂 ${age} | 🏷️ ${
         tagsString || "-"
-      } | ⭐ Favorite: ${
-        contact.isFavorited ? "Yes" : "No"
-      } | 🔗 linkedinUrl: ${
+      } | ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"} | 🔗 LinkedIn: ${
         contact.socialMedia?.linkedinUrl || "-"
-      } | 🌐 websiteUrl: ${
-        contact.socialMedia?.websiteUrl || "-"
-      } | 🕒 Created: ${
+      } | 🌐 Website: ${contact.socialMedia?.websiteUrl || "-"} | 🕒 Created: ${
         contact.createdAt?.toLocaleString() || "-"
       } | 📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
     );
+    renderSeparator();
   } else {
     console.log("contact not found");
   }
 }
 
-function deleteContact(id, contacts) {
-  contactsData = contacts.filter((item) => item.id !== id);
-  return contactsData;
+function deleteContactById(id, contacts) {
+  contacts = contacts.filter((item) => item.id !== id);
+  return contacts;
 }
 
-function searchContactById(id, contacts) {
-  const contact = contacts[id - 1];
+function getContactById(id, contacts) {
+  const contact = contacts.find((contact) => contact.id === id);
   showContact(contact);
 }
 
 function searchContactByName(name, contacts) {
-  contacts.map((item) => {
-    const sameString = item.fullName.toLowerCase().includes(name.toLowerCase());
-    if (sameString) {
-      showContact(item);
-      renderSeparator();
-    }
-  });
+  // TODO: use filter
 }
 
 function countContacts(contacts) {
@@ -303,32 +318,25 @@ function showContactsBirthdayThisMonth(contacts) {
   }
 }
 
-const myName = "banDo mega kusuma";
-function titleCase(keyword) {
-  const lowerString = keyword.toLowerCase().split(" ");
-  console.log(lowerString);
-}
-
+// ---------------------------------------------------------------------
 // Run function
+// ---------------------------------------------------------------------
 
 addContact(contactsData, {
   fullName: "Bando Mega Kusuma",
-  phone: "0818379561242",
-  email: "example@email.com",
+  phone: "+18924109909",
   address: "Semarang, Jawa Tengah, Indonesia",
   birthdate: "1999-10-24",
-  tags: ["Family", "Technology", "Investor"],
-  isFavorited: true,
-  isDeleted: false,
   socialMedia: {
     linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
     websiteUrl: "https://bandomega.com",
   },
 });
 
-// showContact(contactsData[1]);
+showContacts(contactsData);
+
 // renderSeparator();
-// updatedContactById(2, contactsData, {
+// updateContactById(2, contactsData, {
 //   fullName: "Toto Sugiri",
 //   phone: "089667241563",
 //   email: "totosugiri@dciservice.com",
@@ -344,3 +352,43 @@ addContact(contactsData, {
 //   updatedAt: new Date(),
 // });
 // showContact(contactsData[1]);
+
+// deleteContactById(4, contactsData);
+
+// let dataContacts = [
+//   {
+//     id: 1,
+//     fullName: "fullName example",
+//     phone: "+6289242",
+//     email: "email@example.com",
+//   },
+//   {
+//     id: 40,
+//     fullName: "example fullName",
+//     phone: "+19028293",
+//     email: "example@email.com",
+//   },
+// ];
+
+// function addContact(
+//   contacts,
+//   { fullName = "No Name", phone = null, email = null }
+// ) {
+//   const newId = contacts[contacts.length - 1].id + 1;
+
+//   const newContact = {
+//     id: newId,
+//     fullName: fullName,
+//     phone: phone,
+//     email: email,
+//   };
+
+//   const updatedContacts = [...contacts, newContact];
+
+//   dataContacts = updatedContacts;
+// }
+
+// showContacts(dataContacts);
+// renderSeparator();
+// addContact(dataContacts, { phone: "+78724", fullName: "dkjend" });
+// showContacts(dataContacts);
