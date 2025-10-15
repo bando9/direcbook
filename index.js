@@ -231,29 +231,33 @@ function updateContactById(
     email,
     address,
     birthdate,
-    tags,
     isFavorited,
     isDeleted,
     updatedAt = new Date(),
   }
 ) {
-  contacts.map((contact) => {
+  const contact = contacts.find((contact) => contact.id === id);
+  // console.log(contact);
+
+  const updatedContact = {
+    ...contact,
+    fullName: fullName ?? contact.fullName,
+    phone: phone ?? contact.phone,
+    email: email ?? contact.email,
+    address: address ?? contact.address,
+    birthdate: birthdate ?? contact.birthdate,
+    isFavorited: isFavorited ?? contact.isFavorited,
+    isDeleted: isDeleted ?? contact.isDeleted,
+    updatedAt,
+  };
+  const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
-      const updatedContact = {
-        ...contact,
-        fullName: fullName ?? contact.fullName,
-        phone: phone ?? phone,
-        email: email ?? email,
-        address: address ?? address,
-        birthdate: birthdate ?? birthdate,
-        tags: tags ?? tags,
-        isFavorited: isFavorited ?? isFavorited,
-        isDeleted: isDeleted ?? isDeleted,
-        updatedAt,
-      };
-      console.log(updatedContact);
+      return updatedContact;
     }
+    return contact;
   });
+  console.log(updatedContacts);
+  return (contacts = updatedContacts);
 }
 
 function showContacts(contacts) {
@@ -324,6 +328,7 @@ function showContactsBirthdayThisMonth(contacts) {
 // Run function
 // ---------------------------------------------------------------------
 
+// ========= RUN addContact =========
 // addContact(contactsData, {
 //   fullName: "Bando Mega Kusuma",
 //   phone: "+18924109909",
@@ -334,10 +339,8 @@ function showContactsBirthdayThisMonth(contacts) {
 //   },
 // });
 
-// showContacts(contactsData);
-
-// renderSeparator();
-// updateContactById(2, contactsData, {
+// ========= RUN UPDATEDCONTACTBYID =========
+// updateContactById(8, contactsData, {
 //   fullName: "Toto Sugiri",
 //   phone: "089667241563",
 //   email: "totosugiri@dciservice.com",
@@ -350,44 +353,17 @@ function showContactsBirthdayThisMonth(contacts) {
 //     websiteUrl: "https://www.instagram.com/dciindonesia",
 //   },
 // });
+
+// ========= RUN showContacts =========
+// showContacts(contactsData);
+
+// ========= RUN showContact =========
 // showContact(contactsData[1]);
 
-// deleteContactById(4, contactsData);
+// ========= RUN deleteContactById =========
+deleteContactById(2, contactsData);
 
-// let dataContacts = [
-//   {
-//     id: 1,
-//     fullName: "Haidar",
-//     phone: "+628949385",
-//     labels: ["a", "3"],
-//     updatedAt: new Date(),
-//   },
-//   {
-//     id: 40,
-//     fullName: "Bando",
-//     phone: "+628943095",
-//     labels: ["r", "t"],
-//     updatedAt: new Date(),
-//   },
-// ];
+// ========= RUN getContactById =========
+getContactById(2, contactsData);
 
-// function editContact(
-//   id,
-//   contacts,
-//   { fullName, phone, labels, updatedAt = new Date() }
-// ) {
-//   contacts.map((contact) => {
-//     if (contact.id === id) {
-//       contact.fullName = fullName ?? contact.fullName;
-//       contact.phone = phone ?? contact.phone;
-//       contact.labels = labels ?? contact.labels;
-//       updatedAt;
-//     }
-//   });
-// }
-// editContact(1, dataContacts, { fullName: "Hanif" });
-// editContact(40, dataContacts, {
-//   phone: "+628967729138924",
-//   labels: ["gr", "pd"],
-// });
-// console.log(dataContacts);
+// ========= RUN deleteContactById =========
