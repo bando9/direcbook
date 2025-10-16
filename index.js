@@ -361,9 +361,9 @@ function showContactsBirthdayThisMonth(contacts) {
 // showContact(contactsData[1]);
 
 // ========= RUN deleteContactById =========
-deleteContactById(2, contactsData);
+// deleteContactById(2, contactsData);
 
 // ========= RUN getContactById =========
-getContactById(2, contactsData);
+// getContactById(2, contactsData);
 
 // ========= RUN deleteContactById =========
