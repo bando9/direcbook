@@ -257,7 +257,7 @@ function updateContactById(
     return contact;
   });
   console.log(updatedContacts);
-  return (contacts = updatedContacts);
+  return (contactsData = updatedContacts);
 }
 
 function showContacts(contacts) {
@@ -324,6 +324,37 @@ function showContactsBirthdayThisMonth(contacts) {
   }
 }
 
+function saveData(contacts) {
+  const stringifyContactsData = JSON.stringify(contacts);
+  const savedData = localStorage.setItem(
+    "contacts-data",
+    stringifyContactsData
+  );
+  return savedData;
+}
+
+function loadData(contacts) {
+  const loadedData = localStorage.getItem("contacts-data");
+  const parseInt = JSON.parse(loadedData);
+  console.log(parseInt);
+}
+
+function getFullNameToAPI(id) {
+  const contact = dataContacts.find((contact) => contact.id == id);
+  return contact.name.split(" ").join("+");
+}
+
+const api = `https://ui-avatars.com/api/?name=${getFullNameToAPI(3)}`;
+const getDataAPI = async () => {
+  try {
+    const response = await fetch(api);
+    const data = await response.json();
+    console.log(data);
+  } catch (err) {
+    console.error("errors: ", err);
+  }
+};
+
 // ---------------------------------------------------------------------
 // Run function
 // ---------------------------------------------------------------------
@@ -366,4 +397,8 @@ function showContactsBirthdayThisMonth(contacts) {
 // ========= RUN getContactById =========
 // getContactById(2, contactsData);
 
-// ========= RUN deleteContactById =========
+// ========= RUN savedData =========
+// saveData(contactsData);
+
+// ========= RUN loadData =========
+// loadData(contactsData);
