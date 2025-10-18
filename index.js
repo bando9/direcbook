@@ -256,11 +256,11 @@ function updateContactById(
     fullName,
     phone,
     email,
-    address,
     birthdate,
     isFavorited,
     isDeleted,
     updatedAt,
+    socialMedia: { linkedinUrl, websiteUrl },
   }
 ) {
   const updatedContacts = contacts.map((contact) => {
@@ -274,6 +274,10 @@ function updateContactById(
         birthdate: birthdate ?? contact.birthdate,
         isFavorited: isFavorited ?? contact.isFavorited,
         isDeleted: isDeleted ?? contact.isDeleted,
+        socialMedia: {
+          linkedinUrl: linkedinUrl ?? contact.socialMedia.linkedinUrl,
+          websiteUrl: websiteUrl ?? contact.socialMedia.websiteUrl,
+        },
         updatedAt: new Date(),
       };
 
@@ -284,6 +288,14 @@ function updateContactById(
   });
 
   contactsData = updatedContacts;
+}
+
+function addTag(contacts, id, newTag = "Example") {
+  // TODO: Add new tag into existing tags
+}
+
+function removeTag(contacts, id, tagToRemove = "Example") {
+  // TODO: Add new tag into existing tags
 }
 
 function deleteContactById(id, contacts) {
