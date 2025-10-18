@@ -156,6 +156,31 @@ let contactsData = [
   },
 ];
 
+function showContacts(contacts) {
+  contacts.forEach((contact) => showContact(contact));
+}
+
+function showContact(contact) {
+  const age = calculateAge(contact?.birthdate);
+  const tagsString = contact.tags?.join(", ");
+
+  console.log(
+    `👤 ${contact.fullName}
+    📞 ${contact.phone}
+    📧 ${contact?.email || "-"}
+    📍 ${contact.address}
+    🎂 ${age || "-"}
+    🏷️ ${tagsString || "-"}
+    ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"}
+    🔗 LinkedIn: ${contact.socialMedia?.linkedinUrl || "-"}
+    🌐 Website: ${contact.socialMedia?.websiteUrl || "-"}
+    🕒 Created: ${contact.createdAt?.toLocaleString() || "-"}
+    📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
+  );
+
+  renderSeparator();
+}
+
 function calculateAge(yearBirthdate) {
   const currentYear = 2025;
 
@@ -175,6 +200,8 @@ function calculateAge(yearBirthdate) {
     const age = currentYear - getYearDate;
     return age;
   }
+
+  return null;
 }
 
 function renderSeparator() {
@@ -233,67 +260,47 @@ function updateContactById(
     birthdate,
     isFavorited,
     isDeleted,
-    updatedAt = new Date(),
+    updatedAt,
   }
 ) {
-  const contact = contacts.find((contact) => contact.id === id);
-
-  const updatedContact = {
-    ...contact,
-    fullName: fullName ?? contact.fullName,
-    phone: phone ?? contact.phone,
-    email: email ?? contact.email,
-    address: address ?? contact.address,
-    birthdate: birthdate ?? contact.birthdate,
-    isFavorited: isFavorited ?? contact.isFavorited,
-    isDeleted: isDeleted ?? contact.isDeleted,
-    updatedAt,
-  };
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
+      const updatedContact = {
+        ...contact,
+        fullName: fullName ?? contact.fullName,
+        phone: phone ?? contact.phone,
+        email: email ?? contact.email,
+        address: address ?? contact.address,
+        birthdate: birthdate ?? contact.birthdate,
+        isFavorited: isFavorited ?? contact.isFavorited,
+        isDeleted: isDeleted ?? contact.isDeleted,
+        updatedAt: new Date(),
+      };
+
       return updatedContact;
+    } else {
+      return contact;
     }
-    return contact;
   });
-  console.log(updatedContacts);
-  return (contactsData = updatedContacts);
-}
 
-function showContacts(contacts) {
-  contacts.forEach((contact) => showContact(contact));
-}
-
-function showContact(contact) {
-  if (contact) {
-    const age = calculateAge(contact?.birthdate);
-    const tagsString = contact.tags?.join(", ");
-    console.log(
-      `👤 ${contact.fullName} | 📞 ${contact.phone} | 📧 ${
-        contact?.email || "-"
-      } | 📍 ${contact.address} | 🎂 ${age} | 🏷️ ${
-        tagsString || "-"
-      } | ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"} | 🔗 LinkedIn: ${
-        contact.socialMedia?.linkedinUrl || "-"
-      } | 🌐 Website: ${contact.socialMedia?.websiteUrl || "-"} | 🕒 Created: ${
-        contact.createdAt?.toLocaleString() || "-"
-      } | 📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
-    );
-    renderSeparator();
-  } else {
-    console.log("contact not found");
-  }
+  contactsData = updatedContacts;
 }
 
 function deleteContactById(id, contacts) {
-  contacts = contacts.filter((item) => item.id !== id);
-  return contacts;
+  updatedContacts = contacts.filter((item) => item.id !== id);
+
+  contactsData = updatedContacts;
 }
 
 function getContactById(id, contacts) {
-  return contacts.find((contact) => contact.id === id);
+  const contact = contacts.find((contact) => contact.id === id);
+
+  if (!contact) return null;
+
+  return contact;
 }
 
-function searchContactByName(keyword, contacts) {
+function searchContactsByName(keyword, contacts) {
   return contacts.filter((contact) =>
     contact.fullName.toLowerCase().includes(keyword.toLowerCase())
   );
@@ -310,28 +317,27 @@ function checkPhoneAlreadyUsed(phone, contacts) {
 }
 
 function showContactsBirthdayThisMonth(contacts) {
+  // TODO: Refactor to use array map
   for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
     const thisMonthNumber = new Date().getMonth();
-    const contact = contact[index];
-    if (contacts[index].birthdate.getMonth() == thisMonthNumber) {
+
+    if (contact.birthdate.getMonth() == thisMonthNumber) {
       console.log(`Happy Birth day ${contact.fullName}!`);
     }
   }
 }
 
 function saveData() {
-  const stringifyContactsData = JSON.stringify(contactsData);
-  const savedData = localStorage.setItem(
-    "dataDirecbook",
-    stringifyContactsData
-  );
-  return savedData;
+  const stringifiedContactsData = JSON.stringify(contactsData);
+
+  localStorage.setItem("contactsData", stringifiedContactsData);
 }
 
 function loadData() {
-  const loadedData = localStorage.getItem("dataDirecbook");
-  const parseInt = JSON.parse(loadedData);
-  return parseInt;
+  const loadedData = localStorage.getItem("contactsData");
+  const parsedContactsData = JSON.parse(loadedData);
+  return parsedContactsData;
 }
 
 function getFullNameToImage(id) {
