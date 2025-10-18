@@ -32,12 +32,11 @@ let dataContacts = [
 //   console.log(`My name is ${name}`);
 // });
 
-const api = `https://ui-avatars.com/api/?name=${getFullNameToAPI(3)}`;
-// const exampleAPI = `https://jsonplaceholder.typicode.com/todos`;
+const exampleAPI = `https://jsonplaceholder.typicode.com/todos`;
 
 const getDataAPI = async () => {
   try {
-    const response = await fetch(api);
+    const response = await fetch(exampleAPI);
     const data = await response.json();
     console.log(data);
   } catch (err) {
@@ -46,8 +45,3 @@ const getDataAPI = async () => {
 };
 
 getDataAPI();
-
-function getFullNameToAPI(id) {
-  const contact = dataContacts.find((contact) => contact.id == id);
-  return contact.name.split(" ").join("+");
-}

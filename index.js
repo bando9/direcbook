@@ -237,7 +237,6 @@ function updateContactById(
   }
 ) {
   const contact = contacts.find((contact) => contact.id === id);
-  // console.log(contact);
 
   const updatedContact = {
     ...contact,
@@ -300,10 +299,6 @@ function searchContactByName(keyword, contacts) {
   );
 }
 
-function countContacts(contacts) {
-  return contacts.length;
-}
-
 function checkPhoneAlreadyUsed(phone, contacts) {
   const phoneNumberFound = contacts.find((item) => item.phone == phone);
   if (phoneNumberFound) {
@@ -324,36 +319,27 @@ function showContactsBirthdayThisMonth(contacts) {
   }
 }
 
-function saveData(contacts) {
-  const stringifyContactsData = JSON.stringify(contacts);
+function saveData() {
+  const stringifyContactsData = JSON.stringify(contactsData);
   const savedData = localStorage.setItem(
-    "contacts-data",
+    "dataDirecbook",
     stringifyContactsData
   );
   return savedData;
 }
 
-function loadData(contacts) {
-  const loadedData = localStorage.getItem("contacts-data");
+function loadData() {
+  const loadedData = localStorage.getItem("dataDirecbook");
   const parseInt = JSON.parse(loadedData);
-  console.log(parseInt);
+  return parseInt;
 }
 
-function getFullNameToAPI(id) {
-  const contact = dataContacts.find((contact) => contact.id == id);
-  return contact.name.split(" ").join("+");
+function getFullNameToImage(id) {
+  const contact = contactsData.find((contact) => contact.id == id);
+  const getFullName = contact.fullName.split(" ").join("+");
+  const getImage = `https://ui-avatars.com/api/?name=${getFullName}`;
+  return getImage;
 }
-
-const api = `https://ui-avatars.com/api/?name=${getFullNameToAPI(3)}`;
-const getDataAPI = async () => {
-  try {
-    const response = await fetch(api);
-    const data = await response.json();
-    console.log(data);
-  } catch (err) {
-    console.error("errors: ", err);
-  }
-};
 
 // ---------------------------------------------------------------------
 // Run function
@@ -370,7 +356,7 @@ const getDataAPI = async () => {
 //   },
 // });
 
-// ========= RUN UPDATEDCONTACTBYID =========
+// ========= RUN updateContactById =========
 // updateContactById(8, contactsData, {
 //   fullName: "Toto Sugiri",
 //   phone: "089667241563",
@@ -402,3 +388,6 @@ const getDataAPI = async () => {
 
 // ========= RUN loadData =========
 // loadData(contactsData);
+
+saveData();
+console.log(loadData());
