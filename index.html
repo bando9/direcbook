@@ -9,50 +9,72 @@
 
     <link href="/src/output.css" rel="stylesheet" />
   </head>
-  <body class="bg-light">
-    <!-- <header class="fixed top-0 left-0 w-full z-10">
-      <div class="flex justify-center items-center px-4">
-        <button
-          id="hamburger"
-          name="hamburger"
-          type="button"
-          class="block absolute right-10 top-5 md:hidden"
-        >
-          <span class="hamburger-line transition origin-top-left"></span>
-          <span class="hamburger-line transition"></span>
-          <span class="hamburger-line transition origin-bottom-left"></span>
-        </button>
+  <body class="bg-light min-h-screen flex flex-col md:flex-row">
+    <aside
+      class="absolute md:relative w-3/4 md:w-64 bg-white shadow-md h-screen p-4"
+    >
+      <header class="flex items-center gap-2 mb-6 mt-3">
+        <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
+        <h1 class="font-semibold text-lg">Direcbook</h1>
+      </header>
 
-        <nav
-          id="nav-menu"
-          class="text-text mt-10 max-w-fit rounded-xl absolute py-12 px-12 md:px-10 md:py-3 hidden md:block top-full md:top-full right-20 md:right-auto md:left-1/2 md:-translate-x-1/2"
+      <nav class="space-y-2">
+        <div
+          class="bg-primary text-light flex items-center p-2 w-3/4 rounded-2xl mt-10"
         >
-          <ul class="subtitle-600-16 flex flex-col md:flex-row gap-4 md:gap-8">
-            <li><a href="/" class="text-secondary">Add Contact</a></li>
-            <li><a href="#">Favorite</a></li>
-            <li><a href="#">Trash</a></li>
-            <li><a href="#">Family</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header> -->
+          <img src="/images/icons/plus.svg" alt="plus icon" />
+          <p class="text-lg font-semibold">Add Contact</p>
+        </div>
+        <div
+          class="flex gap-2 items-center bg-secondary p-2 ps-3 mt-10 w-36 rounded-2xl"
+        >
+          <img src="/images/icons/contacts-1.svg" alt="contact icon" />
+          <p class="font-semibold">Contacts</p>
+        </div>
 
-    <header class="bg-accent p-2">
-      <nav>
-        <ul>
-          <li><a href="#">Add Contact</a></li>
-          <li><a href="#">Favorite</a></li>
-          <li><a href="#">Trash</a></li>
+        <div
+          class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
+        >
+          <img src="/images/icons/favorite.svg" alt="contact icon" />
+          <p class="font-reguler text-md">Favorite</p>
+        </div>
+
+        <div
+          class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
+        >
+          <img src="/images/icons/trash.svg" alt="contact icon" />
+          <p class="font-reguler text-md">Trash</p>
+        </div>
+
+        <h2 class="text-sm font-semibold text-gray-600 mb-2">Labels</h2>
+
+        <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-sm cursor-pointer">
+            <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
+            <a href="#">Family</a>
+          </li>
+          <li class="flex items-center gap-2 text-sm cursor-pointer">
+            <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
+            <a href="#">Works</a>
+          </li>
+          <li class="flex items-center gap-2 text-sm cursor-pointer">
+            <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
+            <a href="#">Friends</a>
+          </li>
         </ul>
       </nav>
-    </header>
+    </aside>
 
     <main>
       <section class="p-1 mt-3">
-        <div class="bg-card1 flex items-center py-1.5 px-2 rounded-2xl gap-1">
-          <img src="/images/icons/search.png" alt="search icon" class="h-6" />
+        <div class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1">
+          <img src="/images/icons/search.svg" alt="search icon" />
           <label class="rounded-3xl w-full">
-            <input type="text" placeholder="Search contact" />
+            <input
+              type="text"
+              placeholder="Search contact"
+              class="w-full ring-0 focus:ring-0 shadow-none focus:shadow-none focus:outline-none border-none focus:border-none"
+            />
           </label>
           <img
             src="/images/icons/profile.png"
@@ -60,14 +82,44 @@
             class="h-8"
           />
         </div>
-        <div class="p-1 my-2 flex items-center justify-end gap-3">
-          <img src="/images/icons/tag.png" alt="" />
-          <img src="/images/icons/sort.png" alt="" />
+        <div class="px-4 pt-4 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <img src="/images/icons/contacts-1.svg" alt="contacts" />
+            <p class="text-md">All Contacts (45)</p>
+          </div>
+          <div class="flex items-center justify-end gap-3.5">
+            <img src="/images/icons/tag.svg" alt="" />
+            <img src="/images/icons/sort.png" alt="" />
+          </div>
         </div>
       </section>
 
-      <section class="p-2 bg-card3">
-        <ul>
+      <section class="p-2">
+        <div class="p-1 flex items-center gap-1">
+          <img src="/images/icons/favorite.png" alt="favorite icon" />
+          <p class="text-md">Favorite (3)</p>
+        </div>
+        <ul class="bg-card3">
+          <li class="flex gap-2 items-center py-1 px-2">
+            <img src="/images/icons/profile.png" alt="" class="h-8" />
+            <p class="text-xl">Bando Mega</p>
+          </li>
+          <div class="w-full h-1 bg-light my-2"></div>
+          <li class="flex gap-2 items-center py-1 px-2">
+            <img src="/images/icons/profile.png" alt="" class="h-8" />
+            <p class="text-xl">Bando Mega</p>
+          </li>
+          <div class="w-full h-1 bg-light my-2"></div>
+          <li class="flex gap-2 items-center py-1 px-2">
+            <img src="/images/icons/profile.png" alt="" class="h-8" />
+            <p class="text-xl">Bando Mega</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="p-2">
+        <p class="text-md p-1"># (42)</p>
+        <ul class="bg-card3">
           <li class="flex gap-2 items-center py-1 px-2">
             <img src="/images/icons/profile.png" alt="" class="h-8" />
             <p class="text-xl">Bando Mega</p>
