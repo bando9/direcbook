@@ -9,8 +9,35 @@
 
     <link href="/src/output.css" rel="stylesheet" />
   </head>
-  <body>
-    <header>
+  <body class="bg-light">
+    <!-- <header class="fixed top-0 left-0 w-full z-10">
+      <div class="flex justify-center items-center px-4">
+        <button
+          id="hamburger"
+          name="hamburger"
+          type="button"
+          class="block absolute right-10 top-5 md:hidden"
+        >
+          <span class="hamburger-line transition origin-top-left"></span>
+          <span class="hamburger-line transition"></span>
+          <span class="hamburger-line transition origin-bottom-left"></span>
+        </button>
+
+        <nav
+          id="nav-menu"
+          class="text-text mt-10 max-w-fit rounded-xl absolute py-12 px-12 md:px-10 md:py-3 hidden md:block top-full md:top-full right-20 md:right-auto md:left-1/2 md:-translate-x-1/2"
+        >
+          <ul class="subtitle-600-16 flex flex-col md:flex-row gap-4 md:gap-8">
+            <li><a href="/" class="text-secondary">Add Contact</a></li>
+            <li><a href="#">Favorite</a></li>
+            <li><a href="#">Trash</a></li>
+            <li><a href="#">Family</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header> -->
+
+    <header class="bg-accent p-2">
       <nav>
         <ul>
           <li><a href="#">Add Contact</a></li>
@@ -21,12 +48,48 @@
     </header>
 
     <main>
-      <h1>Direcbook</h1>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
+      <section class="p-1 mt-3">
+        <div class="bg-card1 flex items-center py-1.5 px-2 rounded-2xl gap-1">
+          <img src="/images/icons/search.png" alt="search icon" class="h-6" />
+          <label class="rounded-3xl w-full">
+            <input type="text" placeholder="Search contact" />
+          </label>
+          <img
+            src="/images/icons/profile.png"
+            alt="profile image"
+            class="h-8"
+          />
+        </div>
+        <div class="p-1 my-2 flex items-center justify-end gap-3">
+          <img src="/images/icons/tag.png" alt="" />
+          <img src="/images/icons/sort.png" alt="" />
+        </div>
+      </section>
+
+      <section class="p-2 bg-card3">
+        <ul>
+          <li class="flex gap-2 items-center py-1 px-2">
+            <img src="/images/icons/profile.png" alt="" class="h-8" />
+            <p class="text-xl">Bando Mega</p>
+          </li>
+          <div class="w-full h-1 bg-light my-2"></div>
+          <li class="flex gap-2 items-center py-1 px-2">
+            <img src="/images/icons/profile.png" alt="" class="h-8" />
+            <p class="text-xl">Bando Mega</p>
+          </li>
+          <div class="w-full h-1 bg-light my-2"></div>
+          <li class="flex gap-2 items-center py-1 px-2">
+            <img src="/images/icons/profile.png" alt="" class="h-8" />
+            <p class="text-xl">Bando Mega</p>
+          </li>
+        </ul>
+      </section>
     </main>
 
-    <footer>
-      Copyright &copy; 2025. Direcbook by Bando Mega Allright reserved.
+    <footer class="p-2 mt-20">
+      Copyright &copy; 2025. Direcbook by
+      <a href="https://bandomega.com" class="hover:underline">Bando Mega</a>
+      Allright reserved.
     </footer>
 
     <script src="/index.js"></script>

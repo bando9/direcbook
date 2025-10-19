@@ -1,1 +1,38 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #293462;
+  --color-secondary: #1cd6ce;
+  --color-accent: #d61c4e;
+
+  --color-light: #fbfbfe;
+  --color-dark: #040316;
+
+  --color-btn: #b7efee;
+  --color-card1: #d1d3de;
+  --color-card2: #e4f6f8;
+  --color-card3: #f0f1f6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.hamburger-active > span:nth-child(1) {
+  @apply rotate-45;
+}
+
+.hamburger-active > span:nth-child(2) {
+  @apply scale-0;
+}
+
+.hamburger-active > span:nth-child(3) {
+  @apply -rotate-45;
+}
+
+.header-blog {
+  background-image: url("/images/blog-image-1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
