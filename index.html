@@ -21,12 +21,13 @@
       </header>
 
       <nav class="space-y-2">
-        <div
+        <a
+          href="/new"
           class="bg-primary text-light flex items-center p-2 w-3/4 rounded-2xl mt-10"
         >
           <img src="/images/icons/plus.svg" alt="plus icon" />
           <p class="text-lg font-semibold">Add Contact</p>
-        </div>
+        </a>
         <div
           class="flex gap-2 items-center bg-secondary p-2 ps-3 mt-10 w-36 rounded-2xl"
         >
@@ -69,10 +70,11 @@
 
     <main class="md:col-span-4 p-2">
       <section class="p-1 mt-3">
-        <div class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1">
+        <form class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1">
           <img src="/images/icons/search.svg" alt="search icon" />
           <label class="rounded-3xl w-full">
             <input
+              name="q"
               type="text"
               placeholder="Search contact"
               class="w-full ring-0 focus:ring-0 shadow-none focus:shadow-none focus:outline-none border-none focus:border-none"
@@ -83,11 +85,13 @@
             alt="profile image"
             class="h-8"
           />
-        </div>
+        </form>
         <div class="px-4 pt-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <img src="/images/icons/contacts-1.svg" alt="contacts" />
-            <p class="text-md">All Contacts (45)</p>
+            <p class="text-md">
+              All Contacts (<span id="contacts-count">???</span>)
+            </p>
           </div>
           <div class="flex items-center justify-end gap-3.5">
             <img src="/images/icons/tag.svg" alt="" />
@@ -119,12 +123,14 @@
 
       <section class="p-2">
         <p class="text-md p-1"># (42)</p>
-        <ul id="show-contacts" class="flex flex-col gap-1"></ul>
+        <ul id="contacts" class="flex flex-col gap-1">
+          <!-- Render Contacts -->
+        </ul>
       </section>
       <footer class="p-2 mt-20">
-        Copyright &copy; 2025. Direcbook by
-        <a href="https://bandomega.com" class="hover:underline">Bando Mega</a>
-        Allright reserved.
+        &copy; 2025. Direcbook by
+        <a href="https://bandomega.com" class="hover:underline">Bando Mega</a>.
+        All Rights Reserved.
       </footer>
     </main>
 

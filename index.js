@@ -1,5 +1,3 @@
-console.log("Direcbook");
-
 let contactsData = [
   {
     id: 1,
@@ -156,23 +154,21 @@ let contactsData = [
   },
 ];
 
-const renderContacts = document.getElementById("show-contacts");
+const contactsElement = document.getElementById("contacts");
 
-function showContacts(contacts) {
-  renderContacts.innerHTML = `${contacts
-    .map((contact) => showContact(contact))
+function renderContacts(contacts) {
+  contactsElement.innerHTML = `${contacts
+    .map((contact) => renderContact(contact))
     .join("")}`;
-  // contacts.forEach((contact) => showContact(contact));
 }
-showContacts(contactsData);
 
-function showContact(contact) {
+function renderContact(contact) {
+  const imageUrl = getFullNameToImage(contact.id);
+
   // const age = calculateAge(contact?.birthdate);
   // const tagsString = contact.tags?.join(", ");
   // console.log(
   //   `👤 ${contact.fullName}
-  //   📞 ${contact.phone}
-  //   📧 ${contact?.email || "-"}
   //   📍 ${contact.address || "-"}
   //   🎂 ${age || "-"}
   //   🏷️ ${tagsString || "-"}
@@ -182,18 +178,16 @@ function showContact(contact) {
   //   🕒 Created: ${contact.createdAt?.toLocaleString() || "-"}
   //   📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
   // );
-  // renderSeparator();
 
   return `
   <li class="grid grid-cols-12 gap-2 items-center p-3 bg-card2 rounded-xl">
-    <img src=${getFullNameToImage(
-      contact.id
-    )} alt="" class="h-9 rounded-full" />
+    <img src=${imageUrl} alt="" class="h-9 rounded-full" />
     <p class="text-md col-span-4">${contact.fullName}</p>
     <p class="text-md col-span-4">${contact.email}</p>
     <p class="text-md col-span-2">${contact.phone}</p>
   </li>`;
 }
+
 function calculateAge(yearBirthdate) {
   const currentYear = new Date().getFullYear();
 
@@ -315,7 +309,7 @@ function getContactById(id, contacts) {
 
   if (!contact) return null;
 
-  showContact(contact);
+  renderContact(contact);
 }
 
 function searchContactsByName(keyword, contacts) {
@@ -366,6 +360,8 @@ function getFullNameToImage(id) {
 // ---------------------------------------------------------------------
 // Run function
 // ---------------------------------------------------------------------
+
+renderContacts(contactsData);
 
 // ========= RUN addContact =========
 // addContact(contactsData, {
