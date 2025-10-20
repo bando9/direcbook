@@ -156,9 +156,52 @@ let contactsData = [
   },
 ];
 
-function calculateAge(yearBirthdate) {
-  const currentYear = 2025;
+const renderContacts = document.getElementById("show-contacts");
 
+function showContacts(contacts) {
+  renderContacts.innerHTML = `${contacts
+    .map((contact) => showContact(contact))
+    .join("")}`;
+  // contacts.forEach((contact) => showContact(contact));
+}
+showContacts(contactsData);
+
+function showContact(contact) {
+  // const age = calculateAge(contact?.birthdate);
+  // const tagsString = contact.tags?.join(", ");
+  // console.log(
+  //   `👤 ${contact.fullName}
+  //   📞 ${contact.phone}
+  //   📧 ${contact?.email || "-"}
+  //   📍 ${contact.address || "-"}
+  //   🎂 ${age || "-"}
+  //   🏷️ ${tagsString || "-"}
+  //   ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"}
+  //   🔗 LinkedIn: ${contact.socialMedia?.linkedinUrl || "-"}
+  //   🌐 Website: ${contact.socialMedia?.websiteUrl || "-"}
+  //   🕒 Created: ${contact.createdAt?.toLocaleString() || "-"}
+  //   📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
+  // );
+  // renderSeparator();
+
+  return `
+  <li class="grid grid-cols-12 gap-2 items-center p-3 bg-card2 rounded-xl">
+    <img src=${getFullNameToImage(
+      contact.id
+    )} alt="" class="h-9 rounded-full" />
+    <p class="text-md col-span-4">${contact.fullName}</p>
+    <p class="text-md col-span-4">${contact.email}</p>
+    <p class="text-md col-span-2">${contact.phone}</p>
+  </li>`;
+}
+function calculateAge(yearBirthdate) {
+  const currentYear = new Date().getFullYear();
+
+  if (typeof yearBirthdate == "string") {
+    const getYearDate = new Date(yearBirthdate).getFullYear();
+    const age = currentYear - getYearDate;
+    return age;
+  }
   if (typeof yearBirthdate == "object") {
     const getYearDate = yearBirthdate.getFullYear();
     const age = currentYear - getYearDate;
@@ -170,11 +213,7 @@ function calculateAge(yearBirthdate) {
     return age;
   }
 
-  if (typeof yearBirthdate == "string") {
-    const getYearDate = new Date(yearBirthdate).getFullYear();
-    const age = currentYear - getYearDate;
-    return age;
-  }
+  return null;
 }
 
 function renderSeparator() {
@@ -192,7 +231,7 @@ function addContact(
     tags = null,
     isFavorited = false,
     isDeleted = false,
-    socialMedia: { linkedinUrl = null, websiteUrl = null },
+    socialMedia: { linkedinUrl, websiteUrl },
     createdAt = new Date(),
     updatedAt = new Date(),
   }
@@ -213,7 +252,10 @@ function addContact(
     tags,
     isFavorited,
     isDeleted,
-    socialMedia: { linkedinUrl, websiteUrl },
+    socialMedia: {
+      linkedinUrl: linkedinUrl ?? null,
+      websiteUrl: websiteUrl ?? null,
+    },
     createdAt,
     updatedAt,
   };
@@ -233,67 +275,50 @@ function updateContactById(
     birthdate,
     isFavorited,
     isDeleted,
+    socialMedia,
     updatedAt = new Date(),
   }
 ) {
-  const contact = contacts.find((contact) => contact.id === id);
+  const { linkedinUrl, websiteUrl } = socialMedia;
 
-  const updatedContact = {
-    ...contact,
-    fullName: fullName ?? contact.fullName,
-    phone: phone ?? contact.phone,
-    email: email ?? contact.email,
-    address: address ?? contact.address,
-    birthdate: birthdate ?? contact.birthdate,
-    isFavorited: isFavorited ?? contact.isFavorited,
-    isDeleted: isDeleted ?? contact.isDeleted,
-    updatedAt,
-  };
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
+      const updatedContact = {
+        ...contact,
+        fullName: fullName ?? contact.fullName,
+        phone: phone ?? contact.phone,
+        email: email ?? contact.email,
+        address: address ?? contact.address,
+        birthdate: birthdate ?? contact.birthdate,
+        isFavorited: isFavorited ?? contact.isFavorited,
+        isDeleted: isDeleted ?? contact.isDeleted,
+        socialMedia: {
+          linkedinUrl: linkedinUrl ?? contact.socialMedia?.linkedinUrl,
+          websiteUrl: websiteUrl ?? contact.socialMedia?.websiteUrl,
+        },
+        updatedAt,
+      };
       return updatedContact;
     }
     return contact;
   });
-  console.log(updatedContacts);
-  return (contactsData = updatedContacts);
-}
-
-function showContacts(contacts) {
-  contacts.forEach((contact) => showContact(contact));
-}
-
-function showContact(contact) {
-  if (contact) {
-    const age = calculateAge(contact?.birthdate);
-    const tagsString = contact.tags?.join(", ");
-    console.log(
-      `👤 ${contact.fullName} | 📞 ${contact.phone} | 📧 ${
-        contact?.email || "-"
-      } | 📍 ${contact.address} | 🎂 ${age} | 🏷️ ${
-        tagsString || "-"
-      } | ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"} | 🔗 LinkedIn: ${
-        contact.socialMedia?.linkedinUrl || "-"
-      } | 🌐 Website: ${contact.socialMedia?.websiteUrl || "-"} | 🕒 Created: ${
-        contact.createdAt?.toLocaleString() || "-"
-      } | 📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
-    );
-    renderSeparator();
-  } else {
-    console.log("contact not found");
-  }
+  contactsData = updatedContacts;
 }
 
 function deleteContactById(id, contacts) {
-  contacts = contacts.filter((item) => item.id !== id);
-  return contacts;
+  const updatedContact = contacts.filter((item) => item.id !== id);
+  contactsData = updatedContact;
 }
 
 function getContactById(id, contacts) {
-  return contacts.find((contact) => contact.id === id);
+  const contact = contacts.find((contact) => contact.id === id);
+
+  if (!contact) return null;
+
+  showContact(contact);
 }
 
-function searchContactByName(keyword, contacts) {
+function searchContactsByName(keyword, contacts) {
   return contacts.filter((contact) =>
     contact.fullName.toLowerCase().includes(keyword.toLowerCase())
   );
@@ -310,34 +335,31 @@ function checkPhoneAlreadyUsed(phone, contacts) {
 }
 
 function showContactsBirthdayThisMonth(contacts) {
-  for (let index = 0; index < contacts.length; index++) {
+  contacts.map((contact) => {
     const thisMonthNumber = new Date().getMonth();
-    const contact = contact[index];
-    if (contacts[index].birthdate.getMonth() == thisMonthNumber) {
-      console.log(`Happy Birth day ${contact.fullName}!`);
+    const getMonthContactNumber = contact.birthdate.getMonth();
+
+    if (getMonthContactNumber == thisMonthNumber) {
+      console.log(`Happy Birth day ${contact.fullName.toUpperCase()}🎉🎂`);
     }
-  }
+  });
 }
 
 function saveData() {
-  const stringifyContactsData = JSON.stringify(contactsData);
-  const savedData = localStorage.setItem(
-    "dataDirecbook",
-    stringifyContactsData
-  );
-  return savedData;
+  const stringifiedContactsData = JSON.stringify(contactsData);
+  localStorage.setItem("contactsData", stringifiedContactsData);
 }
 
 function loadData() {
-  const loadedData = localStorage.getItem("dataDirecbook");
-  const parseInt = JSON.parse(loadedData);
-  return parseInt;
+  const loadedData = localStorage.getItem("contactsData");
+  const parsedContactsData = JSON.parse(loadedData);
+  return parsedContactsData;
 }
 
 function getFullNameToImage(id) {
   const contact = contactsData.find((contact) => contact.id == id);
   const getFullName = contact.fullName.split(" ").join("+");
-  const getImage = `https://ui-avatars.com/api/?name=${getFullName}`;
+  const getImage = `https://ui-avatars.com/api/?name=${getFullName}&background=random`;
   return getImage;
 }
 
@@ -370,6 +392,9 @@ function getFullNameToImage(id) {
 //     websiteUrl: "https://www.instagram.com/dciindonesia",
 //   },
 // });
+// console.log(contactsData[7]);
+
+// getContactById(8, contactsData);
 
 // ========= RUN showContacts =========
 // showContacts(contactsData);
@@ -389,5 +414,5 @@ function getFullNameToImage(id) {
 // ========= RUN loadData =========
 // loadData(contactsData);
 
-saveData();
-console.log(loadData());
+// saveData();
+// console.log(loadData());
