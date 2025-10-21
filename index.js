@@ -1,5 +1,3 @@
-console.log("Direcbook");
-
 let contactsData = [
   {
     id: 1,
@@ -156,26 +154,29 @@ let contactsData = [
   },
 ];
 
-const renderContacts = document.getElementById("show-contacts");
+const contactsElement = document.getElementById("contacts");
 
-function showContacts(contacts) {
-  renderContacts.innerHTML = `${contacts
-    .map((contact) => showContact(contact))
+function renderContacts(contacts) {
+  contactsElement.innerHTML = `${contacts
+    .map((contact) => renderContact(contact))
     .join("")}`;
-  // contacts.forEach((contact) => showContact(contact));
 }
-showContacts(contactsData);
 
-function showContact(contact) {
+function renderContact(contact) {
   // const age = calculateAge(contact?.birthdate);
-  // const tagsString = contact.tags?.join(", ");
+  // const tagsString = contact.tags?.join(" ");
+  const imageUrl = getFullNameToImage(contact.id);
+  const tagString = contact.tags
+    .map((tag) => {
+      return `<span class="bg-gray-200 text-gray-800 text-sm px-2 py-1 rounded-md">
+          ${tag}
+        </span>`;
+    })
+    .join(" ");
+
   // console.log(
-  //   `👤 ${contact.fullName}
-  //   📞 ${contact.phone}
-  //   📧 ${contact?.email || "-"}
   //   📍 ${contact.address || "-"}
   //   🎂 ${age || "-"}
-  //   🏷️ ${tagsString || "-"}
   //   ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"}
   //   🔗 LinkedIn: ${contact.socialMedia?.linkedinUrl || "-"}
   //   🌐 Website: ${contact.socialMedia?.websiteUrl || "-"}
@@ -184,15 +185,33 @@ function showContact(contact) {
   // );
   // renderSeparator();
 
+  // return `
+  // <li class="grid grid-cols-12 gap-2 items-center p-3 bg-card2 rounded-xl">
+  //   <img src=${imageUrl} alt="" class="h-9 rounded-full" />
+  //   <p class="text-md col-span-4">${contact.fullName}</p>
+  //   <p class="text-md col-span-4">${contact.email}</p>
+  //   <p class="text-md col-span-2">${contact.phone}</p>
+  // </li>`;
+
   return `
-  <li class="grid grid-cols-12 gap-2 items-center p-3 bg-card2 rounded-xl">
-    <img src=${getFullNameToImage(
-      contact.id
-    )} alt="" class="h-9 rounded-full" />
-    <p class="text-md col-span-4">${contact.fullName}</p>
-    <p class="text-md col-span-4">${contact.email}</p>
-    <p class="text-md col-span-2">${contact.phone}</p>
-  </li>`;
+  <tr>
+      <td class="px-4 py-2  flex items-center gap-2">
+        <img src=${imageUrl} alt="" class="h-10 rounded-full" />
+        ${contact.fullName}
+      </td>
+      <td class="px-4 py-2 text-left">${contact.phone}</td>
+      <td class="px-4 py-2 text-left">${contact.email}</td>
+      <td class="px-4 py-2 text-left text-sm">
+        <div class="flex flex-wrap gap-2">
+          ${tagString}
+        </div>
+      </td>
+      <td class="p-3 space-x-2 text-sm">
+        <button class="text-blue-500 hover:underline cursor-pointer">View</button>
+        <button class="text-green-500 hover:underline cursor-pointer">Edit</button>
+        <button class="text-red-500 hover:underline cursor-pointer">Delete</button>
+      </td>
+  </tr>`;
 }
 function calculateAge(yearBirthdate) {
   const currentYear = new Date().getFullYear();
@@ -315,13 +334,18 @@ function getContactById(id, contacts) {
 
   if (!contact) return null;
 
-  showContact(contact);
+  renderContact(contact);
 }
 
 function searchContactsByName(keyword, contacts) {
   return contacts.filter((contact) =>
     contact.fullName.toLowerCase().includes(keyword.toLowerCase())
   );
+}
+
+function renderCountContacts(contacts) {
+  const countContactsElement = document.getElementById("count-contacts");
+  countContactsElement.innerHTML = contacts.length;
 }
 
 function checkPhoneAlreadyUsed(phone, contacts) {
@@ -363,56 +387,5 @@ function getFullNameToImage(id) {
   return getImage;
 }
 
-// ---------------------------------------------------------------------
-// Run function
-// ---------------------------------------------------------------------
-
-// ========= RUN addContact =========
-// addContact(contactsData, {
-//   fullName: "Bando Mega Kusuma",
-//   phone: "+18924109909",
-//   address: "Semarang, Jawa Tengah, Indonesia",
-//   birthdate: "1999-10-24",
-//   socialMedia: {
-//     linkedinUrl: "https://www.linkedin.com/in/bando-mega-kusuma",
-//   },
-// });
-
-// ========= RUN updateContactById =========
-// updateContactById(8, contactsData, {
-//   fullName: "Toto Sugiri",
-//   phone: "089667241563",
-//   email: "totosugiri@dciservice.com",
-//   address: "Bekasi Regency, Jawa Barat, Indonesia ",
-//   birthdate: new Date(1953, 8, 23),
-//   tags: ["DCI ", "Data Engineer"],
-//   isFavorited: true,
-//   isDeleted: false,
-//   socialMedia: {
-//     websiteUrl: "https://www.instagram.com/dciindonesia",
-//   },
-// });
-// console.log(contactsData[7]);
-
-// getContactById(8, contactsData);
-
-// ========= RUN showContacts =========
-// showContacts(contactsData);
-
-// ========= RUN showContact =========
-// showContact(contactsData[1]);
-
-// ========= RUN deleteContactById =========
-// deleteContactById(2, contactsData);
-
-// ========= RUN getContactById =========
-// getContactById(2, contactsData);
-
-// ========= RUN savedData =========
-// saveData(contactsData);
-
-// ========= RUN loadData =========
-// loadData(contactsData);
-
-// saveData();
-// console.log(loadData());
+renderContacts(contactsData);
+renderCountContacts(contactsData);

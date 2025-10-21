@@ -9,24 +9,25 @@
 
     <link href="/src/output.css" rel="stylesheet" />
   </head>
-  <body
-    class="bg-light min-h-screen flex flex-col md:grid md:grid-cols-5 md:flex-row"
-  >
+  <body class="bg-light min-h-screen flex flex-col md:flex-row relative w-full">
     <aside
-      class="absolute md:relative -left-96 md:left-0 w-3/4 md:w-64 bg-white shadow-md h-screen p-4"
+      class="absolute md:fixed -left-96 md:left-0 top-0 w-3/4 md:w-64 bg-white shadow-md h-screen p-4"
     >
-      <header class="flex items-center gap-2 mb-6 mt-3">
-        <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
-        <h1 class="font-semibold text-lg">Direcbook</h1>
+      <header>
+        <a href="/" class="flex items-center gap-2 mb-6 mt-3">
+          <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
+          <h1 class="font-semibold text-lg">Direcbook</h1>
+        </a>
       </header>
 
       <nav class="space-y-2">
-        <div
+        <a
+          href="/new"
           class="bg-primary text-light flex items-center p-2 w-3/4 rounded-2xl mt-10"
         >
           <img src="/images/icons/plus.svg" alt="plus icon" />
-          <p class="text-lg font-semibold">Add Contact</p>
-        </div>
+          <p class="text-sm font-semibold">Create Contact</p>
+        </a>
         <div
           class="flex gap-2 items-center bg-secondary p-2 ps-3 mt-10 w-36 rounded-2xl"
         >
@@ -67,12 +68,18 @@
       </nav>
     </aside>
 
-    <main class="md:col-span-4 p-2">
+    <main
+      class="md:col-span-4 p-2 ml-64 h-screen min-h-screen overflow-hidden flex-1"
+    >
       <section class="p-1 mt-3">
-        <div class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1">
+        <form
+          id="q"
+          class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1"
+        >
           <img src="/images/icons/search.svg" alt="search icon" />
           <label class="rounded-3xl w-full">
             <input
+              name="q"
               type="text"
               placeholder="Search contact"
               class="w-full ring-0 focus:ring-0 shadow-none focus:shadow-none focus:outline-none border-none focus:border-none"
@@ -83,48 +90,81 @@
             alt="profile image"
             class="h-8"
           />
-        </div>
+        </form>
         <div class="px-4 pt-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <img src="/images/icons/contacts-1.svg" alt="contacts" />
-            <p class="text-md">All Contacts (45)</p>
+            <p class="text-md">
+              All Contacts (<span id="count-contacts">???</span>)
+            </p>
           </div>
           <div class="flex items-center justify-end gap-3.5">
-            <img src="/images/icons/tag.svg" alt="" />
             <img src="/images/icons/sort.png" alt="" />
           </div>
         </div>
       </section>
 
-      <section class="p-2">
-        <div class="p-1 flex items-center gap-1">
-          <img src="/images/icons/favorite.png" alt="favorite icon" />
-          <p class="text-md">Favorite (3)</p>
-        </div>
-        <ul class="flex flex-col gap-1">
-          <li class="flex gap-2 items-center p-3 bg-card2 rounded-xl">
-            <img src="/images/icons/profile.png" alt="" class="h-8" />
-            <p class="text-xl">Bando Mega</p>
-          </li>
-          <li class="flex gap-2 items-center p-3 bg-card2 rounded-xl">
-            <img src="/images/icons/profile.png" alt="" class="h-8" />
-            <p class="text-xl">Bando Mega</p>
-          </li>
-          <li class="flex gap-2 items-center p-3 bg-card2 rounded-xl">
-            <img src="/images/icons/profile.png" alt="" class="h-8" />
-            <p class="text-xl">Bando Mega</p>
-          </li>
-        </ul>
+      <section
+        class="p-2 overflow-x-auto overflow-y-auto h-screen max-h-screen"
+      >
+        <table class="min-w-full border-collapse">
+          <thead class="bg-btn sticky -top-4 z-10">
+            <tr>
+              <th class="px-4 py-2 text-left">Name</th>
+              <th class="px-4 py-2 text-left">Phone Number</th>
+              <th class="px-4 py-2 text-left">Email</th>
+              <th class="px-4 py-2 text-left">Labels</th>
+              <th class="px-4 py-2 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="contacts">
+            <tr>
+              <td class="px-4 py-2 flex items-center gap-1">
+                <img src="/images/icons/profile.png" alt="" class="h-10" />
+                Bando Mega
+              </td>
+              <td class="px-4 py-2 text-left">+6289544938452</td>
+              <td class="px-4 py-2 text-left">bandomega1@gmail.com</td>
+              <td class="px-4 py-2 text-left">24 Oktober 1999</td>
+              <td class="px-4 py-2 text-left text-sm">
+                <span>Family</span>
+                <span>Work</span>
+              </td>
+              <td class="px-4 py-2 text-center text-sm">
+                <span>Views</span>
+                <span>Edit</span>
+                <span>Delete</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="px-4 py-2 flex items-center gap-1">
+                <img src="/images/icons/profile.png" alt="" class="h-10" />
+                Bando Mega
+              </td>
+              <td class="px-4 py-2 text-left">+6289544938452</td>
+              <td class="px-4 py-2 text-left">bandomega1@gmail.com</td>
+              <td class="px-4 py-2 text-left">24 Oktober 1999</td>
+              <td class="px-4 py-2 text-left text-sm">
+                <span>Family</span>
+                <span>Work</span>
+              </td>
+              <td class="px-4 py-2 text-center text-sm">
+                <span>Views</span>
+                <span>Edit</span>
+                <span>Delete</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
-      <section class="p-2">
-        <p class="text-md p-1"># (42)</p>
-        <ul id="show-contacts" class="flex flex-col gap-1"></ul>
-      </section>
-      <footer class="p-2 mt-20">
-        Copyright &copy; 2025. Direcbook by
-        <a href="https://bandomega.com" class="hover:underline">Bando Mega</a>
-        Allright reserved.
+      <footer class="p-2">
+        &copy; 2025. Direcbook by
+        <a href="https://bandomega.com" class="hover:underline" target="_blank"
+          >Bando Mega</a
+        >
+        All Rights Reserved.
       </footer>
     </main>
 
