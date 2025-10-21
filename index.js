@@ -6,7 +6,7 @@ let contactsData = [
     email: "warrenbuffett@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1930, 7, 30),
-    tags: ["Investor", "Mentor"],
+    tags: ["Investor"],
     isFavorited: true,
     isDeleted: false,
     socialMedia: {
@@ -40,7 +40,7 @@ let contactsData = [
     email: "charliemunger@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1924, 0, 1),
-    tags: ["Investor", "Philanthropist"],
+    tags: ["Investor"],
     isFavorited: false,
     isDeleted: false,
     socialMedia: {
@@ -108,7 +108,7 @@ let contactsData = [
     email: "jensen@nvidia.com",
     address: "Tainan, Taiwan / California, USA",
     birthdate: new Date(1963, 1, 17),
-    tags: ["Technology", "AI", "GPU"],
+    tags: ["Technology", "AI"],
     isFavorited: true,
     isDeleted: false,
     socialMedia: {
@@ -125,7 +125,7 @@ let contactsData = [
     email: "andrew@deeplearning.ai",
     address: "Stanford, California, USA",
     birthdate: new Date(1976, 3, 18),
-    tags: ["AI", "Educator", "Entrepreneur"],
+    tags: ["AI", "Entrepreneur"],
     isFavorited: true,
     isDeleted: false,
     socialMedia: {
@@ -142,7 +142,7 @@ let contactsData = [
     email: "howardbuffett@bhhsservice.com",
     address: "Omaha, Nebraska, USA",
     birthdate: new Date(1954, 11, 16),
-    tags: ["Investor", "Businuss"],
+    tags: ["Investor", "Entrepreneur"],
     isFavorited: false,
     isDeleted: false,
     socialMedia: {
@@ -168,9 +168,7 @@ function renderContact(contact) {
   const imageUrl = getFullNameToImage(contact.id);
   const tagString = contact.tags
     .map((tag) => {
-      return `<span class="bg-gray-200 text-gray-800 text-sm px-2 py-1 rounded-md">
-          ${tag}
-        </span>`;
+      return `<span class="${getColorBadge(tag)}">${tag}</span>`;
     })
     .join(" ");
 
@@ -237,6 +235,25 @@ function calculateAge(yearBirthdate) {
 
 function renderSeparator() {
   console.log("============================");
+}
+
+function getColorBadge(tag) {
+  switch (tag.toLowerCase()) {
+    case "investor":
+      return `inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-xs font-medium text-yellow-500 inset-ring inset-ring-yellow-400/20`;
+      break;
+    case "entrepreneur":
+      return "inline-flex items-center rounded-md bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 inset-ring inset-ring-indigo-400/30";
+      break;
+    case "ai":
+      return "inline-flex items-center rounded-md bg-green-400/10 px-2 py-1 text-xs font-medium text-green-400 inset-ring inset-ring-green-500/20";
+      break;
+    case "technology":
+      return "inline-flex items-center rounded-md bg-pink-400/10 px-2 py-1 text-xs font-medium text-pink-400 inset-ring inset-ring-pink-400/20";
+      break;
+    default:
+      return "inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-400 inset-ring inset-ring-gray-400/20";
+  }
 }
 
 function addContact(

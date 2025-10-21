@@ -23,7 +23,7 @@
       <nav class="space-y-2">
         <a
           href="/new"
-          class="bg-primary text-light flex items-center p-2 w-3/4 rounded-2xl mt-10"
+          class="bg-primary text-light flex items-center gap-1 p-2 w-3/4 rounded-2xl mt-10"
         >
           <img src="/images/icons/plus.svg" alt="plus icon" />
           <p class="text-sm font-semibold">Create Contact</p>
@@ -68,9 +68,7 @@
       </nav>
     </aside>
 
-    <main
-      class="md:col-span-4 p-2 ml-64 h-screen min-h-screen overflow-hidden flex-1"
-    >
+    <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
       <section class="p-1 mt-3">
         <form
           id="q"
@@ -95,7 +93,7 @@
           <div class="flex items-center gap-2">
             <img src="/images/icons/contacts-1.svg" alt="contacts" />
             <p class="text-md">
-              All Contacts (<span id="count-contacts">???</span>)
+              All Contacts (<span id="count-contacts">0</span>)
             </p>
           </div>
           <div class="flex items-center justify-end gap-3.5">
@@ -104,15 +102,13 @@
         </div>
       </section>
 
-      <section
-        class="p-2 overflow-x-auto overflow-y-auto h-screen max-h-screen"
-      >
+      <section class="p-2 overflow-x-auto relative">
         <table class="min-w-full border-collapse">
-          <thead class="bg-btn sticky -top-4 z-10">
+          <thead class="bg-btn sticky z-10 -top-2">
             <tr>
               <th class="px-4 py-2 text-left">Name</th>
-              <th class="px-4 py-2 text-left">Phone Number</th>
               <th class="px-4 py-2 text-left">Email</th>
+              <th class="px-4 py-2 text-left">Phone Number</th>
               <th class="px-4 py-2 text-left">Labels</th>
               <th class="px-4 py-2 text-center">Actions</th>
             </tr>
@@ -159,7 +155,7 @@
         </table>
       </section>
 
-      <footer class="p-2">
+      <footer class="p-2 mt-10 ms-50">
         &copy; 2025. Direcbook by
         <a href="https://bandomega.com" class="hover:underline" target="_blank"
           >Bando Mega</a
