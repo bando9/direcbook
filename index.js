@@ -2,9 +2,16 @@ let contactsData = [
   {
     id: 1,
     fullName: "Warren Edward Buffett",
-    phone: "+189241099019",
+    phone: "+12025550123",
     email: "warrenbuffett@bhhsservice.com",
-    address: "Omaha, Nebraska, USA",
+    address: {
+      line1: "3555 Farnam Street",
+      line2: "",
+      city: "Omaha",
+      region: "Nebraska",
+      postalCode: "68131",
+      country: "USA",
+    },
     birthdate: new Date(1930, 7, 30),
     tags: ["Investor"],
     isFavorited: true,
@@ -21,7 +28,14 @@ let contactsData = [
     fullName: "Larry Ellison",
     phone: "+181006330738",
     email: "lefoundation@outlook.com",
-    address: "The Bronx, New York City, USA",
+    address: {
+      line1: "100 Oracle Parkway",
+      line2: "",
+      city: "Redwood City",
+      region: "California",
+      postalCode: "94065",
+      country: "USA",
+    },
     birthdate: new Date(1944, 7, 17),
     tags: ["Investor", "Technology"],
     isFavorited: true,
@@ -33,29 +47,20 @@ let contactsData = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+
   {
     id: 3,
-    fullName: "Charles Thomas Munger",
-    phone: "+181837956124",
-    email: "charliemunger@bhhsservice.com",
-    address: "Omaha, Nebraska, USA",
-    birthdate: new Date(1924, 0, 1),
-    tags: ["Investor"],
-    isFavorited: false,
-    isDeleted: false,
-    socialMedia: {
-      linkedinUrl: null,
-      websiteUrl: "https://www.berkshirehathaway.com/",
-    },
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 4,
     fullName: "Elon Musk",
     phone: "+181234567890",
     email: "elon@tesla.com",
-    address: "Austin, Texas, USA",
+    address: {
+      line1: "1 Tesla Road",
+      line2: "",
+      city: "Austin",
+      region: "Texas",
+      postalCode: "78725",
+      country: "USA",
+    },
     birthdate: new Date(1971, 5, 28),
     tags: ["Technology", "Entrepreneur", "AI"],
     isFavorited: true,
@@ -68,11 +73,18 @@ let contactsData = [
     updatedAt: new Date(),
   },
   {
-    id: 5,
+    id: 4,
     fullName: "Jeff Bezos",
     phone: "+181298765432",
     email: "jeff@amazon.com",
-    address: "Medina, Washington, USA",
+    address: {
+      line1: "2125 5th Avenue",
+      line2: "",
+      city: "Seattle",
+      region: "Washington",
+      postalCode: "98121",
+      country: "USA",
+    },
     birthdate: new Date(1964, 0, 12),
     tags: ["Investor", "Technology", "Entrepreneur"],
     isFavorited: false,
@@ -84,29 +96,20 @@ let contactsData = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+
   {
-    id: 6,
-    fullName: "Sam Altman",
-    phone: "+181334455667",
-    email: "sam@openai.com",
-    address: "San Francisco, California, USA",
-    birthdate: new Date(1985, 3, 22),
-    tags: ["Entrepreneur", "AI", "Investor"],
-    isFavorited: false,
-    isDeleted: false,
-    socialMedia: {
-      linkedinUrl: "https://www.linkedin.com/in/sama",
-      websiteUrl: "https://openai.com/",
-    },
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 7,
+    id: 5,
     fullName: "Jensen Huang",
     phone: "+181133355577",
     email: "jensen@nvidia.com",
-    address: "Tainan, Taiwan / California, USA",
+    address: {
+      line1: "2788 San Tomas Expressway",
+      line2: "",
+      city: "Santa Clara",
+      region: "California",
+      postalCode: "95051",
+      country: "USA",
+    },
     birthdate: new Date(1963, 1, 17),
     tags: ["Technology", "AI"],
     isFavorited: true,
@@ -118,29 +121,20 @@ let contactsData = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+
   {
-    id: 8,
-    fullName: "Andrew Ng",
-    phone: "+181144556677",
-    email: "andrew@deeplearning.ai",
-    address: "Stanford, California, USA",
-    birthdate: new Date(1976, 3, 18),
-    tags: ["AI", "Entrepreneur"],
-    isFavorited: true,
-    isDeleted: false,
-    socialMedia: {
-      linkedinUrl: "https://www.linkedin.com/in/andrewyng",
-      websiteUrl: "https://www.deeplearning.ai/",
-    },
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 9,
+    id: 6,
     fullName: "Howard Graham Buffett",
     phone: "+1898748734",
     email: "howardbuffett@bhhsservice.com",
-    address: "Omaha, Nebraska, USA",
+    address: {
+      line1: "3555 Farnam Street",
+      line2: "",
+      city: "Omaha",
+      region: "Nebraska",
+      postalCode: "68131",
+      country: "USA",
+    },
     birthdate: new Date(1954, 11, 16),
     tags: ["Investor", "Entrepreneur"],
     isFavorited: false,
@@ -148,6 +142,54 @@ let contactsData = [
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/howardbuffett",
       websiteUrl: "https://www.berkshirehathaway.com/",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 7,
+    fullName: "Toto Sugiri",
+    phone: "+628111234567",
+    email: "toto@dci-indonesia.co.id",
+    address: {
+      line1: "Jl. Kapten Soebijanto Djojohadikusumo Blok D",
+      line2: "Kawasan Industri Surya Cipta",
+      city: "Karawang",
+      region: "Jawa Barat",
+      postalCode: "41361",
+      country: "Indonesia",
+    },
+    birthdate: new Date(1953, 6, 23),
+    tags: ["Technology", "Entrepreneur"],
+    isFavorited: true,
+    isDeleted: false,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/toto-sugiri",
+      websiteUrl: "https://www.dci-indonesia.co.id/",
+    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 8,
+    fullName: "William Tanuwijaya",
+    phone: "+6282123456789",
+    email: "william@tokopedia.com",
+    address: {
+      line1: "Jl. Prof. Dr. Satrio Kav 11",
+      line2: "Kuningan, Setiabudi",
+      city: "Jakarta Selatan",
+      region: "DKI Jakarta",
+      postalCode: "12950",
+      country: "Indonesia",
+    },
+    birthdate: new Date(1981, 10, 11),
+    tags: ["Technology", "Entrepreneur"],
+    isFavorited: true,
+    isDeleted: false,
+    socialMedia: {
+      linkedinUrl: "https://www.linkedin.com/in/williamtanuwijaya",
+      websiteUrl: "https://www.tokopedia.com/",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -192,7 +234,7 @@ function renderContact(contact) {
   return `
   <tr class="group border-b border-slate-300">
       <td class="px-4 py-2  flex items-center gap-2 text-sm">
-        <img src=${imageUrl} alt="" class="h-10 rounded-full" />
+        <img src="${imageUrl}" alt="${contact.fullName}" class="h-10 rounded-full" />
         ${contact.fullName}
       </td>
       <td class="px-4 py-2 text-left text-sm">${contact.phone}</td>
@@ -207,6 +249,7 @@ function renderContact(contact) {
       </td>
   </tr>`;
 }
+
 function calculateAge(yearBirthdate) {
   const currentYear = new Date().getFullYear();
 
