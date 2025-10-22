@@ -154,9 +154,8 @@ let contactsData = [
   },
 ];
 
-const contactsElement = document.getElementById("contacts");
-
 function renderContacts(contacts) {
+  const contactsElement = document.getElementById("contacts");
   contactsElement.innerHTML = `${contacts
     .map((contact) => renderContact(contact))
     .join("")}`;
@@ -164,7 +163,6 @@ function renderContacts(contacts) {
 
 function renderContact(contact) {
   // const age = calculateAge(contact?.birthdate);
-  // const tagsString = contact.tags?.join(" ");
   const imageUrl = getFullNameToImage(contact.id);
   const tagString = contact.tags
     .map((tag) => {
@@ -192,22 +190,20 @@ function renderContact(contact) {
   // </li>`;
 
   return `
-  <tr>
-      <td class="px-4 py-2  flex items-center gap-2">
+  <tr class="group border-b border-slate-300">
+      <td class="px-4 py-2  flex items-center gap-2 text-sm">
         <img src=${imageUrl} alt="" class="h-10 rounded-full" />
         ${contact.fullName}
       </td>
-      <td class="px-4 py-2 text-left">${contact.phone}</td>
-      <td class="px-4 py-2 text-left">${contact.email}</td>
+      <td class="px-4 py-2 text-left text-sm">${contact.phone}</td>
+      <td class="px-4 py-2 text-left text-sm">${contact.email}</td>
       <td class="px-4 py-2 text-left text-sm">
-        <div class="flex flex-wrap gap-2">
-          ${tagString}
-        </div>
+        <div class="flex flex-wrap gap-2">${tagString}</div>
       </td>
-      <td class="p-3 space-x-2 text-sm">
-        <button class="text-blue-500 hover:underline cursor-pointer">View</button>
-        <button class="text-green-500 hover:underline cursor-pointer">Edit</button>
-        <button class="text-red-500 hover:underline cursor-pointer">Delete</button>
+      <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out flex">
+        <button class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/see.svg"/></button>
+        <button class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></button>
+        <button onclick="deleteContactById(contactsData, ${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
   </tr>`;
 }
@@ -276,7 +272,7 @@ function addContact(
     return;
   }
 
-  const newId = contacts[contacts.length - 1].id + 1;
+  const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 0;
 
   const newContact = {
     id: newId,
@@ -341,9 +337,10 @@ function updateContactById(
   contactsData = updatedContacts;
 }
 
-function deleteContactById(id, contacts) {
-  const updatedContact = contacts.filter((item) => item.id !== id);
-  contactsData = updatedContact;
+function deleteContactById(contacts, id) {
+  const updatedContacts = contacts.filter((contact) => contact.id !== id);
+  contactsData = updatedContacts;
+  renderContacts(contactsData);
 }
 
 function getContactById(id, contacts) {
@@ -355,9 +352,11 @@ function getContactById(id, contacts) {
 }
 
 function searchContactsByName(keyword, contacts) {
-  return contacts.filter((contact) =>
+  const updatedContacts = contacts.filter((contact) =>
     contact.fullName.toLowerCase().includes(keyword.toLowerCase())
   );
+  contactsData = updatedContacts;
+  renderContacts(contactsData);
 }
 
 function renderCountContacts(contacts) {

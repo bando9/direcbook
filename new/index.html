@@ -23,17 +23,18 @@
       <nav class="space-y-2">
         <a
           href="/new"
-          class="bg-primary text-light flex items-center p-2 w-3/4 rounded-2xl mt-10"
+          class="bg-primary text-light flex items-center gap-1 p-2 w-3/4 rounded-2xl mt-10"
         >
           <img src="/images/icons/plus.svg" alt="plus icon" />
-          <p class="text-lg font-semibold">Add Contact</p>
+          <p class="text-sm font-semibold">Create Contact</p>
         </a>
-        <div
+        <a
+          href="/"
           class="flex gap-2 items-center bg-secondary p-2 ps-3 mt-10 w-36 rounded-2xl"
         >
           <img src="/images/icons/contacts-1.svg" alt="contact icon" />
           <p class="font-semibold">Contacts</p>
-        </div>
+        </a>
 
         <div
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
@@ -68,17 +69,246 @@
       </nav>
     </aside>
 
-    <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-x-hidden flex-1">
-      <form>
-        <label for="fullname"> Full Name </label>
-        <input type="text" name="fullname" id="fullname" />
-      </form>
-      <footer class="p-2 mt-20">
+    <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
+      <div class="p-4 sm:p-12">
+        <div class="w-full max-w-xl rounded-lg bg-white p-6 shadow-lg sm:p-10">
+          <!-- <img
+            src="/images/icons/profile.png"
+            alt="Event Registration Form Illustration"
+            class="mb-8 w-25 rounded-lg sm:mb-12"
+          /> -->
+
+          <form method="POST">
+            <div class="mb-3">
+              <label
+                for="fullname"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Full Name*</label
+              >
+              <input
+                type="text"
+                name="fullname"
+                id="fullname"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+                required
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="email"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Email Address*</label
+              >
+              <input
+                type="email"
+                name="email"
+                id="email"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+                required
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="phone"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Phone Number*</label
+              >
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                required
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="organization"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Organization / Company Name (Optional)</label
+              >
+              <input
+                type="text"
+                name="organization"
+                id="organization"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="ticket-type"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Ticket Type / Registration Category*</label
+              >
+              <select
+                name="ticket-type"
+                id="ticket-type"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+                required
+              >
+                <option value="general">General</option>
+                <option value="vip">VIP</option>
+                <option value="student">Student</option>
+                <option value="speaker">Speaker</option>
+                <option value="press">Press</option>
+              </select>
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="num-attendees"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Number of Attendees (Optional)</label
+              >
+              <input
+                type="number"
+                name="num-attendees"
+                id="num-attendees"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+
+            <div class="mb-6">
+              <label class="mb-2 block text-sm font-medium text-gray-700"
+                >Location Preferences (Optional)</label
+              >
+              <div class="flex items-center gap-x-6">
+                <label class="flex items-center">
+                  <input
+                    type="radio"
+                    name="location-preference"
+                    id="physical-location"
+                    value="physical"
+                    class="form-radio h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <span class="ml-2 text-sm text-gray-600">Physical</span>
+                </label>
+                <label class="flex items-center">
+                  <input
+                    type="radio"
+                    name="location-preference"
+                    id="virtual-location"
+                    value="virtual"
+                    class="form-radio h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <span class="ml-2 text-sm text-gray-600">Virtual</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="preferred-session"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Select Preferred Session/City</label
+              >
+              <select
+                name="preferred-session"
+                id="preferred-session"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              >
+                <option value="session-1">Session 1 - New York</option>
+                <option value="session-2">Session 2 - Los Angeles</option>
+                <option value="session-3">Session 3 - Virtual</option>
+              </select>
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="dietary-preferences"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Dietary Preferences</label
+              >
+              <select
+                name="dietary-preferences"
+                id="dietary-preferences"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              >
+                <option value="none">None</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten-free">Gluten-Free</option>
+                <option value="halal">Halal</option>
+              </select>
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="accessibility-needs"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Accessibility Needs</label
+              >
+              <textarea
+                name="accessibility-needs"
+                id="accessibility-needs"
+                rows="3"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              ></textarea>
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="promo-code"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Referral Code / Promo Code</label
+              >
+              <input
+                type="text"
+                name="promo-code"
+                id="promo-code"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="comments"
+                class="mb-2 block text-sm font-medium text-gray-700"
+                >Comments or Questions</label
+              >
+              <textarea
+                name="comments"
+                id="comments"
+                rows="5"
+                class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+              ></textarea>
+            </div>
+
+            <div class="mb-6 flex items-center">
+              <input
+                type="checkbox"
+                id="consent-checkbox"
+                class="form-checkbox h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                required
+              />
+              <label for="consent-checkbox" class="ml-2 text-sm text-gray-600">
+                I agree to the
+                <a href="#" class="text-indigo-600 hover:underline"
+                  >terms and conditions of registration</a
+                >.
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full rounded-md bg-indigo-600 px-6 py-3 font-medium text-white shadow-sm transition duration-300 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
+            >
+              Register Now
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <footer class="p-2 mt-10 ms-50">
         &copy; 2025. Direcbook by
         <a href="https://bandomega.com" class="hover:underline" target="_blank"
           >Bando Mega</a
         >
-        Allright reserved.
+        All Rights Reserved.
       </footer>
     </main>
 
