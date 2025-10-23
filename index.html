@@ -71,10 +71,15 @@
 
     <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
       <section class="p-1 mt-3">
-        <form class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1">
+        <form
+          class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1"
+          method="get"
+          id="search-form"
+        >
           <img src="/images/icons/search.svg" alt="search icon" />
-          <label class="rounded-3xl w-full">
+          <label class="rounded-3xl w-full" for="q">
             <input
+              id="search-input"
               name="q"
               type="text"
               placeholder="Search contact"

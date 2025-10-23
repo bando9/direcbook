@@ -198,6 +198,7 @@ let initialContacts = [
 
 function renderContacts(contacts) {
   const contactElement = document.getElementById("contacts");
+
   contactElement.innerHTML = `${contacts
     .map((contact) => renderContact(contact))
     .join("")}`;
@@ -230,6 +231,31 @@ function renderContact(contact) {
   </tr>`;
 }
 
+function deleteContactById(contacts, id) {
+  const updatedContacts = contacts.filter((contact) => contact.id !== id);
+  initialContacts = updatedContacts;
+  renderContacts(initialContacts);
+}
+
+function searchContactsByName(keyword, contacts) {
+  const keywordElement = document.getElementById("#search-form");
+  // keywordElement.value = keyword;
+
+  const formData = new FormData(keywordElement);
+
+  const search = {
+    keyword: formData.get("q"),
+  };
+
+  const updatedContacts = contacts.filter((contact) =>
+    contact.fullName.toLowerCase().includes(search.keyword.toLowerCase())
+  );
+
+  initialContacts = updatedContacts;
+
+  renderContacts(initialContacts);
+}
+
 function calculateAge(yearBirthdate) {
   const currentYear = new Date().getFullYear();
 
@@ -250,10 +276,6 @@ function calculateAge(yearBirthdate) {
   }
 
   return null;
-}
-
-function renderSeparator() {
-  console.log("============================");
 }
 
 function getColorBadge(tag) {
@@ -360,26 +382,12 @@ function updateContactById(
   initialContacts = updatedContacts;
 }
 
-function deleteContactById(contacts, id) {
-  const updatedContacts = contacts.filter((contact) => contact.id !== id);
-  initialContacts = updatedContacts;
-  renderContacts(initialContacts);
-}
-
 function getContactById(id, contacts) {
   const contact = contacts.find((contact) => contact.id === id);
 
   if (!contact) return null;
 
   renderContact(contact);
-}
-
-function searchContactsByName(keyword, contacts) {
-  const updatedContacts = contacts.filter((contact) =>
-    contact.fullName.toLowerCase().includes(keyword.toLowerCase())
-  );
-  initialContacts = updatedContacts;
-  renderContacts(initialContacts);
 }
 
 function renderCountContacts(contacts) {
