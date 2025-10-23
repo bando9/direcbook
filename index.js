@@ -1,4 +1,4 @@
-let contactsData = [
+let initialContacts = [
   {
     id: 1,
     fullName: "Warren Edward Buffett",
@@ -197,14 +197,13 @@ let contactsData = [
 ];
 
 function renderContacts(contacts) {
-  const contactsElement = document.getElementById("contacts");
-  contactsElement.innerHTML = `${contacts
+  const contactElement = document.getElementById("contacts");
+  contactElement.innerHTML = `${contacts
     .map((contact) => renderContact(contact))
     .join("")}`;
 }
 
 function renderContact(contact) {
-  // const age = calculateAge(contact?.birthdate);
   const imageUrl = getFullNameToImage(contact.id);
   const tagString = contact.tags
     .map((tag) => {
@@ -212,27 +211,8 @@ function renderContact(contact) {
     })
     .join(" ");
 
-  // console.log(
-  //   📍 ${contact.address || "-"}
-  //   🎂 ${age || "-"}
-  //   ⭐ Favorite: ${contact.isFavorited ? "Yes" : "No"}
-  //   🔗 LinkedIn: ${contact.socialMedia?.linkedinUrl || "-"}
-  //   🌐 Website: ${contact.socialMedia?.websiteUrl || "-"}
-  //   🕒 Created: ${contact.createdAt?.toLocaleString() || "-"}
-  //   📝 Updated: ${contact.updatedAt?.toLocaleString() || "-"}`
-  // );
-  // renderSeparator();
-
-  // return `
-  // <li class="grid grid-cols-12 gap-2 items-center p-3 bg-card2 rounded-xl">
-  //   <img src=${imageUrl} alt="" class="h-9 rounded-full" />
-  //   <p class="text-md col-span-4">${contact.fullName}</p>
-  //   <p class="text-md col-span-4">${contact.email}</p>
-  //   <p class="text-md col-span-2">${contact.phone}</p>
-  // </li>`;
-
   return `
-  <tr class="group border-b border-slate-300">
+  <tr class="group border-b border-slate-300 hover:bg-card2 cursor-pointer" onclick="if(!event.target.closest('button')) window.location='/detail/?id=${contact.id}'">
       <td class="px-4 py-2  flex items-center gap-2 text-sm">
         <img src="${imageUrl}" alt="${contact.fullName}" class="h-10 rounded-full" />
         ${contact.fullName}
@@ -243,9 +223,9 @@ function renderContact(contact) {
         <div class="flex flex-wrap gap-2">${tagString}</div>
       </td>
       <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out flex">
-        <a href="/details" class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/see.svg"/></a>
+        <button class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/favorite.svg"/></button>
         <a href="/update-contact" class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></a>
-        <button onclick="deleteContactById(contactsData, ${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
+        <button onclick="deleteContactById(initialContacts, ${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
   </tr>`;
 }
@@ -336,7 +316,7 @@ function addContact(
   };
 
   const updatedContacts = [...contacts, newContact];
-  contactsData = updatedContacts;
+  initialContacts = updatedContacts;
 }
 
 function updateContactById(
@@ -377,13 +357,13 @@ function updateContactById(
     }
     return contact;
   });
-  contactsData = updatedContacts;
+  initialContacts = updatedContacts;
 }
 
 function deleteContactById(contacts, id) {
   const updatedContacts = contacts.filter((contact) => contact.id !== id);
-  contactsData = updatedContacts;
-  renderContacts(contactsData);
+  initialContacts = updatedContacts;
+  renderContacts(initialContacts);
 }
 
 function getContactById(id, contacts) {
@@ -398,8 +378,8 @@ function searchContactsByName(keyword, contacts) {
   const updatedContacts = contacts.filter((contact) =>
     contact.fullName.toLowerCase().includes(keyword.toLowerCase())
   );
-  contactsData = updatedContacts;
-  renderContacts(contactsData);
+  initialContacts = updatedContacts;
+  renderContacts(initialContacts);
 }
 
 function renderCountContacts(contacts) {
@@ -429,22 +409,22 @@ function showContactsBirthdayThisMonth(contacts) {
 }
 
 function saveData() {
-  const stringifiedContactsData = JSON.stringify(contactsData);
-  localStorage.setItem("contactsData", stringifiedContactsData);
+  const stringifiedinitialContacts = JSON.stringify(initialContacts);
+  localStorage.setItem("initialContacts", stringifiedinitialContacts);
 }
 
 function loadData() {
-  const loadedData = localStorage.getItem("contactsData");
-  const parsedContactsData = JSON.parse(loadedData);
-  return parsedContactsData;
+  const loadedData = localStorage.getItem("initialContacts");
+  const parsedinitialContacts = JSON.parse(loadedData);
+  return parsedinitialContacts;
 }
 
 function getFullNameToImage(id) {
-  const contact = contactsData.find((contact) => contact.id == id);
+  const contact = initialContacts.find((contact) => contact.id == id);
   const getFullName = contact.fullName.split(" ").join("+");
   const getImage = `https://ui-avatars.com/api/?name=${getFullName}&background=random`;
   return getImage;
 }
 
-renderContacts(contactsData);
-renderCountContacts(contactsData);
+renderContacts(initialContacts);
+renderCountContacts(initialContacts);
