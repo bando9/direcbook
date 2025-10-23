@@ -86,7 +86,7 @@ let initialContacts = [
       country: "USA",
     },
     birthdate: new Date(1964, 0, 12),
-    tags: ["Investor", "Technology", "Entrepreneur"],
+    tags: [],
     isFavorited: false,
     isDeleted: false,
     socialMedia: {
@@ -206,10 +206,8 @@ function renderContacts(contacts) {
 
 function renderContact(contact) {
   const imageUrl = getFullNameToImage(contact.id);
-  const tagString = contact.tags
-    .map((tag) => {
-      return `<span class="${getColorBadge(tag)}">${tag}</span>`;
-    })
+  const tagString = (contact?.tags || [])
+    .map((tag) => `<span class="${getColorBadge(tag)}">${tag}</span>`)
     .join(" ");
 
   return `
@@ -297,49 +295,78 @@ function getColorBadge(tag) {
   }
 }
 
-function addContact(
-  contacts,
-  {
-    fullName = "Unknown",
-    phone = null,
-    email = null,
-    address = null,
-    birthdate = null,
-    tags = null,
-    isFavorited = false,
-    isDeleted = false,
-    socialMedia: { linkedinUrl, websiteUrl },
-    createdAt = new Date(),
-    updatedAt = new Date(),
-  }
-) {
-  if (checkPhoneAlreadyUsed(phone, contacts)) {
-    return;
-  }
+const addContactFormElement = document.getElementById("add-contact-form");
 
-  const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 0;
+addContactFormElement.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-  const newContact = {
+  console.log("add contact");
+
+  const newId =
+    initialContacts.length > 0
+      ? initialContacts[initialContacts.length - 1].id + 1
+      : 0;
+
+  const formData = new FormData(addContactFormElement);
+  const addContactData = {
     id: newId,
-    fullName,
-    phone,
-    email,
-    address,
-    birthdate,
-    tags,
-    isFavorited,
-    isDeleted,
-    socialMedia: {
-      linkedinUrl: linkedinUrl ?? null,
-      websiteUrl: websiteUrl ?? null,
-    },
-    createdAt,
-    updatedAt,
+    fullName: formData.get("full-name"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
   };
 
-  const updatedContacts = [...contacts, newContact];
+  const updatedContacts = [...initialContacts, addContactData];
+
   initialContacts = updatedContacts;
-}
+
+  renderContacts(initialContacts);
+
+  addContactFormElement.reset();
+});
+
+// function addContact(
+//   contacts,
+//   {
+//     fullName = "Unknown",
+//     phone = null,
+//     email = null,
+//     address = null,
+//     birthdate = null,
+//     tags = null,
+//     isFavorited = false,
+//     isDeleted = false,
+//     socialMedia: { linkedinUrl, websiteUrl },
+//     createdAt = new Date(),
+//     updatedAt = new Date(),
+//   }
+// ) {
+//   if (checkPhoneAlreadyUsed(phone, contacts)) {
+//     return;
+//   }
+
+//   const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 0;
+
+//   const newContact = {
+//     id: newId,
+//     fullName,
+//     phone,
+//     email,
+//     address,
+//     birthdate,
+//     tags,
+//     isFavorited,
+//     isDeleted,
+//     socialMedia: {
+//       linkedinUrl: linkedinUrl ?? null,
+//       websiteUrl: websiteUrl ?? null,
+//     },
+//     createdAt,
+//     updatedAt,
+//   };
+
+//   const updatedContacts = [...contacts, newContact];
+//   initialContacts = updatedContacts;
+// }
 
 function updateContactById(
   id,

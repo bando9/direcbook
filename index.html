@@ -106,6 +106,28 @@
       </section>
 
       <section class="p-2 overflow-x-auto relative">
+        <form
+          id="add-contact-form"
+          method="post"
+          class="flex flex-col gap-3 mb-5"
+        >
+          <label for="full-name">
+            Full Name: <input name="full-name" type="text" class="border" />
+          </label>
+          <label for="email">
+            Email: <input name="email" type="email" class="border" />
+          </label>
+          <label for="phone">
+            Phone: <input name="phone" type="text" class="border" />
+          </label>
+
+          <button
+            type="submit"
+            class="w-50 rounded-lg bg-btn text-slate-700 py-1 cursor-pointer"
+          >
+            Save
+          </button>
+        </form>
         <table class="min-w-full border-collapse">
           <thead class="bg-btn sticky z-10 -top-2">
             <tr>
