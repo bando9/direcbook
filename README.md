@@ -9,11 +9,20 @@ The app will be used to efficiently manage our contacts. The goal is to create a
 Initial basic structure:
 
 ```sh
-address-book
+direcbook
+├── detail
+│   └── index.html
+├── new
+│   └── index.html
+├── src
+│   ├── input.css
+│   └── output.css
+├── update-contact
+│   └── index.html
 ├── README.md
 ├── index.html
-├── index.css
-└── index.js
+├── index.js
+└── storage.js
 ```
 
 ## Tech Stack

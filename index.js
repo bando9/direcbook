@@ -196,13 +196,25 @@ let initialContacts = [
   },
 ];
 
-function renderContacts(contacts) {
+function saveInitialContacts() {
+  const contactsData = loadData();
+
+  if (contactsData.length === 0) {
+    saveData(initialContacts);
+  }
+}
+
+function renderContacts() {
   const contactElement = document.getElementById("contacts");
+
+  saveInitialContacts();
+  const contacts = loadData();
 
   contactElement.innerHTML = `${contacts
     .map((contact) => renderContact(contact))
     .join("")}`;
 }
+renderContacts();
 
 function renderContact(contact) {
   const imageUrl = getFullNameToImage(contact.id);
@@ -299,8 +311,6 @@ const addContactFormElement = document.getElementById("add-contact-form");
 
 addContactFormElement.addEventListener("submit", (event) => {
   event.preventDefault();
-
-  console.log("add contact");
 
   const newId =
     initialContacts.length > 0
@@ -443,17 +453,6 @@ function showContactsBirthdayThisMonth(contacts) {
   });
 }
 
-function saveData() {
-  const stringifiedinitialContacts = JSON.stringify(initialContacts);
-  localStorage.setItem("initialContacts", stringifiedinitialContacts);
-}
-
-function loadData() {
-  const loadedData = localStorage.getItem("initialContacts");
-  const parsedinitialContacts = JSON.parse(loadedData);
-  return parsedinitialContacts;
-}
-
 function getFullNameToImage(id) {
   const contact = initialContacts.find((contact) => contact.id == id);
   const getFullName = contact.fullName.split(" ").join("+");
@@ -461,5 +460,5 @@ function getFullNameToImage(id) {
   return getImage;
 }
 
-renderContacts(initialContacts);
-renderCountContacts(initialContacts);
+// renderContacts(initialContacts);
+// renderCountContacts(initialContacts);
