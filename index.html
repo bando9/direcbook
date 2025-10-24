@@ -71,36 +71,38 @@
 
     <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
       <section class="p-1 mt-3">
-        <form
-          class="bg-card1 flex items-center py-1 px-2 rounded-2xl gap-1"
-          method="get"
-          id="search-form"
-        >
-          <img src="/images/icons/search.svg" alt="search icon" />
-          <label class="rounded-3xl w-full" for="q">
-            <input
-              id="search-input"
-              name="q"
-              type="text"
-              placeholder="Search contact"
-              class="w-full ring-0 focus:ring-0 shadow-none focus:shadow-none focus:outline-none border-none focus:border-none"
+        <div class="flex items-center justify-between mx-5">
+          <form
+            class="bg-card1 flex items-center w-80 py-2 px-2 rounded-2xl gap-1"
+            method="get"
+            id="search-form"
+          >
+            <img src="/images/icons/search.svg" alt="search icon" />
+            <label class="rounded-3xl w-full" for="q">
+              <input
+                id="search-input"
+                name="q"
+                type="text"
+                placeholder="Search contact"
+                class="w-full ring-0 focus:ring-0 shadow-none focus:shadow-none focus:outline-none border-none focus:border-none"
+              />
+            </label>
+          </form>
+          <div class="flex items-center gap-3">
+            <img
+              src="/images/icons/profile.png"
+              alt="profile image"
+              class="h-8"
             />
-          </label>
-          <img
-            src="/images/icons/profile.png"
-            alt="profile image"
-            class="h-8"
-          />
-        </form>
+            <p class="text-sm font-semibold">Bando Mega</p>
+          </div>
+        </div>
         <div class="px-4 pt-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <img src="/images/icons/contacts-1.svg" alt="contacts" />
             <p class="text-md">
               All Contacts (<span id="count-contacts">0</span>)
             </p>
-          </div>
-          <div class="flex items-center justify-end gap-3.5">
-            <img src="/images/icons/sort.png" alt="" />
           </div>
         </div>
       </section>
@@ -112,13 +114,14 @@
           class="flex flex-col gap-3 mb-5"
         >
           <label for="full-name">
-            Full Name: <input name="full-name" type="text" class="border" />
+            Full Name:
+            <input name="full-name" type="text" class="border" required />
           </label>
           <label for="email">
-            Email: <input name="email" type="email" class="border" />
+            Email: <input name="email" type="email" class="border" required />
           </label>
           <label for="phone">
-            Phone: <input name="phone" type="text" class="border" />
+            Phone: <input name="phone" type="text" class="border" required />
           </label>
 
           <button

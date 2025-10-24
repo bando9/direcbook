@@ -213,8 +213,9 @@ function renderContacts() {
   contactElement.innerHTML = `${contacts
     .map((contact) => renderContact(contact))
     .join("")}`;
+
+  renderCountContacts(contacts);
 }
-renderContacts();
 
 function renderContact(contact) {
   const imageUrl = getFullNameToImage(contact.id);
@@ -236,35 +237,41 @@ function renderContact(contact) {
       <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out flex">
         <button class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/favorite.svg"/></button>
         <a href="/update-contact" class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></a>
-        <button onclick="deleteContactById(initialContacts, ${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
+        <button onclick="deleteContactById(${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
   </tr>`;
 }
 
-function deleteContactById(contacts, id) {
+function deleteContactById(id) {
+  let contacts = loadData();
+
   const updatedContacts = contacts.filter((contact) => contact.id !== id);
-  initialContacts = updatedContacts;
-  renderContacts(initialContacts);
+  contacts = updatedContacts;
+
+  saveData(updatedContacts);
+
+  renderContacts(contacts);
 }
 
-function searchContactsByName(keyword, contacts) {
-  const keywordElement = document.getElementById("#search-form");
-  // keywordElement.value = keyword;
+const searchInputElement = document.getElementById("search-input");
+
+function searchContactsByName(event) {
+  event.preventDefault();
+  const contacts = loadData();
+
+  const keywordElement = document.getElementById("search-form");
 
   const formData = new FormData(keywordElement);
 
-  const search = {
-    keyword: formData.get("q"),
-  };
+  const keyword = formData.get("q");
 
   const updatedContacts = contacts.filter((contact) =>
-    contact.fullName.toLowerCase().includes(search.keyword.toLowerCase())
+    contact.fullName.toLowerCase().includes(keyword.toLowerCase())
   );
-
-  initialContacts = updatedContacts;
-
-  renderContacts(initialContacts);
+  console.log(updatedContacts);
 }
+
+searchInputElement.addEventListener("input", searchContactsByName);
 
 function calculateAge(yearBirthdate) {
   const currentYear = new Date().getFullYear();
@@ -309,30 +316,35 @@ function getColorBadge(tag) {
 
 const addContactFormElement = document.getElementById("add-contact-form");
 
-addContactFormElement.addEventListener("submit", (event) => {
+function addContact(event) {
   event.preventDefault();
 
-  const newId =
-    initialContacts.length > 0
-      ? initialContacts[initialContacts.length - 1].id + 1
-      : 0;
-
   const formData = new FormData(addContactFormElement);
-  const addContactData = {
+
+  const contacts = loadData();
+  const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 0;
+
+  const newContact = {
     id: newId,
     fullName: formData.get("full-name"),
     email: formData.get("email"),
     phone: formData.get("phone"),
   };
 
-  const updatedContacts = [...initialContacts, addContactData];
+  if (!newContact.fullName) return;
+  if (!newContact.phone) return;
+  if (!newContact.email) return;
 
-  initialContacts = updatedContacts;
+  const updatedContacts = [...contacts, newContact];
 
-  renderContacts(initialContacts);
+  saveData(updatedContacts);
 
   addContactFormElement.reset();
-});
+
+  renderContacts();
+}
+
+addContactFormElement.addEventListener("submit", addContact);
 
 // function addContact(
 //   contacts,
@@ -377,6 +389,15 @@ addContactFormElement.addEventListener("submit", (event) => {
 //   const updatedContacts = [...contacts, newContact];
 //   initialContacts = updatedContacts;
 // }
+
+function getFullNameToImage(id) {
+  const contacts = loadData();
+
+  const contact = contacts.find((contact) => contact.id == id);
+  const getFullName = contact.fullName.split(" ").join("+");
+  const getImage = `https://ui-avatars.com/api/?name=${getFullName}&background=random`;
+  return getImage;
+}
 
 function updateContactById(
   id,
@@ -453,12 +474,4 @@ function showContactsBirthdayThisMonth(contacts) {
   });
 }
 
-function getFullNameToImage(id) {
-  const contact = initialContacts.find((contact) => contact.id == id);
-  const getFullName = contact.fullName.split(" ").join("+");
-  const getImage = `https://ui-avatars.com/api/?name=${getFullName}&background=random`;
-  return getImage;
-}
-
-// renderContacts(initialContacts);
-// renderCountContacts(initialContacts);
+renderContacts();
