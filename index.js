@@ -208,13 +208,27 @@ function renderContacts() {
   const contactElement = document.getElementById("contacts");
 
   saveInitialContacts();
-  const contacts = loadData();
+  let contacts = loadData();
 
-  contactElement.innerHTML = `${contacts
-    .map((contact) => renderContact(contact))
-    .join("")}`;
+  const showContacts = (contacts) => {
+    return `${contacts.map((contact) => renderContact(contact)).join("")}`;
+  };
 
-  renderCountContacts(contacts);
+  const searchParams = new URLSearchParams(window.location.search);
+  const query = searchParams.get("q");
+
+  let queryElement = document.getElementById("q");
+  queryElement.value = query;
+
+  if (query) {
+    const filteredContacts = searchContactsByName(query, contacts);
+    contacts = filteredContacts;
+    contactElement.innerHTML = showContacts(contacts);
+    renderCountContacts(contacts);
+  } else {
+    contactElement.innerHTML = showContacts(contacts);
+    renderCountContacts(contacts);
+  }
 }
 
 function renderContact(contact) {
@@ -253,25 +267,12 @@ function deleteContactById(id) {
   renderContacts(contacts);
 }
 
-const searchInputElement = document.getElementById("search-input");
-
-function searchContactsByName(event) {
-  event.preventDefault();
-  const contacts = loadData();
-
-  const keywordElement = document.getElementById("search-form");
-
-  const formData = new FormData(keywordElement);
-
-  const keyword = formData.get("q");
-
+function searchContactsByName(keyword, contacts) {
   const updatedContacts = contacts.filter((contact) =>
     contact.fullName.toLowerCase().includes(keyword.toLowerCase())
   );
-  console.log(updatedContacts);
+  return updatedContacts;
 }
-
-searchInputElement.addEventListener("input", searchContactsByName);
 
 function calculateAge(yearBirthdate) {
   const currentYear = new Date().getFullYear();
