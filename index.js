@@ -13,7 +13,7 @@ let initialContacts = [
       country: "USA",
     },
     birthdate: new Date(1930, 7, 30),
-    tags: ["Investor"],
+    tags: ["Family"],
     isFavorited: true,
     isDeleted: false,
     socialMedia: {
@@ -37,7 +37,7 @@ let initialContacts = [
       country: "USA",
     },
     birthdate: new Date(1944, 7, 17),
-    tags: ["Investor", "Technology"],
+    tags: ["Family", "Technology"],
     isFavorited: true,
     isDeleted: false,
     socialMedia: {
@@ -112,7 +112,7 @@ let initialContacts = [
     },
     birthdate: new Date(1963, 1, 17),
     tags: ["Technology", "AI"],
-    isFavorited: true,
+    isFavorited: false,
     isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/jensen-huang",
@@ -136,7 +136,7 @@ let initialContacts = [
       country: "USA",
     },
     birthdate: new Date(1954, 11, 16),
-    tags: ["Investor", "Entrepreneur"],
+    tags: ["Family", "Entrepreneur"],
     isFavorited: false,
     isDeleted: false,
     socialMedia: {
@@ -216,12 +216,24 @@ function renderContacts() {
 
   const searchParams = new URLSearchParams(window.location.search);
   const query = searchParams.get("q");
+  const labelFiltered = searchParams.get("tag");
+  const isFavorited = searchParams.get("isFavorited");
 
   let queryElement = document.getElementById("q");
   queryElement.value = query;
 
   if (query) {
     const filteredContacts = searchContactsByName(query, contacts);
+    contacts = filteredContacts;
+    contactElement.innerHTML = showContacts(contacts);
+    renderCountContacts(contacts);
+  } else if (labelFiltered) {
+    const filteredContacts = filterByLabels(labelFiltered, contacts);
+    contacts = filteredContacts;
+    contactElement.innerHTML = showContacts(contacts);
+    renderCountContacts(contacts);
+  } else if (isFavorited) {
+    const filteredContacts = filterFavorites(contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
     renderCountContacts(contacts);
@@ -236,6 +248,9 @@ function renderContact(contact) {
   const tagString = (contact?.tags || [])
     .map((tag) => `<span class="${getColorBadge(tag)}">${tag}</span>`)
     .join(" ");
+  const isFavoritedIcon = contact.isFavorited
+    ? "/images/icons/favorite-1.svg"
+    : "/images/icons/favorite.svg";
 
   return `
   <tr class="group border-b border-slate-300 hover:bg-card2 cursor-pointer" onclick="if(!event.target.closest('button')) window.location='/detail/?id=${contact.id}'">
@@ -249,7 +264,7 @@ function renderContact(contact) {
         <div class="flex flex-wrap gap-2">${tagString}</div>
       </td>
       <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out flex">
-        <button class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/favorite.svg"/></button>
+        <button class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
         <a href="/update-contact" class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></a>
         <button onclick="deleteContactById(${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
@@ -274,6 +289,19 @@ function searchContactsByName(keyword, contacts) {
   return updatedContacts;
 }
 
+function filterFavorites(contacts) {
+  const updatedContacts = contacts.filter((contact) => contact.isFavorited);
+  return updatedContacts;
+}
+
+function filterByLabels(label, contacts) {
+  const updatedContacts = contacts.filter((contact) =>
+    contact.tags?.map((tag) => tag.toLowerCase()).includes(label.toLowerCase())
+  );
+  return updatedContacts;
+}
+console.log(filterByLabels("family", initialContacts));
+
 function calculateAge(yearBirthdate) {
   const currentYear = new Date().getFullYear();
 
@@ -295,10 +323,9 @@ function calculateAge(yearBirthdate) {
 
   return null;
 }
-
 function getColorBadge(tag) {
   switch (tag.toLowerCase()) {
-    case "investor":
+    case "family":
       return `inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-xs font-medium text-yellow-500 inset-ring inset-ring-yellow-400/20`;
       break;
     case "entrepreneur":
@@ -314,7 +341,6 @@ function getColorBadge(tag) {
       return "inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-400 inset-ring inset-ring-gray-400/20";
   }
 }
-
 const addContactFormElement = document.getElementById("add-contact-form");
 
 function addContact(event) {
