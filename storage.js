@@ -21,3 +21,11 @@ function loadData() {
 const goToDashboardPage = () => {
   window.location = "/";
 };
+
+function goBack() {
+  if (document.referrer !== "") {
+    return `${window.history.back()}`;
+  } else {
+    return `${(window.location.href = "/")}`;
+  }
+}

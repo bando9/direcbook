@@ -30,12 +30,19 @@ function renderContactById() {
     email,
     birthdate,
     phone,
-    address: { line1, line2, city, region, postalCode, country },
+    address: {
+      line1 = "",
+      line2 = "",
+      city = "",
+      region = "",
+      postalCode = "",
+      country = "",
+    } = {},
     isFavorited,
     isDeleted,
-    socialMedia: { linkedinUrl, websiteUrl },
-    createdAt,
+    socialMedia: { linkedinUrl = "", websiteUrl = "" } = {},
     updatedAt,
+    createdAt,
   } = contact;
   const age = calculateAge(birthdate);
 
@@ -48,11 +55,11 @@ function renderContactById() {
   const imageUrl = getFullNameToImage(contact.id);
 
   const renderFoundContact = `<div class="flex justify-between pb-5">
-            <a
-              href="/"
+            <button
+              onclick="goBack()"
               class="hover:bg-card1 rounded-full cursor-pointer h-10 w-10 flex justify-center items-center mb-5"
               ><img src="/images/icons/back.svg"
-            /></a>
+            /></button>
             <div class="p-3 space-x-3 flex">
               <a
                 class=" hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
@@ -79,11 +86,15 @@ function renderContactById() {
             />
             <div class="flex flex-col gap-1">
               <h1 class="text-xl font-semibold">${fullName}</h1>
-              <p class="text-gray-700 text-sm">${new Date(
+              ${
                 birthdate
-              ).toLocaleString("en-UK", {
-                dateStyle: "long",
-              })} (${age} years)</p>
+                  ? `<p class="text-gray-700 text-sm">${new Date(
+                      birthdate
+                    ).toLocaleString("en-UK", {
+                      dateStyle: "long",
+                    })} (${age} years)</p>`
+                  : ""
+              }
               <div class="flex flex-wrap gap-2">${tagString}</div>
             </div>
           </div>
@@ -105,37 +116,48 @@ function renderContactById() {
                 <img src="/images/icons/copy.svg" />
               </button>
             </p>
-            <div class="flex flex-col gap-1">
+            ${
+              line1 || line2 || city || region || postalCode || country
+                ? `<div class="flex flex-col gap-1">
               <p class="text-slate-700 text-sm gap-1">${line1}</p>
               <p class="text-slate-700 text-sm gap-1">${line2}</p>
               <p class="text-slate-700 text-sm">${city}</p>
               <p class="text-slate-700 text-sm">${region}</p>
               <p class="text-slate-700 text-sm">${postalCode}</p>
               <p class="text-slate-700 text-sm">${country}</p>
-            </div>
-            <p class="text-slate-700 text-sm flex gap-3 items-center">
+            </div>`
+                : ""
+            }
+            ${
+              linkedinUrl
+                ? `<p class="text-slate-700 text-sm flex gap-3 items-center">
               <a href="${linkedinUrl}">${linkedinUrl}</a>
               <button
                 class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
               >
                 <img src="/images/icons/copy.svg" />
               </button>
-            </p>
-            <p class="text-slate-700 text-sm flex gap-3 items-center">
+            </p>`
+                : ""
+            }
+            ${
+              websiteUrl
+                ? `<p class="text-slate-700 text-sm flex gap-3 items-center">
               <a href="${websiteUrl}">${websiteUrl}</a>
               <button
                 class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
               >
                 <img src="/images/icons/copy.svg" />
               </button>
-            </p>
-
+            </p>`
+                : ""
+            }
             <div>
             <h2 class="text-slate-700 text-sm">Histori:</h2>
             <p class="text-slate-700 text-xs">Last edited. ${new Date(
               updatedAt
             ).toLocaleString("en-UK", {
-              dateStyle: "medium",
+              dateStyle: "long",
               timeStyle: "short",
             })}</p>
             <p class="text-slate-700 text-xs">Added contact. ${new Date(

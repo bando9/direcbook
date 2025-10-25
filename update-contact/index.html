@@ -32,7 +32,7 @@
           href="/"
           class="flex gap-2 items-center bg-secondary p-2 ps-3 mt-10 w-36 rounded-2xl"
         >
-          <img src="/images/icons/contacts-1.svg" alt="contact icon" />
+          <img src="/images/icons/contacts.svg" alt="contact icon" />
           <p class="font-semibold">Contacts</p>
         </a>
 
@@ -72,20 +72,19 @@
     <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
       <div class="p-4 sm:p-12">
         <div class="w-full max-w-xl rounded-lg bg-white p-6 shadow-lg sm:p-10">
-          <form method="POST">
+          <form method="POST" id="update-contact">
             <div class="mb-6">
               <label
-                for="fullname"
+                for="full-name"
                 class="mb-2 block text-sm font-medium text-gray-700"
                 >Full Name<span class="text-red-400">*</span></label
               >
               <input
                 type="text"
-                name="fullname"
-                id="fullname"
+                name="full-name"
+                id="full-name"
                 placeholder="Warren Edward Buffett"
                 class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-                required
               />
             </div>
 
@@ -101,7 +100,6 @@
                 id="email"
                 placeholder="warrenbuffett@bhhsservice.com"
                 class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
-                required
               />
             </div>
 
@@ -116,7 +114,6 @@
                 name="phone"
                 id="phone"
                 placeholder="+12025550123"
-                required
                 class="w-full rounded-md border border-gray-300 p-2 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
@@ -309,6 +306,6 @@
       </footer>
     </main>
 
-    <script src="/index.js"></script>
+    <script src="/storage.js"></script>
   </body>
 </html>
