@@ -18,7 +18,7 @@ let initialContacts = [
     isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/warrenbuffett",
-      websiteUrl: "https://www.berkshirehathaway.com/",
+      websiteUrl: "https://www.berkshirehathaway.com",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -42,7 +42,7 @@ let initialContacts = [
     isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/larryellison",
-      websiteUrl: "https://www.oracle.com/",
+      websiteUrl: "https://www.oracle.com",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -91,7 +91,7 @@ let initialContacts = [
     isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/jeffbezos",
-      websiteUrl: "https://www.amazon.com/",
+      websiteUrl: "https://www.amazon.com",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -116,7 +116,7 @@ let initialContacts = [
     isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/jensen-huang",
-      websiteUrl: "https://www.nvidia.com/",
+      websiteUrl: "https://www.nvidia.com",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -141,7 +141,7 @@ let initialContacts = [
     isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/howardbuffett",
-      websiteUrl: "https://www.berkshirehathaway.com/",
+      websiteUrl: "https://www.berkshirehathaway.com",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -189,7 +189,7 @@ let initialContacts = [
     isDeleted: false,
     socialMedia: {
       linkedinUrl: "https://www.linkedin.com/in/williamtanuwijaya",
-      websiteUrl: "https://www.tokopedia.com/",
+      websiteUrl: "https://www.tokopedia.com",
     },
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -300,29 +300,7 @@ function filterByLabels(label, contacts) {
   );
   return updatedContacts;
 }
-console.log(filterByLabels("family", initialContacts));
 
-function calculateAge(yearBirthdate) {
-  const currentYear = new Date().getFullYear();
-
-  if (typeof yearBirthdate == "string") {
-    const getYearDate = new Date(yearBirthdate).getFullYear();
-    const age = currentYear - getYearDate;
-    return age;
-  }
-  if (typeof yearBirthdate == "object") {
-    const getYearDate = yearBirthdate.getFullYear();
-    const age = currentYear - getYearDate;
-    return age;
-  }
-
-  if (typeof yearBirthdate == "number") {
-    const age = currentYear - yearBirthdate;
-    return age;
-  }
-
-  return null;
-}
 function getColorBadge(tag) {
   switch (tag.toLowerCase()) {
     case "family":
@@ -341,6 +319,7 @@ function getColorBadge(tag) {
       return "inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-400 inset-ring inset-ring-gray-400/20";
   }
 }
+
 const addContactFormElement = document.getElementById("add-contact-form");
 
 function addContact(event) {

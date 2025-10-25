@@ -30,40 +30,46 @@
         </a>
         <a
           href="/"
-          class="flex gap-2 items-center bg-secondary p-2 ps-3 mt-10 w-36 rounded-2xl"
+          class="flex gap-2 items-center bg-btn p-2 ps-3 mt-10 w-36 rounded-2xl"
         >
           <img src="/images/icons/contacts-1.svg" alt="contact icon" />
-          <p class="font-semibold">Contacts</p>
+          <p class="font-reguler">Contacts</p>
         </a>
 
-        <div
+        <a
+          href="/?isFavorited=favorite"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
         >
           <img src="/images/icons/favorite.svg" alt="contact icon" />
           <p class="font-reguler text-md">Favorite</p>
-        </div>
+        </a>
 
-        <div
+        <a
+          href="/?tag=trash"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
         >
           <img src="/images/icons/trash.svg" alt="contact icon" />
           <p class="font-reguler text-md">Trash</p>
-        </div>
+        </a>
 
-        <h2 class="text-sm font-semibold text-gray-600 mb-2">Labels</h2>
+        <h2 class="text-sm font-semibold text-gray-600 mb-3">Labels</h2>
 
-        <ul class="space-y-3">
+        <ul class="space-y-4">
           <li class="flex items-center gap-2 text-sm cursor-pointer">
             <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
-            <a href="#">Family</a>
+            <a href="/?tag=family" class="">Family</a>
           </li>
           <li class="flex items-center gap-2 text-sm cursor-pointer">
             <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
-            <a href="#">Works</a>
+            <a href="/?tag=entrepreneur">Entrepreneur</a>
           </li>
           <li class="flex items-center gap-2 text-sm cursor-pointer">
             <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
-            <a href="#">Friends</a>
+            <a href="/?tag=technology">Technology</a>
+          </li>
+          <li class="flex items-center gap-2 text-sm cursor-pointer">
+            <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
+            <a href="/?tag=ai">AI</a>
           </li>
         </ul>
       </nav>
@@ -71,95 +77,12 @@
 
     <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
       <div class="p-4 sm:p-12">
-        <div class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg sm:p-10">
-          <div class="flex justify-between pb-5">
-            <a
-              href="/"
-              class="hover:bg-card1 rounded-full cursor-pointer h-10 w-10 flex justify-center items-center mb-5"
-              ><img src="/images/icons/back.svg"
-            /></a>
-            <div class="p-3 space-x-3 flex">
-              <a
-                href="/details"
-                class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
-                ><img src="/images/icons/favorite-1.svg"
-              /></a>
-              <a
-                href="/update-contact"
-                class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
-                ><img src="/images/icons/edit.svg"
-              /></a>
-              <button
-                class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
-              >
-                <img src="/images/icons/trash1.svg" />
-              </button>
-            </div>
-          </div>
-          <div class="flex items-center gap-5 border-b border-slate-300 pb-5">
-            <img
-              src="https://avatars.githubusercontent.com/u/67163621?s=400&u=dbd05e73a2be472ccc66d3f92fec6eb565599698&v=4"
-              class="w-44 h-44 rounded-full"
-              alt="profile image"
-            />
-            <div class="flex flex-col gap-1">
-              <h1 class="text-xl font-semibold">Bando Mega</h1>
-              <p class="text-gray-700 text-sm">26, tesla</p>
-              <p>
-                <a
-                  href="/?tag=family"
-                  class="inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-xs font-medium text-yellow-500 inset-ring inset-ring-yellow-400/20"
-                >
-                  Family
-                </a>
-                <a
-                  href="/technology"
-                  class="inline-flex items-center rounded-md bg-pink-400/10 px-2 py-1 text-xs font-medium text-pink-400 inset-ring inset-ring-pink-400/20"
-                >
-                  Technology
-                </a>
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-col gap-2">
-            <h2 class="text-slate-800 font-semibold text-lg">Detail Contact</h2>
-            <p class="text-slate-700 text-sm">warrenbuffett@bhhsservice.com</p>
-            <p class="text-slate-700 text-sm">+12025550123</p>
-            <div class="flex flex-col gap-1">
-              <img src="/images/icons/copy.svg" alt="" class="w-4 h-4" />
-              <p class="text-slate-700 text-sm gap-1">
-                3555 Farnam Street, 68131, USA
-              </p>
-              <p class="text-slate-700 text-sm">Omaha</p>
-              <p class="text-slate-700 text-sm">Nebraska</p>
-              <p class="text-slate-700 text-sm">68131</p>
-              <p class="text-slate-700 text-sm">USA</p>
-            </div>
-            <p class="text-slate-700 text-sm">30 Juli 1930</p>
-            <p class="text-slate-700 text-sm flex gap-2">
-              <a href="https://www.linkedin.com/in/warrenbuffett">
-                https://www.linkedin.com/in/warrenbuffett
-              </a>
-              <img
-                src="/images/icons/copy.svg"
-                alt="copy icon"
-                class="w-4 h-4 inline-block"
-              />
-            </p>
-            <p class="text-slate-700 text-sm flex gap-2">
-              <a href="https://www.berkshirehathaway.com/">
-                https://www.berkshirehathaway.com/
-              </a>
-              <img
-                src="/images/icons/copy.svg"
-                alt="copy icon"
-                class="w-4 h-4 inline-block"
-              />
-            </p>
-
-            <p class="text-slate-700 text-sm flex gap-2">Add to contact:</p>
-          </div>
-        </div>
+        <div
+          class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg sm:p-10"
+          id="contact-detail"
+        >
+        <!-- Render Contact Detail -->
+          
       </div>
 
       <footer class="p-2 mt-10 ms-50">
@@ -171,6 +94,7 @@
       </footer>
     </main>
 
-    <script src="/index.js"></script>
+    <script src="/storage.js"></script>
+    <script src="/detail/index.js"></script>
   </body>
 </html>
