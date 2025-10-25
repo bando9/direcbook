@@ -22,8 +22,8 @@ function addContact(event) {
       country: formData.get("country"),
     },
     birthdate: formData.get("birthdate"),
-    createdAt: new Date(),
     updatedAt: new Date(),
+    createdAt: new Date(),
   };
   //   console.log(newContact);
 

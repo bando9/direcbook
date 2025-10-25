@@ -1,0 +1,74 @@
+const updateContactElement = document.getElementById("update-contact");
+
+// address: {
+//   line1: formData.get("line1"),
+//   line2: formData.get("line2"),
+//   city: formData.get("city"),
+//   region: formData.get("region"),
+//   postalcode: formData.get("postal-code"),
+//   country: formData.get("country"),
+// },
+// birthdate: formData.get("birthdate"),
+
+function renderContactById() {
+  const contacts = loadData();
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const idParams = Number(searchParams.get("id"));
+
+  const contact = contacts.find((contact) => contact.id === idParams);
+
+  document.getElementById("full-name").defaultValue = contact.fullName;
+  document.getElementById("email").defaultValue = contact.email;
+  document.getElementById("phone").defaultValue = contact.phone;
+  document.getElementById("line1").defaultValue = contact.address.line1 ?? "";
+  document.getElementById("line2").defaultValue = contact.address.line2 ?? "";
+  document.getElementById("city").defaultValue = contact.address.city ?? "";
+  document.getElementById("region").defaultValue = contact.address.region ?? "";
+  document.getElementById("postal-code").defaultValue =
+    contact.address.postalCode ?? "";
+  document.getElementById("country").defaultValue =
+    contact.address.country ?? "";
+  document.getElementById("birthdate").valueAsDate =
+    new Date(contact.birthdate) ?? "";
+}
+
+function updateContactById(event) {
+  event.preventDefault();
+  const contacts = loadData();
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const idParams = Number(searchParams.get("id"));
+
+  const formData = new FormData(updateContactElement);
+
+  const updatedContacts = contacts.map((contact) => {
+    if (contact.id === idParams) {
+      const updatedContact = {
+        ...contact,
+        fullName: formData.get("full-name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        address: {
+          line1: formData.get("line1"),
+          line2: formData.get("line2"),
+          city: formData.get("city"),
+          region: formData.get("region"),
+          postalcode: formData.get("postal-code"),
+          country: formData.get("country"),
+        },
+        birthdate: new Date(formData.get("birthdate")).toISOString(),
+        updatedAt: new Date(),
+      };
+
+      return updatedContact;
+    }
+    return contact;
+  });
+
+  saveData(updatedContacts);
+  goToDashboardPage();
+}
+
+updateContactElement.addEventListener("submit", updateContactById);
+renderContactById();
