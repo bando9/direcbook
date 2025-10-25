@@ -226,20 +226,20 @@ function renderContacts() {
     const filteredContacts = searchContactsByName(query, contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts(contacts);
+    renderCountContacts("contacts", contacts);
   } else if (labelFiltered) {
     const filteredContacts = filterByLabels(labelFiltered, contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts(contacts);
+    renderCountContacts(labelFiltered, contacts);
   } else if (isFavorited) {
     const filteredContacts = filterFavorites(contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts(contacts);
+    renderCountContacts("favorites", contacts);
   } else {
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts(contacts);
+    renderCountContacts("all contacts", contacts);
   }
 }
 
@@ -258,17 +258,18 @@ function renderContact(contact) {
         <img src="${imageUrl}" alt="${contact.fullName}" class="h-10 rounded-full" />
         ${contact.fullName}
       </td>
-      <td class="px-4 py-2 text-left text-sm">${contact.phone}</td>
-      <td class="px-4 py-2 text-left text-sm">${contact.email}</td>
-      <td class="px-4 py-2 text-left text-sm">
+      <td class="px-4 py-2 text-left text-sm hidden md:table-cell ">${contact.phone}</td>
+      <td class="px-4 py-2 text-left text-sm hidden md:table-cell">${contact.email}</td>
+      <td class="px-4 py-2 text-left text-sm hidden md:table-cell">
         <div class="flex flex-wrap gap-2">${tagString}</div>
       </td>
-      <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out flex">
+      <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out hidden md:flex">
         <button class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
         <a href="/update-contact/?id=${contact.id}" class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></a>
         <button onclick="deleteContactById(${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
-  </tr>`;
+  </tr>
+  `;
 }
 
 function deleteContactById(id) {
@@ -378,9 +379,9 @@ function getContactById(id, contacts) {
   renderContact(contact);
 }
 
-function renderCountContacts(contacts) {
+function renderCountContacts(keyword, contacts) {
   const countContactsElement = document.getElementById("count-contacts");
-  countContactsElement.innerHTML = contacts.length;
+  countContactsElement.innerHTML = `${keyword} (${contacts.length})`;
 }
 
 function checkPhoneAlreadyUsed(phone, contacts) {
@@ -403,5 +404,23 @@ function showContactsBirthdayThisMonth(contacts) {
     }
   });
 }
+
+const menuToggle = document.getElementById("menu-toggle");
+const menuClose = document.getElementById("menu-close");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.remove("-translate-x-full");
+  overlay.classList.remove("hidden");
+});
+
+const closeSidebar = () => {
+  sidebar.classList.add("-translate-x-full");
+  overlay.classList.add("hidden");
+};
+
+menuClose.addEventListener("click", closeSidebar);
+overlay.addEventListener("click", closeSidebar);
 
 renderContacts();

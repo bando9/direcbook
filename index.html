@@ -10,54 +10,102 @@
     <link href="/src/output.css" rel="stylesheet" />
   </head>
   <body class="bg-light min-h-screen flex flex-col md:flex-row relative w-full">
-    <aside
-      class="absolute md:fixed -left-96 md:left-0 top-0 w-3/4 md:w-64 bg-white shadow-md h-screen p-4"
+    <header
+      class="flex items-center justify-between md:hidden p-4 shadow-sm bg-white"
     >
-      <header>
-        <a href="/" class="flex items-center gap-2 mb-6 mt-3">
-          <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
-          <h1 class="font-semibold text-lg">Direcbook</h1>
-        </a>
+      <div class="flex items-center gap-2">
+        <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
+        <h1 class="font-semibold text-lg">Direcbook</h1>
+      </div>
+      <button
+        id="menu-toggle"
+        class="p-2 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <aside
+      id="sidebar"
+      class="fixed top-0 left-0 h-screen w-3/4 md:w-64 bg-white shadow-md p-4 transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50"
+    >
+      <header class="hidden md:flex items-center gap-2 mb-6 mt-3">
+        <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
+        <h1 class="font-semibold text-lg">Direcbook</h1>
       </header>
 
-      <nav class="space-y-2">
+      <button
+        id="menu-close"
+        class="absolute top-3 right-3 p-2 rounded-full md:hidden hover:bg-gray-100 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+
+      <nav class="space-y-2 mt-10">
         <a
           href="/new"
-          class="bg-primary text-light flex items-center gap-1 p-2 w-3/4 rounded-2xl mt-10"
+          class="bg-primary text-light flex items-center gap-2 p-2 rounded-2xl w-3/4"
         >
           <img src="/images/icons/plus.svg" alt="plus icon" />
           <p class="text-sm font-semibold">Create Contact</p>
         </a>
+
         <a
           href="/"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-10 w-36 rounded-2xl"
         >
           <img src="/images/icons/contacts.svg" alt="contact icon" />
-          <p class="font-reguler">Contacts</p>
+          <p class="font-regular">Contacts</p>
         </a>
 
         <a
           href="/?isFavorited=favorite"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
         >
-          <img src="/images/icons/favorite.svg" alt="contact icon" />
-          <p class="font-reguler text-md">Favorite</p>
+          <img src="/images/icons/favorite.svg" alt="favorite icon" />
+          <p class="font-regular text-md">Favorite</p>
         </a>
 
         <a
           href="/?tag=trash"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
         >
-          <img src="/images/icons/trash.svg" alt="contact icon" />
-          <p class="font-reguler text-md">Trash</p>
+          <img src="/images/icons/trash.svg" alt="trash icon" />
+          <p class="font-regular text-md">Trash</p>
         </a>
 
-        <h2 class="text-sm font-semibold text-gray-600 mb-3">Labels</h2>
+        <h2 class="text-sm font-semibold text-gray-600 mb-3 mt-5">Labels</h2>
 
         <ul class="space-y-4">
           <li class="flex items-center gap-2 text-sm cursor-pointer">
             <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
-            <a href="/?tag=family" class="">Family</a>
+            <a href="/?tag=family">Family</a>
           </li>
           <li class="flex items-center gap-2 text-sm cursor-pointer">
             <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
@@ -75,52 +123,97 @@
       </nav>
     </aside>
 
-    <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
-      <section class="mt-5">
-        <div class="flex items-center justify-between mx-5 mb-2">
+    <div
+      id="overlay"
+      class="fixed inset-0 bg-black opacity-50 hidden z-40 md:hidden"
+    ></div>
+
+    <main
+      class="flex-1 p-4 md:ml-64 min-h-screen overflow-hidden transition-all duration-300"
+    >
+      <section class="mt-4">
+        <div
+          class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mx-2 mb-4"
+        >
           <form
-            class="bg-card1 flex items-center w-80 py-2 px-2 rounded-2xl gap-1"
+            class="bg-card1 flex items-center w-full sm:w-80 py-2 px-3 rounded-2xl gap-2 shadow-sm"
             method="get"
           >
-            <img src="/images/icons/search.svg" alt="search icon" />
-            <label class="rounded-3xl w-full" for="q">
+            <img
+              src="/images/icons/search.svg"
+              alt="search icon"
+              class="w-5 h-5"
+            />
+            <label class="w-full" for="q">
               <input
                 id="q"
                 name="q"
                 type="search"
                 placeholder="Search contact"
-                class="w-full ring-0 focus:ring-0 shadow-none focus:shadow-none focus:outline-none border-none focus:border-none"
+                class="w-full bg-transparent placeholder-gray-500 text-sm focus:outline-none border-none"
               />
             </label>
           </form>
-          <div class="flex items-center gap-3">
+
+          <div
+            class="hidden md:flex md:items-center gap-3 self-end sm:self-auto"
+          >
             <img
               src="/images/icons/profile.png"
               alt="profile image"
-              class="h-8"
+              class="h-8 w-8 rounded-full"
             />
             <p class="text-sm font-semibold">Bando Mega</p>
           </div>
         </div>
-        <div class="px-2 pt-4 flex items-center justify-between">
+
+        <div class="flex items-center justify-between px-2 pt-2">
           <div class="flex items-center gap-2">
-            <img src="/images/icons/contacts.svg" alt="contacts" />
+            <img
+              src="/images/icons/contacts.svg"
+              alt="contacts"
+              class="w-5 h-5"
+            />
             <p class="text-md">
-              All Contacts (<span id="count-contacts">0</span>)
+              <span id="count-contacts" class="capitalize"
+                >All Contacts (0)</span
+              >
             </p>
           </div>
         </div>
       </section>
 
-      <section class="p-2 overflow-x-auto relative">
-        <table class="min-w-full border-collapse">
-          <thead class="bg-btn sticky z-10 -top-2">
+      <section
+        class="p-2 mt-4 overflow-x-auto relative rounded-xl border border-gray-100"
+      >
+        <table class="min-w-full border-collapse text-sm">
+          <thead class="bg-btn sticky top-0 z-10">
             <tr>
-              <th class="px-4 py-2 text-left">Full Name</th>
-              <th class="px-4 py-2 text-left">Email</th>
-              <th class="px-4 py-2 text-left">Phone Number</th>
-              <th class="px-4 py-2 text-left">Labels</th>
-              <th class="px-4 py-2 text-center">Actions</th>
+              <th
+                class="px-4 py-2 text-left whitespace-nowrap hidden md:table-cell"
+              >
+                Full Name
+              </th>
+              <th
+                class="px-4 py-2 text-left whitespace-nowrap hidden md:table-cell"
+              >
+                Phone Number
+              </th>
+              <th
+                class="px-4 py-2 text-left whitespace-nowrap hidden md:table-cell"
+              >
+                Email
+              </th>
+              <th
+                class="px-4 py-2 text-left whitespace-nowrap hidden md:table-cell"
+              >
+                Labels
+              </th>
+              <th
+                class="px-4 py-2 text-center whitespace-nowrap hidden md:table-cell"
+              >
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody id="contacts">
@@ -129,15 +222,20 @@
         </table>
       </section>
 
-      <footer class="p-2 mt-10 ms-50">
+      <footer class="p-4 mt-10 text-center text-sm text-gray-600">
         &copy; 2025. Direcbook by
-        <a href="https://bandomega.com" class="hover:underline" target="_blank">
-          Bando Mega</a
+        <a
+          href="https://bandomega.com"
+          class="hover:underline text-blue-600 font-medium"
+          target="_blank"
+        >
+          Bando Mega </a
         >. All Rights Reserved.
       </footer>
     </main>
 
     <script src="/storage.js"></script>
     <script src="/index.js"></script>
+    <script></script>
   </body>
 </html>
