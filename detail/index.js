@@ -54,119 +54,129 @@ function renderContactById() {
     : "/images/icons/favorite.svg";
   const imageUrl = getFullNameToImage(contact.id);
 
-  const renderFoundContact = `<div class="flex justify-between pb-5">
-            <button
-              onclick="goBack()"
-              class="hover:bg-card1 rounded-full cursor-pointer h-10 w-10 flex justify-center items-center mb-5"
-              ><img src="/images/icons/back.svg"
-            /></button>
-            <div class="p-3 space-x-3 flex">
-              <a
-                class=" hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
-                ><img src=${isFavoritedIcon}
-              /></a>
-              <a
-                href="/update-contact/?id=${id}"
-                class=" hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
-                ><img src="/images/icons/edit.svg"
-              /></a>
-              <button
-              onclick="deleteContactById(${id})"
-                class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
-              >
-                <img src="/images/icons/trash1.svg" />
-              </button>
-            </div>
+  const renderFoundContact = `
+      <div class="flex items-center justify-between pb-4">
+        <button
+          onclick="goBack()"
+          class="hover:bg-card1 rounded-full cursor-pointer h-9 w-9 flex justify-center items-center"
+        >
+          <img src="/images/icons/back.svg" alt="Back" />
+        </button>
+        <div class="flex items-center gap-2">
+          <a class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7">
+            <img src="${isFavoritedIcon}" alt="Favorite" />
+          </a>
+          <a
+            href="/update-contact/?id=${id}"
+            class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
+          >
+            <img src="/images/icons/edit.svg" alt="Edit" />
+          </a>
+          <button
+            onclick="deleteContactById(${id})"
+            class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
+          >
+            <img src="/images/icons/trash1.svg" alt="Delete" />
+          </button>
+        </div>
+      </div>
+
+      
+      <div
+        class="flex flex-col sm:flex-row sm:items-center gap-5 border-b border-slate-300 pb-5"
+      >
+        <img
+          src="${imageUrl}"
+          class="w-32 h-32 sm:w-44 sm:h-44 rounded-full object-cover mx-auto sm:mx-0"
+          alt="Profile image"
+        />
+        <div class="flex flex-col gap-1 text-center sm:text-left">
+          <h1 class="text-lg sm:text-xl font-semibold">${fullName}</h1>
+          ${
+            birthdate
+              ? `<p class="text-gray-700 text-sm">${new Date(
+                  birthdate
+                ).toLocaleString("en-UK", {
+                  dateStyle: "long",
+                })} (${age} years)</p>`
+              : ""
+          }
+          <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
+            ${tagString}
           </div>
-          <div class="flex items-center gap-5 border-b border-slate-300 pb-5">
-            <img
-              src="${imageUrl}"
-              class="w-44 h-44 rounded-full"
-              alt="profile image"
-            />
-            <div class="flex flex-col gap-1">
-              <h1 class="text-xl font-semibold">${fullName}</h1>
-              ${
-                birthdate
-                  ? `<p class="text-gray-700 text-sm">${new Date(
-                      birthdate
-                    ).toLocaleString("en-UK", {
-                      dateStyle: "long",
-                    })} (${age} years)</p>`
-                  : ""
-              }
-              <div class="flex flex-wrap gap-2">${tagString}</div>
-            </div>
-          </div>
-          <div class="flex flex-col gap-3">
-            <h2 class="text-slate-800 font-semibold text-lg">Detail Contact</h2>
-            <p class="text-slate-700 text-sm flex gap-1.5 items-center">
-            ${email}
-              <button
-                class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
-              >
-                <img src="/images/icons/copy.svg" />
-              </button>
-            </p>
-            <p class="text-slate-700 text-sm flex gap-1.5 items-center">
-            ${phone}
-              <button
-                class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
-              >
-                <img src="/images/icons/copy.svg" />
-              </button>
-            </p>
-            ${
-              line1 || line2 || city || region || postalCode || country
-                ? `<div class="flex flex-col gap-1">
-              <p class="text-slate-700 text-sm gap-1">${line1}</p>
-              <p class="text-slate-700 text-sm gap-1">${line2}</p>
-              <p class="text-slate-700 text-sm">${city}</p>
-              <p class="text-slate-700 text-sm">${region}</p>
-              <p class="text-slate-700 text-sm">${postalCode}</p>
-              <p class="text-slate-700 text-sm">${country}</p>
-            </div>`
-                : ""
-            }
-            ${
-              linkedinUrl
-                ? `<p class="text-slate-700 text-sm flex gap-3 items-center">
-              <a href="${linkedinUrl}">${linkedinUrl}</a>
-              <button
-                class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
-              >
-                <img src="/images/icons/copy.svg" />
-              </button>
-            </p>`
-                : ""
-            }
-            ${
-              websiteUrl
-                ? `<p class="text-slate-700 text-sm flex gap-3 items-center">
-              <a href="${websiteUrl}">${websiteUrl}</a>
-              <button
-                class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
-              >
-                <img src="/images/icons/copy.svg" />
-              </button>
-            </p>`
-                : ""
-            }
-            <div>
-            <h2 class="text-slate-700 text-sm">Histori:</h2>
-            <p class="text-slate-700 text-xs">Last edited. ${new Date(
-              updatedAt
-            ).toLocaleString("en-UK", {
-              dateStyle: "long",
-              timeStyle: "short",
-            })}</p>
-            <p class="text-slate-700 text-xs">Added contact. ${new Date(
-              createdAt
-            ).toLocaleString("en-UK", {
-              dateStyle: "long",
-            })} </p>
-            </div>
-          </div>`;
+        </div>
+      </div>
+
+      
+      <div class="flex flex-col gap-3 mt-4">
+        <h2 class="text-slate-800 font-semibold text-base sm:text-lg">
+          Detail Contact
+        </h2>
+
+        <p class="text-slate-700 text-sm flex flex-wrap gap-1.5 items-center break-all">
+          ${email}
+          <button
+            class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
+          >
+            <img src="/images/icons/copy.svg" alt="Copy" />
+          </button>
+        </p>
+
+        <p class="text-slate-700 text-sm flex flex-wrap gap-1.5 items-center break-all">
+          ${phone}
+          <button
+            class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6"
+          >
+            <img src="/images/icons/copy.svg" alt="Copy" />
+          </button>
+        </p>
+
+        ${
+          line1 || line2 || city || region || postalCode || country
+            ? `<div class="flex flex-col gap-0.5 text-slate-700 text-sm">
+          ${line1 ? `<p>${line1}</p>` : ""}
+          ${line2 ? `<p>${line2}</p>` : ""}
+          ${city ? `<p>${city}</p>` : ""}
+          ${region ? `<p>${region}</p>` : ""}
+          ${postalCode ? `<p>${postalCode}</p>` : ""}
+          ${country ? `<p>${country}</p>` : ""}
+        </div>`
+            : ""
+        }
+
+        ${
+          linkedinUrl
+            ? `<p class="text-slate-700 text-sm flex flex-wrap gap-2 items-center break-all">
+          <a href="${linkedinUrl}" class="underline text-blue-600">${linkedinUrl}</a>
+          <button class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6">
+            <img src="/images/icons/copy.svg" alt="Copy" />
+          </button>
+        </p>`
+            : ""
+        }
+
+        ${
+          websiteUrl
+            ? `<p class="text-slate-700 text-sm flex flex-wrap gap-2 items-center break-all">
+          <a href="${websiteUrl}" class="underline text-blue-600">${websiteUrl}</a>
+          <button class="hover:bg-card1 p-1 rounded-full cursor-pointer h-6 w-6">
+            <img src="/images/icons/copy.svg" alt="Copy" />
+          </button>
+        </p>`
+            : ""
+        }
+
+        <div class="mt-3 text-xs text-slate-600">
+          <h3 class="font-medium text-slate-700">Histori:</h3>
+          <p>Last edited: ${new Date(updatedAt).toLocaleString("en-UK", {
+            dateStyle: "long",
+            timeStyle: "short",
+          })}</p>
+          <p>Added contact: ${new Date(createdAt).toLocaleString("en-UK", {
+            dateStyle: "long",
+          })}</p>
+        </div>
+      </div>`;
 
   contactDetailElement.innerHTML = renderFoundContact;
 }
@@ -231,4 +241,23 @@ function calculateAge(yearBirthdate) {
 
   return null;
 }
+
+const menuToggle = document.getElementById("menu-toggle");
+const menuClose = document.getElementById("menu-close");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.remove("-translate-x-full");
+  overlay.classList.remove("hidden");
+});
+
+const closeSidebar = () => {
+  sidebar.classList.add("-translate-x-full");
+  overlay.classList.add("hidden");
+};
+
+menuClose.addEventListener("click", closeSidebar);
+overlay.addEventListener("click", closeSidebar);
+
 renderContactById();

@@ -10,54 +10,79 @@
     <link href="/src/output.css" rel="stylesheet" />
   </head>
   <body class="bg-light min-h-screen flex flex-col md:flex-row relative w-full">
-    <aside
-      class="absolute md:fixed -left-96 md:left-0 top-0 w-3/4 md:w-64 bg-white shadow-md h-screen p-4"
+    <header
+      class="flex items-center justify-between md:hidden p-4 shadow-sm bg-white"
     >
-      <header>
-        <a href="/" class="flex items-center gap-2 mb-6 mt-3">
-          <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
-          <h1 class="font-semibold text-lg">Direcbook</h1>
-        </a>
+      <button
+        id="menu-toggle"
+        class="p-2 rounded-md border border-gray-300 hover:bg-gray-100 focus:outline-none"
+      >
+        <img src="/images/icons/menu.svg" class="h-6 w-6" alt="menu icon" />
+      </button>
+      <div class="flex items-center justify-center">
+        <img
+          src="/images/icons/profile.png"
+          alt="profile image"
+          class="h-8 w-8 rounded-full"
+        />
+      </div>
+    </header>
+
+    <aside
+      id="sidebar"
+      class="fixed top-0 left-0 h-screen w-3/4 md:w-64 bg-white shadow-md p-4 transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-50"
+    >
+      <header class="flex items-center gap-2 mb-6 mt-3">
+        <img src="/images/icons/logo.svg" alt="Direcbook logo" class="h-6" />
+        <h1 class="font-semibold text-lg">Direcbook</h1>
       </header>
 
-      <nav class="space-y-2">
+      <button
+        id="menu-close"
+        class="absolute top-3 right-3 p-2 rounded-full md:hidden hover:bg-gray-100 focus:outline-none"
+      >
+        <img src="/images/icons/close.svg" alt="close icon" />
+      </button>
+
+      <nav class="space-y-2 mt-10">
         <a
           href="/new"
-          class="bg-primary text-light flex items-center gap-1 p-2 w-3/4 rounded-2xl mt-10"
+          class="bg-primary text-light flex items-center gap-2 p-2 rounded-2xl w-3/4"
         >
           <img src="/images/icons/plus.svg" alt="plus icon" />
           <p class="text-sm font-semibold">Create Contact</p>
         </a>
+
         <a
           href="/"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-10 w-36 rounded-2xl"
         >
           <img src="/images/icons/contacts.svg" alt="contact icon" />
-          <p class="font-reguler">Contacts</p>
+          <p class="font-regular">Contacts</p>
         </a>
 
         <a
           href="/?isFavorited=favorite"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
         >
-          <img src="/images/icons/favorite.svg" alt="contact icon" />
-          <p class="font-reguler text-md">Favorite</p>
+          <img src="/images/icons/favorite.svg" alt="favorite icon" />
+          <p class="font-regular text-md">Favorite</p>
         </a>
 
         <a
           href="/?tag=trash"
           class="flex gap-2 items-center bg-btn p-2 ps-3 mt-3 w-36 rounded-2xl"
         >
-          <img src="/images/icons/trash.svg" alt="contact icon" />
-          <p class="font-reguler text-md">Trash</p>
+          <img src="/images/icons/trash.svg" alt="trash icon" />
+          <p class="font-regular text-md">Trash</p>
         </a>
 
-        <h2 class="text-sm font-semibold text-gray-600 mb-3">Labels</h2>
+        <h2 class="text-sm font-semibold text-gray-600 mb-3 mt-5">Labels</h2>
 
         <ul class="space-y-4">
           <li class="flex items-center gap-2 text-sm cursor-pointer">
             <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
-            <a href="/?tag=family" class="">Family</a>
+            <a href="/?tag=family">Family</a>
           </li>
           <li class="flex items-center gap-2 text-sm cursor-pointer">
             <img src="/images/icons/tag.svg" alt="tag icon" class="w-5" />
@@ -75,17 +100,22 @@
       </nav>
     </aside>
 
-    <main class="md:col-span-4 p-2 ml-64 min-h-screen overflow-hidden flex-1">
-      <div class="p-4 sm:p-12">
+    <div
+      id="overlay"
+      class="fixed inset-0 bg-black opacity-50 hidden z-40 md:hidden"
+    ></div>
+
+    <main class="md:col-span-4 p-2 md:ml-64 min-h-screen flex-1">
+      <div class="p-4 sm:p-6 md:p-12">
         <div
-          class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg sm:p-10"
+          class="w-full max-w-2xl mx-auto rounded-lg bg-white p-4 sm:p-6 shadow-lg"
           id="contact-detail"
         >
-        <!-- Render Contact Detail -->
-          
+          <!-- Render Contact Detail -->
+        </div>
       </div>
 
-      <footer class="p-2 mt-10 ms-50">
+      <footer class="p-2 mt-8 text-center text-xs text-slate-600">
         &copy; 2025. Direcbook by
         <a href="https://bandomega.com" class="hover:underline" target="_blank"
           >Bando Mega</a
