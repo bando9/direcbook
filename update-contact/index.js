@@ -31,6 +31,16 @@ function renderContactById() {
     contact.address.country ?? "";
   document.getElementById("birthdate").valueAsDate =
     new Date(contact.birthdate) ?? "";
+
+  if (contact.tags) {
+    contact.tags.forEach((tag) => {
+      const checkbox = document.getElementById(tag.toLowerCase());
+
+      if (checkbox) {
+        checkbox.checked = true;
+      }
+    });
+  }
 }
 
 function updateContactById(event) {
@@ -41,6 +51,13 @@ function updateContactById(event) {
   const idParams = Number(searchParams.get("id"));
 
   const formData = new FormData(updateContactElement);
+
+  const tags = [];
+
+  if (formData.get("ai")) tags.push("AI");
+  if (formData.get("technology")) tags.push("Technology");
+  if (formData.get("entrepreneur")) tags.push("Entrepreneur");
+  if (formData.get("family")) tags.push("Family");
 
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === idParams) {
@@ -57,6 +74,7 @@ function updateContactById(event) {
           postalcode: formData.get("postal-code"),
           country: formData.get("country"),
         },
+        tags: tags,
         birthdate: new Date(formData.get("birthdate")).toISOString(),
         updatedAt: new Date(),
       };

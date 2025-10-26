@@ -8,6 +8,13 @@ function addContact(event) {
   const contacts = loadData();
   const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 0;
 
+  const tags = [];
+
+  if (formData.get("ai")) tags.push("AI");
+  if (formData.get("technology")) tags.push("Technology");
+  if (formData.get("entrepreneur")) tags.push("Entrepreneur");
+  if (formData.get("family")) tags.push("Family");
+
   const newContact = {
     id: newId,
     fullName: formData.get("full-name"),
@@ -21,6 +28,7 @@ function addContact(event) {
       postalcode: formData.get("postal-code"),
       country: formData.get("country"),
     },
+    tags: tags,
     birthdate: formData.get("birthdate"),
     updatedAt: new Date(),
     createdAt: new Date(),

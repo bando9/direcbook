@@ -257,50 +257,6 @@
               />
             </div>
           </div>
-
-          <div>
-            <p class="block text-sm font-medium text-gray-700 mb-2">
-              Choose Labels
-            </p>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <label class="flex items-center space-x-1">
-                <input type="checkbox" id="investor" name="investor" />
-                <span
-                  class="bg-yellow-400/10 px-2 py-1 text-xs font-medium text-yellow-500 rounded-md"
-                >
-                  Investor
-                </span>
-              </label>
-
-              <label class="flex items-center space-x-1">
-                <input type="checkbox" id="technology" name="technology" />
-                <span
-                  class="bg-pink-400/10 px-2 py-1 text-xs font-medium text-pink-400 rounded-md"
-                >
-                  Technology
-                </span>
-              </label>
-
-              <label class="flex items-center space-x-1">
-                <input type="checkbox" id="entrepreneur" name="entrepreneur" />
-                <span
-                  class="bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 rounded-md"
-                >
-                  Entrepreneur
-                </span>
-              </label>
-
-              <label class="flex items-center space-x-1">
-                <input type="checkbox" id="ai" name="ai" />
-                <span
-                  class="bg-green-400/10 px-2 py-1 text-xs font-medium text-green-400 rounded-md"
-                >
-                  AI
-                </span>
-              </label>
-            </div>
-          </div>
-
           <div>
             <label
               for="birthdate"
@@ -314,6 +270,67 @@
               name="birthdate"
               class="w-full rounded-md border border-gray-300 p-2.5 text-sm text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
             />
+          </div>
+
+          <div>
+            <label
+              class="block text-sm font-medium text-gray-700 mb-2"
+              for="labels"
+            >
+              Choose Labels
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <label class="flex items-center space-x-1" for="family">
+                <input
+                  type="checkbox"
+                  id="family"
+                  name="family"
+                  value="family"
+                />
+                <span
+                  class="bg-yellow-400/10 px-2 py-1 text-xs font-medium text-yellow-500 rounded-md"
+                >
+                  Family
+                </span>
+              </label>
+
+              <label for="technology" class="flex items-center space-x-1">
+                <input
+                  type="checkbox"
+                  id="technology"
+                  name="technology"
+                  value="technology"
+                />
+                <span
+                  class="bg-pink-400/10 px-2 py-1 text-xs font-medium text-pink-400 rounded-md"
+                >
+                  Technology
+                </span>
+              </label>
+
+              <label class="flex items-center space-x-1" for="entrepreneur">
+                <input
+                  type="checkbox"
+                  id="entrepreneur"
+                  name="entrepreneur"
+                  value="entrepreneur"
+                />
+                <span
+                  class="bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 rounded-md"
+                >
+                  Entrepreneur
+                </span>
+              </label>
+
+              <label class="flex items-center space-x-1" for="ai">
+                <input type="checkbox" id="ai" name="ai" value="ai" />
+                <span
+                  class="bg-green-400/10 px-2 py-1 text-xs font-medium text-green-400 rounded-md"
+                >
+                  AI
+                </span>
+              </label>
+            </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
