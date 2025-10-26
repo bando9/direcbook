@@ -63,9 +63,9 @@ function renderContactById() {
           <img src="/images/icons/back.svg" alt="Back" />
         </button>
         <div class="flex items-center gap-2">
-          <a class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7">
+          <button onclick="isFavorite(${id})" class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7">
             <img src="${isFavoritedIcon}" alt="Favorite" />
-          </a>
+          </button>
           <a
             href="/update-contact/?id=${id}"
             class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"
@@ -179,6 +179,29 @@ function renderContactById() {
       </div>`;
 
   contactDetailElement.innerHTML = renderFoundContact;
+}
+
+function isFavorite(id) {
+  let contacts = loadData();
+
+  const updatedContacts = contacts.map((contact) => {
+    if (contact.id === id) {
+      const updatedIsFavorited = !contact.isFavorited;
+      const updatedContact = {
+        ...contact,
+        isFavorited: updatedIsFavorited,
+      };
+
+      return updatedContact;
+    }
+    return contact;
+  });
+
+  contacts = updatedContacts;
+
+  saveData(updatedContacts);
+
+  renderContactById();
 }
 
 function deleteContactById(id) {
