@@ -264,12 +264,35 @@ function renderContact(contact) {
         <div class="flex flex-wrap gap-2">${tagString}</div>
       </td>
       <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out hidden md:flex">
-        <button class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
+        <button onclick="isFavorite(${contact.id})" class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
         <a href="/update-contact/?id=${contact.id}" class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></a>
         <button onclick="deleteContactById(${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
   </tr>
   `;
+}
+
+function isFavorite(id) {
+  let contacts = loadData();
+
+  const updatedContacts = contacts.map((contact) => {
+    if (contact.id === id) {
+      const updatedIsFavorited = !contact.isFavorited;
+      const updatedContact = {
+        ...contact,
+        isFavorited: updatedIsFavorited,
+      };
+
+      return updatedContact;
+    }
+    return contact;
+  });
+
+  contacts = updatedContacts;
+
+  saveData(updatedContacts);
+
+  renderContacts(contacts);
 }
 
 function deleteContactById(id) {
@@ -306,16 +329,12 @@ function getColorBadge(tag) {
   switch (tag.toLowerCase()) {
     case "family":
       return `inline-flex items-center rounded-md bg-yellow-400/10 px-2 py-1 text-xs font-medium text-yellow-500 inset-ring inset-ring-yellow-400/20`;
-      break;
     case "entrepreneur":
       return "inline-flex items-center rounded-md bg-indigo-400/10 px-2 py-1 text-xs font-medium text-indigo-400 inset-ring inset-ring-indigo-400/30";
-      break;
     case "ai":
       return "inline-flex items-center rounded-md bg-green-400/10 px-2 py-1 text-xs font-medium text-green-400 inset-ring inset-ring-green-500/20";
-      break;
     case "technology":
       return "inline-flex items-center rounded-md bg-pink-400/10 px-2 py-1 text-xs font-medium text-pink-400 inset-ring inset-ring-pink-400/20";
-      break;
     default:
       return "inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-400 inset-ring inset-ring-gray-400/20";
   }
