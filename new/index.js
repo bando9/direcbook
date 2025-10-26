@@ -25,7 +25,6 @@ function addContact(event) {
     updatedAt: new Date(),
     createdAt: new Date(),
   };
-  //   console.log(newContact);
 
   if (!newContact.fullName) return;
   if (!newContact.phone) return;
@@ -37,8 +36,25 @@ function addContact(event) {
   console.log(newContact);
   console.log(updatedContacts);
 
-  //   addContactFormElement.reset();
   goToDashboardPage();
 }
 
 addContactFormElement.addEventListener("submit", addContact);
+
+const menuToggle = document.getElementById("menu-toggle");
+const menuClose = document.getElementById("menu-close");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.remove("-translate-x-full");
+  overlay.classList.remove("hidden");
+});
+
+const closeSidebar = () => {
+  sidebar.classList.add("-translate-x-full");
+  overlay.classList.add("hidden");
+};
+
+menuClose.addEventListener("click", closeSidebar);
+overlay.addEventListener("click", closeSidebar);
