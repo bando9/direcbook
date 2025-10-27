@@ -1,7 +1,7 @@
 const updateContactElement = document.getElementById("update-contact");
 
 function renderContactById() {
-  const contacts = loadData();
+  const contacts = loadContactsData();
 
   const searchParams = new URLSearchParams(window.location.search);
   const idParams = Number(searchParams.get("id"));
@@ -35,7 +35,7 @@ function renderContactById() {
 
 function updateContactById(event) {
   event.preventDefault();
-  const contacts = loadData();
+  const contacts = loadContactsData();
 
   const searchParams = new URLSearchParams(window.location.search);
   const idParams = Number(searchParams.get("id"));
@@ -77,7 +77,7 @@ function updateContactById(event) {
     return contact;
   });
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
   goToDashboardPage();
 }
 

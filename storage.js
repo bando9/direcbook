@@ -1,13 +1,13 @@
-function saveData(contacts) {
+function saveContactsData(contacts) {
   const stringifiedInitialContacts = JSON.stringify(contacts);
   localStorage.setItem("contactsData", stringifiedInitialContacts);
 }
 
-function loadData() {
+function loadContactsData() {
   const loadedData = localStorage.getItem("contactsData");
 
   if (!loadedData) {
-    saveData([]);
+    saveContactsData([]);
   }
 
   try {
@@ -18,9 +18,9 @@ function loadData() {
   }
 }
 
-const goToDashboardPage = () => {
+function goToDashboardPage() {
   window.location = "/";
-};
+}
 
 function goBack() {
   if (document.referrer !== "") {

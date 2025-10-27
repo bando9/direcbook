@@ -5,7 +5,7 @@ function addContact(event) {
 
   const formData = new FormData(addContactFormElement);
 
-  const contacts = loadData();
+  const contacts = loadContactsData();
   const newId = contacts.length > 0 ? contacts[contacts.length - 1].id + 1 : 0;
 
   const tags = [];
@@ -40,7 +40,7 @@ function addContact(event) {
 
   const updatedContacts = [...contacts, newContact];
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
 
   goToDashboardPage();
 }

@@ -197,10 +197,10 @@ let initialContacts = [
 ];
 
 function saveInitialContacts() {
-  const contactsData = loadData();
+  const contactsData = loadContactsData();
 
   if (contactsData.length === 0) {
-    saveData(initialContacts);
+    saveContactsData(initialContacts);
   }
 }
 
@@ -208,7 +208,7 @@ function renderContacts() {
   const contactElement = document.getElementById("contacts");
 
   saveInitialContacts();
-  let contacts = loadData();
+  let contacts = loadContactsData();
 
   const showContacts = (contacts) => {
     return `${contacts.map((contact) => renderContact(contact)).join("")}`;
@@ -228,7 +228,7 @@ function renderContacts() {
     contactElement.innerHTML = showContacts(contacts);
     renderCountContacts("contacts", contacts);
   } else if (labelFiltered) {
-    const filteredContacts = filterByLabels(labelFiltered, contacts);
+    const filteredContacts = filterByTags(labelFiltered, contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
     renderCountContacts(labelFiltered, contacts);
@@ -244,7 +244,7 @@ function renderContacts() {
 }
 
 function renderContact(contact) {
-  const imageUrl = getFullNameToImage(contact.id);
+  const imageUrl = getFullNameToImageUrl(contact.id);
   const tagString = (contact?.tags || [])
     .map((tag) => `<span class="${getColorBadge(tag)}">${tag}</span>`)
     .join(" ");
@@ -264,7 +264,7 @@ function renderContact(contact) {
         <div class="flex flex-wrap gap-2">${tagString}</div>
       </td>
       <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out hidden md:flex">
-        <button onclick="isFavorite(${contact.id})" class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
+        <button onclick="toggleFavorite(${contact.id})" class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
         <a href="/update-contact/?id=${contact.id}" class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></a>
         <button onclick="deleteContactById(${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
@@ -272,8 +272,8 @@ function renderContact(contact) {
   `;
 }
 
-function isFavorite(id) {
-  let contacts = loadData();
+function toggleFavorite(id) {
+  let contacts = loadContactsData();
 
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
@@ -290,18 +290,18 @@ function isFavorite(id) {
 
   contacts = updatedContacts;
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
 
   renderContacts(contacts);
 }
 
 function deleteContactById(id) {
-  let contacts = loadData();
+  let contacts = loadContactsData();
 
   const updatedContacts = contacts.filter((contact) => contact.id !== id);
   contacts = updatedContacts;
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
 
   renderContacts(contacts);
 }
@@ -318,9 +318,10 @@ function filterFavorites(contacts) {
   return updatedContacts;
 }
 
-function filterByLabels(label, contacts) {
+// TODO: Rename labels to tags
+function filterByTags(tag, contacts) {
   const updatedContacts = contacts.filter((contact) =>
-    contact.tags?.map((tag) => tag.toLowerCase()).includes(label.toLowerCase())
+    contact.tags?.map((tag) => tag.toLowerCase()).includes(tag.toLowerCase())
   );
   return updatedContacts;
 }
@@ -340,8 +341,8 @@ function getColorBadge(tag) {
   }
 }
 
-function getFullNameToImage(id) {
-  const contacts = loadData();
+function getFullNameToImageUrl(id) {
+  const contacts = loadContactsData();
 
   const contact = contacts.find((contact) => contact.id == id);
   const getFullName = contact.fullName.split(" ").join("+");
@@ -398,6 +399,7 @@ function getContactById(id, contacts) {
   renderContact(contact);
 }
 
+// TODO: Rename to quantity
 function renderCountContacts(keyword, contacts) {
   const countContactsElement = document.getElementById("count-contacts");
   countContactsElement.innerHTML = `${keyword} (${contacts.length})`;
@@ -434,10 +436,10 @@ menuToggle.addEventListener("click", () => {
   overlay.classList.remove("hidden");
 });
 
-const closeSidebar = () => {
+function closeSidebar() {
   sidebar.classList.add("-translate-x-full");
   overlay.classList.add("hidden");
-};
+}
 
 menuClose.addEventListener("click", closeSidebar);
 overlay.addEventListener("click", closeSidebar);
