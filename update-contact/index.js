@@ -51,6 +51,7 @@ function updateContactById(event) {
   const idParams = Number(searchParams.get("id"));
 
   const formData = new FormData(updateContactElement);
+  const newBirthdate = new Date(formData.get("birthdate"));
 
   const tags = [];
 
@@ -75,9 +76,10 @@ function updateContactById(event) {
           country: formData.get("country"),
         },
         tags: tags,
-        birthdate: new Date(formData.get("birthdate")).toISOString(),
+        birthdate: newBirthdate.toISOString(),
         updatedAt: new Date(),
       };
+      console.log(updatedContact.birthdate);
 
       return updatedContact;
     }
@@ -85,7 +87,7 @@ function updateContactById(event) {
   });
 
   saveData(updatedContacts);
-  goToDashboardPage();
+  // goToDashboardPage();
 }
 
 const menuToggle = document.getElementById("menu-toggle");
