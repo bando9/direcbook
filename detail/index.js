@@ -64,7 +64,7 @@ function renderContactById() {
           <img src="/images/icons/back.svg" alt="Back" />
         </a>
         <div class="flex items-center gap-2">
-          <button onclick="isFavorite(${id})" class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7">
+          <button onclick="toggleFavorite(${id})" class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7">
             <img src="${isFavoritedIcon}" alt="Favorite" />
           </button>
           <a
@@ -245,25 +245,26 @@ function getColorBadge(tag) {
 }
 
 function calculateAge(yearBirthdate) {
+  if (!yearBirthdate) return null;
+
   const currentYear = new Date().getFullYear();
+  let birthYear;
 
   if (typeof yearBirthdate == "string") {
-    const getYearDate = new Date(yearBirthdate).getFullYear();
-    const age = currentYear - getYearDate;
-    return age;
-  }
-  if (typeof yearBirthdate == "object") {
-    const getYearDate = yearBirthdate.getFullYear();
-    const age = currentYear - getYearDate;
-    return age;
-  }
-
-  if (typeof yearBirthdate == "number") {
-    const age = currentYear - yearBirthdate;
-    return age;
+    const parsedDate = new Date(yearBirthdate);
+    if (isNaN(parsedDate)) return null;
+    birthYear = parsedDate.getFullYear();
+  } else if (yearBirthdate instanceof Date) {
+    if (isNaN(yearBirthdate)) return null;
+    birthYear = parsedDate.getFullYear();
+  } else if (typeof yearBirthdate == "number") {
+    birthYear = yearBirthdate;
+  } else {
+    return null;
   }
 
-  return null;
+  const age = currentYear - birthYear;
+  return age >= 0 ? age : null;
 }
 
 const menuToggleElement = document.getElementById("menu-toggle");
