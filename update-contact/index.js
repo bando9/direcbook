@@ -30,7 +30,7 @@ function renderContactById() {
   document.getElementById("country").defaultValue =
     contact.address.country ?? "";
   document.getElementById("birthdate").valueAsDate =
-    new Date(contact.birthdate) ?? "";
+    new Date(contact.birthdate) ?? null;
 
   if (contact.tags) {
     contact.tags.forEach((tag) => {
@@ -51,7 +51,7 @@ function updateContactById(event) {
   const idParams = Number(searchParams.get("id"));
 
   const formData = new FormData(updateContactElement);
-  const newBirthdate = new Date(formData.get("birthdate"));
+  const birthdateInput = formData.get("birthdate");
 
   const tags = [];
 
@@ -76,10 +76,11 @@ function updateContactById(event) {
           country: formData.get("country"),
         },
         tags: tags,
-        birthdate: newBirthdate.toISOString(),
+        birthdate: birthdateInput
+          ? new Date(birthdateInput).toISOString()
+          : null,
         updatedAt: new Date(),
       };
-      console.log(updatedContact.birthdate);
 
       return updatedContact;
     }
@@ -87,7 +88,7 @@ function updateContactById(event) {
   });
 
   saveData(updatedContacts);
-  // goToDashboardPage();
+  goToDashboardPage();
 }
 
 const menuToggle = document.getElementById("menu-toggle");
