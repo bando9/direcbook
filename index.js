@@ -197,10 +197,10 @@ let initialContacts = [
 ];
 
 function saveInitialContacts() {
-  const contactsData = loadData();
+  const contactsData = loadContactsData();
 
   if (contactsData.length === 0) {
-    saveData(initialContacts);
+    saveContactsData(initialContacts);
   }
 }
 
@@ -208,7 +208,7 @@ function renderContacts() {
   const contactElement = document.getElementById("contacts");
 
   saveInitialContacts();
-  let contacts = loadData();
+  let contacts = loadContactsData();
 
   const showContacts = (contacts) => {
     return `${contacts.map((contact) => renderContact(contact)).join("")}`;
@@ -226,25 +226,25 @@ function renderContacts() {
     const filteredContacts = searchContactsByName(query, contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts("contacts", contacts);
+    renderQuantityContacts("contacts", contacts);
   } else if (labelFiltered) {
-    const filteredContacts = filterByLabels(labelFiltered, contacts);
+    const filteredContacts = filterByTags(labelFiltered, contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts(labelFiltered, contacts);
+    renderQuantityContacts(labelFiltered, contacts);
   } else if (isFavorited) {
     const filteredContacts = filterFavorites(contacts);
     contacts = filteredContacts;
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts("favorites", contacts);
+    renderQuantityContacts("favorites", contacts);
   } else {
     contactElement.innerHTML = showContacts(contacts);
-    renderCountContacts("all contacts", contacts);
+    renderQuantityContacts("all contacts", contacts);
   }
 }
 
 function renderContact(contact) {
-  const imageUrl = getFullNameToImage(contact.id);
+  const imageUrl = getFullNameToImageUrl(contact.id);
   const tagString = (contact?.tags || [])
     .map((tag) => `<span class="${getColorBadge(tag)}">${tag}</span>`)
     .join(" ");
@@ -264,7 +264,7 @@ function renderContact(contact) {
         <div class="flex flex-wrap gap-2">${tagString}</div>
       </td>
       <td class="p-3 space-x-1 group-hover:visible invisible duration-100 ease-in-out hidden md:flex">
-        <button onclick="isFavorite(${contact.id})" class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
+        <button onclick="toggleFavorite(${contact.id})" class="text-blue-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src=${isFavoritedIcon} /></button>
         <a href="/update-contact/?id=${contact.id}" class="text-green-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/edit.svg"/></a>
         <button onclick="deleteContactById(${contact.id})" class="text-red-500 hover:underline hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7"><img src="/images/icons/trash1.svg"/></button>
       </td>
@@ -272,8 +272,8 @@ function renderContact(contact) {
   `;
 }
 
-function isFavorite(id) {
-  let contacts = loadData();
+function toggleFavorite(id) {
+  let contacts = loadContactsData();
 
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
@@ -290,18 +290,18 @@ function isFavorite(id) {
 
   contacts = updatedContacts;
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
 
   renderContacts(contacts);
 }
 
 function deleteContactById(id) {
-  let contacts = loadData();
+  let contacts = loadContactsData();
 
   const updatedContacts = contacts.filter((contact) => contact.id !== id);
   contacts = updatedContacts;
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
 
   renderContacts(contacts);
 }
@@ -318,9 +318,11 @@ function filterFavorites(contacts) {
   return updatedContacts;
 }
 
-function filterByLabels(label, contacts) {
+function filterByTags(selectedTag, contacts) {
   const updatedContacts = contacts.filter((contact) =>
-    contact.tags?.map((tag) => tag.toLowerCase()).includes(label.toLowerCase())
+    contact.tags
+      ?.map((contactTag) => contactTag.toLowerCase())
+      .includes(selectedTag.toLowerCase())
   );
   return updatedContacts;
 }
@@ -340,54 +342,13 @@ function getColorBadge(tag) {
   }
 }
 
-function getFullNameToImage(id) {
-  const contacts = loadData();
+function getFullNameToImageUrl(id) {
+  const contacts = loadContactsData();
 
   const contact = contacts.find((contact) => contact.id == id);
-  const getFullName = contact.fullName.split(" ").join("+");
-  const getImage = `https://ui-avatars.com/api/?name=${getFullName}&background=random`;
-  return getImage;
-}
-
-function updateContactById(
-  id,
-  contacts,
-  {
-    fullName,
-    phone,
-    email,
-    address,
-    birthdate,
-    isFavorited,
-    isDeleted,
-    socialMedia,
-    updatedAt = new Date(),
-  }
-) {
-  const { linkedinUrl, websiteUrl } = socialMedia;
-
-  const updatedContacts = contacts.map((contact) => {
-    if (contact.id === id) {
-      const updatedContact = {
-        ...contact,
-        fullName: fullName ?? contact.fullName,
-        phone: phone ?? contact.phone,
-        email: email ?? contact.email,
-        address: address ?? contact.address,
-        birthdate: birthdate ?? contact.birthdate,
-        isFavorited: isFavorited ?? contact.isFavorited,
-        isDeleted: isDeleted ?? contact.isDeleted,
-        socialMedia: {
-          linkedinUrl: linkedinUrl ?? contact.socialMedia?.linkedinUrl,
-          websiteUrl: websiteUrl ?? contact.socialMedia?.websiteUrl,
-        },
-        updatedAt,
-      };
-      return updatedContact;
-    }
-    return contact;
-  });
-  initialContacts = updatedContacts;
+  const fullNameJoin = contact.fullName.split(" ").join("+");
+  const imageUrl = `https://ui-avatars.com/api/?name=${fullNameJoin}&background=random`;
+  return imageUrl;
 }
 
 function getContactById(id, contacts) {
@@ -398,19 +359,9 @@ function getContactById(id, contacts) {
   renderContact(contact);
 }
 
-function renderCountContacts(keyword, contacts) {
+function renderQuantityContacts(keyword, contacts) {
   const countContactsElement = document.getElementById("count-contacts");
   countContactsElement.innerHTML = `${keyword} (${contacts.length})`;
-}
-
-function checkPhoneAlreadyUsed(phone, contacts) {
-  const phoneNumberFound = contacts.find((item) => item.phone == phone);
-  if (phoneNumberFound) {
-    console.log(`Phone number already in use.`);
-    return true;
-  } else {
-    return false;
-  }
 }
 
 function showContactsBirthdayThisMonth(contacts) {
@@ -424,22 +375,22 @@ function showContactsBirthdayThisMonth(contacts) {
   });
 }
 
-const menuToggle = document.getElementById("menu-toggle");
-const menuClose = document.getElementById("menu-close");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("overlay");
+const menuToggleElement = document.getElementById("menu-toggle");
+const menuCloseElement = document.getElementById("menu-close");
+const sidebarElement = document.getElementById("sidebar");
+const overlayElement = document.getElementById("overlay");
 
-menuToggle.addEventListener("click", () => {
-  sidebar.classList.remove("-translate-x-full");
-  overlay.classList.remove("hidden");
+menuToggleElement.addEventListener("click", () => {
+  sidebarElement.classList.remove("-translate-x-full");
+  overlayElement.classList.remove("hidden");
 });
 
-const closeSidebar = () => {
-  sidebar.classList.add("-translate-x-full");
-  overlay.classList.add("hidden");
-};
+function closesidebarElement() {
+  sidebarElement.classList.add("-translate-x-full");
+  overlayElement.classList.add("hidden");
+}
 
-menuClose.addEventListener("click", closeSidebar);
-overlay.addEventListener("click", closeSidebar);
+menuCloseElement.addEventListener("click", closesidebarElement);
+overlayElement.addEventListener("click", closesidebarElement);
 
 renderContacts();

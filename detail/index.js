@@ -1,26 +1,25 @@
 const contactDetailElement = document.getElementById("contact-detail");
 
 function renderContactById() {
-  const contacts = loadData();
+  const contacts = loadContactsData();
 
   contactDetailElement.innerHTML = "";
 
   const searchParams = new URLSearchParams(window.location.search);
-  const idParams = Number(searchParams.get("id"));
+  const paramId = Number(searchParams.get("id"));
 
-  const contact = contacts.find((contact) => contact.id === idParams);
-
-  const contactNotFound = `<div class="flex justify-between pb-5">
-            <a
-              href="/"
-              class="hover:bg-card1 rounded-full cursor-pointer h-10 w-10 flex justify-center items-center mb-5"
-              ><img src="/images/icons/back.svg"
-            /></a>
-          </div>
-          <div class="text-semibold">Contact Not Found</div>`;
+  const contact = contacts.find((contact) => contact.id === paramId);
 
   if (!contact) {
-    contactDetailElement.innerHTML = contactNotFound;
+    contactDetailElement.innerHTML = `
+    <div class="flex justify-between pb-5">
+      <a
+        href="/"
+        class="hover:bg-card1 rounded-full cursor-pointer h-10 w-10 flex justify-center items-center mb-5">
+          <img src="/images/icons/back.svg"/>
+      </a>
+    </div>
+    <div class="text-semibold">Contact Not Found</div>`;
     return null;
   }
 
@@ -49,19 +48,21 @@ function renderContactById() {
   const tagString = (contact?.tags || [])
     .map((tag) => `<span class="${getColorBadge(tag)}">${tag}</span>`)
     .join(" ");
+
   const isFavoritedIcon = isFavorited
     ? "/images/icons/favorite-1.svg"
     : "/images/icons/favorite.svg";
-  const imageUrl = getFullNameToImage(contact.id);
 
-  const renderFoundContact = `
+  const imageUrl = getFullNameToImageUrl(contact.id);
+
+  contactDetailElement.innerHTML = `
       <div class="flex items-center justify-between pb-4">
-        <button
-          onclick="goBack()"
+        <a
+          onclick="goToDashboardPage()"
           class="hover:bg-card1 rounded-full cursor-pointer h-9 w-9 flex justify-center items-center"
         >
           <img src="/images/icons/back.svg" alt="Back" />
-        </button>
+        </a>
         <div class="flex items-center gap-2">
           <button onclick="isFavorite(${id})" class="hover:bg-card1 p-1 rounded-full cursor-pointer h-7 w-7">
             <img src="${isFavoritedIcon}" alt="Favorite" />
@@ -167,22 +168,22 @@ function renderContactById() {
         }
 
         <div class="mt-3 text-xs text-slate-600">
-          <h3 class="font-medium text-slate-700">Histori:</h3>
-          <p>Last edited: ${new Date(updatedAt).toLocaleString("en-UK", {
-            dateStyle: "long",
-            timeStyle: "short",
-          })}</p>
-          <p>Added contact: ${new Date(createdAt).toLocaleString("en-UK", {
-            dateStyle: "long",
-          })}</p>
+          <h3 class="font-medium text-slate-700">History:</h3>
+          <p>Last updated ${convertToLocaleString(updatedAt)}</p>
+          <p>Created ${convertToLocaleString(createdAt)}</p>
         </div>
       </div>`;
-
-  contactDetailElement.innerHTML = renderFoundContact;
 }
 
-function isFavorite(id) {
-  let contacts = loadData();
+function convertToLocaleString(timestamp) {
+  return new Date(timestamp).toLocaleString("en-UK", {
+    dateStyle: "long",
+    timeStyle: "short",
+  });
+}
+
+function toggleFavorite(id) {
+  let contacts = loadContactsData();
 
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === id) {
@@ -199,29 +200,29 @@ function isFavorite(id) {
 
   contacts = updatedContacts;
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
 
   renderContactById();
 }
 
 function deleteContactById(id) {
-  let contacts = loadData();
+  let contacts = loadContactsData();
 
   const updatedContacts = contacts.filter((contact) => contact.id !== id);
   contacts = updatedContacts;
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
 
   goToDashboardPage();
 }
 
-function getFullNameToImage(id) {
-  const contacts = loadData();
+function getFullNameToImageUrl(id) {
+  const contacts = loadContactsData();
 
   const contact = contacts.find((contact) => contact.id == id);
-  const getFullName = contact.fullName.split(" ").join("+");
-  const getImage = `https://ui-avatars.com/api/?name=${getFullName}&background=random`;
-  return getImage;
+  const fullNameJoin = contact.fullName.split(" ").join("+");
+  const imageUrl = `https://ui-avatars.com/api/?name=${fullNameJoin}&background=random`;
+  return imageUrl;
 }
 
 function getColorBadge(tag) {
@@ -265,22 +266,22 @@ function calculateAge(yearBirthdate) {
   return null;
 }
 
-const menuToggle = document.getElementById("menu-toggle");
-const menuClose = document.getElementById("menu-close");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("overlay");
+const menuToggleElement = document.getElementById("menu-toggle");
+const menuCloseElement = document.getElementById("menu-close");
+const sidebarElement = document.getElementById("sidebar");
+const overlayElement = document.getElementById("overlay");
 
-menuToggle.addEventListener("click", () => {
-  sidebar.classList.remove("-translate-x-full");
-  overlay.classList.remove("hidden");
+menuToggleElement.addEventListener("click", () => {
+  sidebarElement.classList.remove("-translate-x-full");
+  overlayElement.classList.remove("hidden");
 });
 
-const closeSidebar = () => {
-  sidebar.classList.add("-translate-x-full");
-  overlay.classList.add("hidden");
-};
+function closesidebarElement() {
+  sidebarElement.classList.add("-translate-x-full");
+  overlayElement.classList.add("hidden");
+}
 
-menuClose.addEventListener("click", closeSidebar);
-overlay.addEventListener("click", closeSidebar);
+menuCloseElement.addEventListener("click", closesidebarElement);
+overlayElement.addEventListener("click", closesidebarElement);
 
 renderContactById();

@@ -1,12 +1,12 @@
 const updateContactElement = document.getElementById("update-contact");
 
 function renderContactById() {
-  const contacts = loadData();
+  const contacts = loadContactsData();
 
   const searchParams = new URLSearchParams(window.location.search);
-  const idParams = Number(searchParams.get("id"));
+  const paramId = Number(searchParams.get("id"));
 
-  const contact = contacts.find((contact) => contact.id === idParams);
+  const contact = contacts.find((contact) => contact.id === paramId);
 
   document.getElementById("full-name").defaultValue = contact.fullName;
   document.getElementById("email").defaultValue = contact.email;
@@ -35,10 +35,10 @@ function renderContactById() {
 
 function updateContactById(event) {
   event.preventDefault();
-  const contacts = loadData();
+  const contacts = loadContactsData();
 
   const searchParams = new URLSearchParams(window.location.search);
-  const idParams = Number(searchParams.get("id"));
+  const paramId = Number(searchParams.get("id"));
 
   const formData = new FormData(updateContactElement);
   const birthdateInput = formData.get("birthdate");
@@ -51,7 +51,7 @@ function updateContactById(event) {
   if (formData.get("family")) tags.push("Family");
 
   const updatedContacts = contacts.map((contact) => {
-    if (contact.id === idParams) {
+    if (contact.id === paramId) {
       const updatedContact = {
         ...contact,
         fullName: formData.get("full-name"),
@@ -77,27 +77,27 @@ function updateContactById(event) {
     return contact;
   });
 
-  saveData(updatedContacts);
+  saveContactsData(updatedContacts);
   goToDashboardPage();
 }
 
-const menuToggle = document.getElementById("menu-toggle");
-const menuClose = document.getElementById("menu-close");
-const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("overlay");
+const menuToggleElement = document.getElementById("menu-toggle");
+const menuCloseElement = document.getElementById("menu-close");
+const sidebarElement = document.getElementById("sidebar");
+const overlayElement = document.getElementById("overlay");
 
-menuToggle.addEventListener("click", () => {
-  sidebar.classList.remove("-translate-x-full");
-  overlay.classList.remove("hidden");
+menuToggleElement.addEventListener("click", () => {
+  sidebarElement.classList.remove("-translate-x-full");
+  overlayElement.classList.remove("hidden");
 });
 
-const closeSidebar = () => {
-  sidebar.classList.add("-translate-x-full");
-  overlay.classList.add("hidden");
+const closesidebarElement = () => {
+  sidebarElement.classList.add("-translate-x-full");
+  overlayElement.classList.add("hidden");
 };
 
-menuClose.addEventListener("click", closeSidebar);
-overlay.addEventListener("click", closeSidebar);
+menuCloseElement.addEventListener("click", closesidebarElement);
+overlayElement.addEventListener("click", closesidebarElement);
 
 updateContactElement.addEventListener("submit", updateContactById);
 renderContactById();
