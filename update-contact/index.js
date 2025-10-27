@@ -1,15 +1,5 @@
 const updateContactElement = document.getElementById("update-contact");
 
-// address: {
-//   line1: formData.get("line1"),
-//   line2: formData.get("line2"),
-//   city: formData.get("city"),
-//   region: formData.get("region"),
-//   postalcode: formData.get("postal-code"),
-//   country: formData.get("country"),
-// },
-// birthdate: formData.get("birthdate"),
-
 function renderContactById() {
   const contacts = loadData();
 

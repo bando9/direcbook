@@ -41,8 +41,6 @@ function addContact(event) {
   const updatedContacts = [...contacts, newContact];
 
   saveData(updatedContacts);
-  console.log(newContact);
-  console.log(updatedContacts);
 
   goToDashboardPage();
 }
